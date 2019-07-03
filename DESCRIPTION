@@ -1,11 +1,17 @@
 Package: threesixtygiving
-Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Download Charitable Grants from the 'ThreeSixtyGiving' Platform
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Evan",
+           family = "Odell",
+           role = c("aut", "cre"),
+           email = "evanodell91@gmail.com",
+           comment = c(ORCID='0000-0003-1845-808X'))
+Description: Access open data from <http://www.threesixtygiving.org>
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Imports: 
+    dplyr,
+    openxlsx
+RoxygenNote: 6.1.1
