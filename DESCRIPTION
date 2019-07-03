@@ -13,5 +13,6 @@ Encoding: UTF-8
 LazyData: true
 Imports: 
     dplyr,
-    openxlsx
+    openxlsx,
+    curl
 RoxygenNote: 6.1.1

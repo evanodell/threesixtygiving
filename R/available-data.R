@@ -8,8 +8,6 @@
 #'
 #' @examples
 #'
-#'
-
 tsg_available <- function() {
   url <- "http://data.threesixtygiving.org/data.json"
 
@@ -21,8 +19,3 @@ tsg_available <- function() {
 
   df2
 }
-
-
-
-
-
