@@ -5,6 +5,10 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.org/evanodell/threesixtygiving.svg?branch=master)](https://travis-ci.org/evanodell/threesixtygiving)
+[![Codecov test
+coverage](https://codecov.io/gh/evanodell/threesixtygiving/branch/master/graph/badge.svg)](https://codecov.io/gh/evanodell/threesixtygiving?branch=master)
 <!-- badges: end -->
 
 The goal of threesixtygiving is to …

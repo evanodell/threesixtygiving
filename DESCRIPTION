@@ -14,5 +14,9 @@ LazyData: true
 Imports: 
     dplyr,
     openxlsx,
-    curl
+    curl,
+    readxl,
+    snakecase
 RoxygenNote: 6.1.1
+Suggests: 
+    covr
