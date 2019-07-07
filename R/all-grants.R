@@ -1,6 +1,21 @@
 
 
 
+#' All grants
+#'
+#' Returns a list of data frames with details of all grants from funders
+#' returned by [tsg_available()].
+#'
+#' @param verbose If `TRUE`, prints console messages.
+#'
+#' @return A list of data frames.
+#' @export
+#'
+#' @examples \donttest{
+#'
+#' all_grants <- tsg_all_grants()
+#'
+#' }
 tsg_all_grants <- function(verbose = TRUE) {
   grant_df <- tsg_available()
 
@@ -19,7 +34,8 @@ tsg_all_grants <- function(verbose = TRUE) {
 
     temp_f <- tempfile()
 
-    download.file(grant_df$downloadURL[[i]], temp_f, mode = "wb", quiet = TRUE)
+    download.file(grant_df$downloadURL[[i]], temp_f,
+                  mode = "wb", quiet = !verbose)
 
       if (!(suffix %in% c("xlsx", "csv", "json"))) {
         df_x <- curl::curl_fetch_memory(grant_df$downloadURL[[i]])
@@ -52,7 +68,7 @@ tsg_all_grants <- function(verbose = TRUE) {
         spend_df[[i]]$tsg_identifier <- grant_df$identifier[[i]]
       } else if (suffix == "csv") { ## some csv returns
         spend_df[[i]] <- tryCatch({
-          read.csv(temp_f, colClasses = "character")
+          dplyr::as_tibble(read.csv(temp_f, colClasses = "character"))
         },
         error = function(cond) {
           return("Download failed")

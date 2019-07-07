@@ -14,5 +14,4 @@ Available datasets
 }
 \examples{
 
-
 }

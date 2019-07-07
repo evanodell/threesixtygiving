@@ -1,6 +1,4 @@
 
-
-
 #' Available datasets
 #'
 #' @return A data frame with available datasets
@@ -16,6 +14,8 @@ tsg_available <- function() {
   df2 <- dplyr::inner_join(df, dplyr::bind_rows(df$distribution), by = "title")
 
   df2$distribution <- NULL
+
+  names(df2) <- snakecase::to_snake_case(names(df2))
 
   df2
 }
