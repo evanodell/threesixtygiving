@@ -4,9 +4,11 @@
 \alias{tsg_all_grants}
 \title{All grants}
 \usage{
-tsg_all_grants(verbose = TRUE)
+tsg_all_grants(with_meta = TRUE, verbose = TRUE)
 }
 \arguments{
+\item{with_meta}{If `TRUE`}
+
 \item{verbose}{If `TRUE`, prints console messages.}
 }
 \value{
@@ -18,8 +20,6 @@ returned by [tsg_available()].
 }
 \examples{
 \donttest{
-
 all_grants <- tsg_all_grants()
-
 }
 }

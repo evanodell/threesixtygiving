@@ -17,13 +17,26 @@ status](https://travis-ci.org/evanodell/threesixtygiving.svg?branch=master)](htt
 coverage](https://codecov.io/gh/evanodell/threesixtygiving/branch/master/graph/badge.svg)](https://codecov.io/gh/evanodell/threesixtygiving?branch=master)
 <!-- badges: end -->
 
+Access open data from the <https://www.threesixtygiving.org/> data feed,
+a database of charitable grant giving in the UK. The package provides
+functions to search and retrieve data on charitable giving.
+
 ## Installation
 
-You can install the released version of threesixtygiving from
-[CRAN](https://CRAN.R-project.org) with:
+<!--
+You can install the released version of threesixtygiving from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 install.packages("threesixtygiving")
+```
+-->
+
+You can install the development version from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("evanodell/threesixtygiving")
 ```
 
 ## Example

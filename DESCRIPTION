@@ -1,13 +1,15 @@
 Package: threesixtygiving
-Title: Download Charitable Grants from the 'ThreeSixtyGiving' Platform
-Version: 0.0.0.9000
+Title: Download Charitable Grants from the '360Giving' Platform
+Version: 0.1.0
 Authors@R: 
     person(given = "Evan",
            family = "Odell",
            role = c("aut", "cre"),
            email = "evanodell91@gmail.com",
            comment = c(ORCID='0000-0003-1845-808X'))
-Description: Access open data from <http://www.threesixtygiving.org>
+Description: Access open data from <https://www.threesixtygiving.org>, a 
+    database of charitable grant giving in the UK. The package provides 
+    functions to search and retrieve data on charitable giving.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -15,7 +17,11 @@ Imports:
     dplyr,
     curl,
     readxl,
-    snakecase
+    snakecase,
+    readr, 
+    jsonlite
 RoxygenNote: 6.1.1
 Suggests: 
-    covr
+    covr,
+    testthat (>= 2.1.0),
+    tibble

@@ -7,11 +7,13 @@
 tsg_available()
 }
 \value{
-A data frame with available datasets
+A tibble with details on all available datasets.
 }
 \description{
-Available datasets
+Information on the available datasets
 }
 \examples{
-
+\donttest{
+available <- tsg_available()
+}
 }
