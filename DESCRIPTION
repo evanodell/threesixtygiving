@@ -18,8 +18,11 @@ Imports:
     curl,
     readxl,
     snakecase,
-    readr, 
-    jsonlite
+    readr,
+    jsonlite,
+    magrittr,
+    purrr,
+    janitor
 RoxygenNote: 6.1.1
 Suggests: 
     covr,

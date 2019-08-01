@@ -4,10 +4,10 @@
 \alias{tsg_all_grants}
 \title{All grants}
 \usage{
-tsg_all_grants(with_meta = TRUE, verbose = TRUE)
+tsg_all_grants(core_data = FALSE, verbose = TRUE)
 }
 \arguments{
-\item{with_meta}{If `TRUE`}
+\item{core_data}{If `TRUE`}
 
 \item{verbose}{If `TRUE`, prints console messages.}
 }
