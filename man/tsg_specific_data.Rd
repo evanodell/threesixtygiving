@@ -13,7 +13,7 @@ regular expressions. Use `perl = TRUE` for perl-style regex.
 Accepts single strings or a character vector.}
 
 \item{search_in}{The name of the column to search in. Accepts single strings
-or a character vector of column names.}
+or a character vector of column names. If `NULL`, searches all columns.}
 
 \item{verbose}{If `TRUE`, prints console messages.}
 
@@ -24,7 +24,8 @@ or a character vector of column names.}
 \item{fixed}{If `TRUE`, searches will be matched as-is.}
 }
 \value{
-A tibble or a list of tibbles.
+A single tibble (if only one grant maker matches the queries) or a
+list of tibbles (if the query matches multiple datasets).
 }
 \description{
 Returns a list of tibble with details of all grants from funders

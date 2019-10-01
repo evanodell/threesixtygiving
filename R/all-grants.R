@@ -20,7 +20,7 @@
 tsg_all_grants <- function(core_data = FALSE, verbose = TRUE) {
   grant_df <- tsg_available()
 
-  df <- threesixtygiving:::tsg_data_retrieval(grant_df, verbose = verbose)
+  df <- tsg_data_retrieval(grant_df, verbose = verbose)
 
    if (core_data) {
       # get all the common spending information into a single dataset

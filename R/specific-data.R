@@ -2,14 +2,14 @@
 
 #' Retrieve specific datasets
 #'
-#'
 #' Returns a list of tibble with details of all grants from funders
 #' where funder data matches one or more search strings. If only one dataset
 #' matches queries, returns a tibble of that dataset.
 #'
 #' @inheritParams tsg_search_grants
 #'
-#' @return A tibble or a list of tibbles.
+#' @return A single tibble (if only one grant maker matches the queries) or a
+#' list of tibbles (if the query matches multiple datasets).
 #' @export
 #'
 #' @examples \donttest{
@@ -26,7 +26,7 @@ tsg_specific_data <- function(search, search_in = NULL, verbose = TRUE,
 
   df <- tsg_data_retrieval(q_df, verbose = verbose)
 
-  if (length(df == 1)) {
+  if (length(df) == 1) {
     df <- df[[1]]
   }
 

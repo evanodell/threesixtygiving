@@ -5,8 +5,8 @@
 
 <!-- badges: start -->
 
-[![License:
-MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License: GPL
+v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/threesixtygiving)](https://cran.r-project.org/package=threesixtygiving)
 [![GitHub
 tag](https://img.shields.io/github/tag/evanodell/threesixtygiving.svg)](https://github.com/evanodell/threesixtygiving)
@@ -15,6 +15,8 @@ tag](https://img.shields.io/github/tag/evanodell/threesixtygiving.svg)](https://
 status](https://travis-ci.org/evanodell/threesixtygiving.svg?branch=master)](https://travis-ci.org/evanodell/threesixtygiving)
 [![Codecov test
 coverage](https://codecov.io/gh/evanodell/threesixtygiving/branch/master/graph/badge.svg)](https://codecov.io/gh/evanodell/threesixtygiving?branch=master)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/evanodell/threesixtygiving?branch=master&svg=true)](https://ci.appveyor.com/project/evanodell/threesixtygiving)
 <!-- badges: end -->
 
 Access open data from the <https://www.threesixtygiving.org/> data feed,

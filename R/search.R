@@ -9,7 +9,7 @@
 #' regular expressions. Use `perl = TRUE` for perl-style regex.
 #' Accepts single strings or a character vector.
 #' @param search_in The name of the column to search in. Accepts single strings
-#'  or a character vector of column names.
+#'  or a character vector of column names. If `NULL`, searches all columns.
 #' @inheritParams tsg_all_grants
 #' @param ignore_case If `TRUE` ignores case.
 #' @param perl If `TRUE`, uses perl-style regex.
