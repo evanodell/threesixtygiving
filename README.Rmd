@@ -24,6 +24,7 @@ knitr::opts_chunk$set(
 [![Travis build status](https://travis-ci.org/evanodell/threesixtygiving.svg?branch=master)](https://travis-ci.org/evanodell/threesixtygiving)
 [![Codecov test coverage](https://codecov.io/gh/evanodell/threesixtygiving/branch/master/graph/badge.svg)](https://codecov.io/gh/evanodell/threesixtygiving?branch=master)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/evanodell/threesixtygiving?branch=master&svg=true)](https://ci.appveyor.com/project/evanodell/threesixtygiving)
+[![DOI](https://zenodo.org/badge/195080045.svg)](https://zenodo.org/badge/latestdoi/195080045)
 <!-- badges: end -->
 
 

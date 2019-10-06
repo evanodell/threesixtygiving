@@ -17,10 +17,12 @@ status](https://travis-ci.org/evanodell/threesixtygiving.svg?branch=master)](htt
 coverage](https://codecov.io/gh/evanodell/threesixtygiving/branch/master/graph/badge.svg)](https://codecov.io/gh/evanodell/threesixtygiving?branch=master)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/evanodell/threesixtygiving?branch=master&svg=true)](https://ci.appveyor.com/project/evanodell/threesixtygiving)
+[![DOI](https://zenodo.org/badge/195080045.svg)](https://zenodo.org/badge/latestdoi/195080045)
 <!-- badges: end -->
 
-Access open data from the <https://www.threesixtygiving.org/> data feed,
-a database of charitable grant giving in the UK. The package provides
+Access open data from the
+[ThreeSixtyGiving](https://www.threesixtygiving.org/) data feed, a
+database of charitable grant giving in the UK. The package provides
 functions to search and retrieve data on charitable giving.
 
 ## Installation
@@ -41,4 +43,7 @@ You can install the development version from
 devtools::install_github("evanodell/threesixtygiving")
 ```
 
-## Example
+Please note that the ‘threesixtygiving’ project is released with a
+[Contributor Code of
+Conduct](https://github.com/evanodell/threesixtygiving/blob/master/CODE_OF_CONDUCT.md).
+By contributing to this project, you agree to abide by its terms.
