@@ -5,5 +5,7 @@
 \alias{threesixtygiving-package}
 \title{threesixtygiving package}
 \description{
-Charity giving data
+Charity funding data for the UK. See the
+[360 Giving website](https://www.threesixtygiving.org) for more information
+on the source of this data.
 }

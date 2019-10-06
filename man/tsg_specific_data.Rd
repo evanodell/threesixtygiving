@@ -36,4 +36,5 @@ matches queries, returns a tibble of that dataset.
 \donttest{
 
 }
+
 }

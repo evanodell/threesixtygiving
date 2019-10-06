@@ -34,4 +34,5 @@ matches one or more search strings.
 \donttest{
 
 }
+
 }
