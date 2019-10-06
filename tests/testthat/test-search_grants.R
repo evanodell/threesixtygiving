@@ -2,7 +2,7 @@
 
 
 test_that("funder searching works", {
-
+  skip_on_cran()
   search1 <- tsg_search_grants(search = c("bbc", "caBinet"))
 
   # expect_length(search1, 13)

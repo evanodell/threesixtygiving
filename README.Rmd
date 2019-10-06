@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 
-Access open data from the <https://www.threesixtygiving.org/> data feed, a database of charitable grant giving in the UK. The package provides functions to search and retrieve data on charitable giving.
+Access open data from the [ThreeSixtyGiving](https://www.threesixtygiving.org/) data feed, a database of charitable grant giving in the UK. The package provides functions to search and retrieve data on charitable giving.
 
 
 ## Installation
@@ -39,10 +39,14 @@ install.packages("threesixtygiving")
 ```
 -->
 
-
 You can install the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("evanodell/threesixtygiving")
 ```
+
+
+Please note that the 'threesixtygiving' project is released with a [Contributor Code of Conduct](https://github.com/evanodell/threesixtygiving/blob/master/CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
+
+

@@ -1,6 +1,6 @@
 Package: threesixtygiving
 Title: Download Charitable Grants from the '360Giving' Platform
-Version: 0.1.0
+Version: 0.0.9000
 Authors@R: 
     person(given = "Evan",
            family = "Odell",
