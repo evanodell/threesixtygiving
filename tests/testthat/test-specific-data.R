@@ -4,5 +4,4 @@ test_that("retrieving specific datsets works", {
 
   expect_type(specific1, "list")
   expect_true(tibble::is_tibble(specific1[[1]]))
-
 })

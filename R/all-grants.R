@@ -12,19 +12,19 @@
 #' @return A list of data frames.
 #' @export
 #'
-#' @examples \donttest{
+#' @examples
+#' \donttest{
 #' all_grants <- tsg_all_grants()
 #' }
-
-
+#'
 tsg_all_grants <- function(core_data = FALSE, verbose = TRUE) {
   grant_df <- tsg_available()
 
   df <- tsg_data_retrieval(grant_df, verbose = verbose)
 
-   if (core_data) {
-      # get all the common spending information into a single dataset
-   }
+  if (core_data) {
+    # get all the common spending information into a single dataset
+  }
   df
 }
 # attempts to sort out this whole nested data frame problem

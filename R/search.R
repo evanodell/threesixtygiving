@@ -18,10 +18,11 @@
 #' @return A tibble with information on matching datasets
 #' @export
 #'
-#' @examples \donttest{
+#' @examples
+#' \donttest{
 #'
 #' }
-
+#'
 tsg_search_grants <- function(search, search_in = NULL, verbose = TRUE,
                               ignore_case = TRUE, perl = FALSE, fixed = FALSE) {
   grant_df <- tsg_available()
@@ -36,11 +37,15 @@ tsg_search_grants <- function(search, search_in = NULL, verbose = TRUE,
     }
   }
 
-  temp <- sapply(grant_df[search_in],
-                 function(x) grepl(query, x, ignore.case = ignore_case,
-                                   perl= perl, fixed = fixed))
+  temp <- sapply(
+    grant_df[search_in],
+    function(x) grepl(query, x,
+        ignore.case = ignore_case,
+        perl = perl, fixed = fixed
+      )
+  )
 
-  return <- grant_df[rowSums(temp) > 0L,]
+  return <- grant_df[rowSums(temp) > 0L, ]
 
   return
 }

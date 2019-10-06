@@ -12,17 +12,18 @@
 #' list of tibbles (if the query matches multiple datasets).
 #' @export
 #'
-#' @examples \donttest{
+#' @examples
+#' \donttest{
 #'
 #' }
-
-
+#'
 tsg_specific_data <- function(search, search_in = NULL, verbose = TRUE,
                               ignore_case = TRUE, perl = FALSE, fixed = FALSE) {
-
-  q_df <- tsg_search_grants(search = search, search_in = search_in,
-                                verbose = verbose, ignore_case = ignore_case,
-                                perl = perl, fixed = fixed)
+  q_df <- tsg_search_grants(
+    search = search, search_in = search_in,
+    verbose = verbose, ignore_case = ignore_case,
+    perl = perl, fixed = fixed
+  )
 
   df <- tsg_data_retrieval(q_df, verbose = verbose)
 

@@ -6,10 +6,11 @@
 #' @return A tibble with details on all available datasets.
 #' @export
 #'
-#' @examples \donttest{
+#' @examples
+#' \donttest{
 #' available <- tsg_available()
 #' }
-
+#'
 tsg_available <- function() {
   url <- "http://data.threesixtygiving.org/data.json"
 
