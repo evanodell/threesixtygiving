@@ -20,7 +20,7 @@
 #'
 #' @examples
 #' \donttest{
-#'
+#'  search1 <- tsg_search_grants(search = c("bbc", "caBinet"))
 #' }
 #'
 tsg_search_grants <- function(search, search_in = NULL, verbose = TRUE,

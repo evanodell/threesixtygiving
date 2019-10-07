@@ -14,7 +14,7 @@
 #'
 #' @examples
 #' \donttest{
-#'
+#'  specific1 <- tsg_specific_data(search = c("bbc", "caBinet"))
 #' }
 #'
 tsg_specific_data <- function(search, search_in = NULL, verbose = TRUE,

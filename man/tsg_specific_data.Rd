@@ -34,7 +34,7 @@ matches queries, returns a tibble of that dataset.
 }
 \examples{
 \donttest{
-
+ specific1 <- tsg_specific_data(search = c("bbc", "caBinet"))
 }
 
 }

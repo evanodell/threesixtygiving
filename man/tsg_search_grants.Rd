@@ -32,7 +32,7 @@ matches one or more search strings.
 }
 \examples{
 \donttest{
-
+ search1 <- tsg_search_grants(search = c("bbc", "caBinet"))
 }
 
 }
