@@ -13,7 +13,7 @@ regular expressions. Use `perl = TRUE` for perl-style regex.
 Accepts single strings or a character vector.}
 
 \item{search_in}{The name of the column to search in. Accepts single strings
-or a character vector of column names.}
+or a character vector of column names. If `NULL`, searches all columns.}
 
 \item{verbose}{If `TRUE`, prints console messages.}
 
@@ -32,6 +32,7 @@ matches one or more search strings.
 }
 \examples{
 \donttest{
-
+ search1 <- tsg_search_grants(search = c("bbc", "caBinet"))
 }
+
 }

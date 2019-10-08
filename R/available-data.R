@@ -6,22 +6,21 @@
 #' @return A tibble with details on all available datasets.
 #' @export
 #'
-#' @examples \donttest{
+#' @examples
+#' \donttest{
 #' available <- tsg_available()
 #' }
-
+#'
 tsg_available <- function() {
   url <- "http://data.threesixtygiving.org/data.json"
 
-  df <- jsonlite::fromJSON(url, flatten = TRUE)
+  df <- dplyr::as_tibble(jsonlite::fromJSON(url, flatten = TRUE))
 
-  df2 <- dplyr::as_tibble(
-    dplyr::inner_join(df, dplyr::bind_rows(df$distribution), by = "title")
-    )
+  df$distribution <- lapply(df$distribution, dplyr::as_tibble)
 
-  df2$distribution <- NULL
+  df$distribution <- lapply(df$distribution, janitor::clean_names)
 
-  names(df2) <- snakecase::to_snake_case(names(df2))
+  df <- janitor::clean_names(df)
 
-  df2
+  df
 }
