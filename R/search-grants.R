@@ -19,12 +19,12 @@
 #'
 #' @examples
 #' \donttest{
-#'  specific1 <- tsg_search_grants(search = c("bbc", "caBinet"))
+#' specific1 <- tsg_search_grants(search = c("bbc", "caBinet"))
 #' }
 #'
 tsg_search_grants <- function(search, search_in = NULL, verbose = TRUE,
-                                     ignore_case = TRUE, perl = FALSE,
-                                     fixed = FALSE, ...) {
+                              ignore_case = TRUE, perl = FALSE,
+                              fixed = FALSE, ...) {
   q_df <- tsg_search_funders(
     search = search, search_in = search_in,
     verbose = verbose, ignore_case = ignore_case,
@@ -39,4 +39,3 @@ tsg_search_grants <- function(search, search_in = NULL, verbose = TRUE,
 
   df
 }
-

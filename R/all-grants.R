@@ -22,12 +22,14 @@
 #' \donttest{
 #' all_grants <- tsg_all_grants()
 #' }
-
+#'
 tsg_all_grants <- function(verbose = TRUE, timeout = 30, retries = 3) {
   grant_df <- tsg_available()
 
-  df <- tsg_data_retrieval(grant_df, verbose = verbose, timeout = timeout,
-                           retries = retries)
+  df <- tsg_data_retrieval(grant_df,
+    verbose = verbose, timeout = timeout,
+    retries = retries
+  )
 
   df
 }

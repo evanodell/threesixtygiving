@@ -10,12 +10,13 @@
 #' passed to the function.
 #' @export
 #'
-#' @examples \donttest{
+#' @examples
+#' \donttest{
 #' all_grants <- tsg_all_grants()
 #'
 #' missing_grants <- tsg_missing(all_grants)
 #' }
-
+#'
 tsg_missing <- function(x) {
   if (!is.list(x)) {
     stop("`x` must be a list of data frames with grant data.", call. = FALSE)

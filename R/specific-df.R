@@ -14,7 +14,8 @@
 #' @seealso tsg_available
 #' @seealso tsg_missing
 #'
-#' @examples \donttest{
+#' @examples
+#' \donttest{
 #' all_grants <- tsg_all_grants()
 #'
 #' missing_grants <- tsg_missing(all_grants)
@@ -22,16 +23,15 @@
 #' more_grants <- tsg_specific_df(missing_grants)
 #' }
 #'
-
-
 tsg_specific_df <- function(x, verbose = TRUE, timeout = 30, retries = 3) {
-
   if (!is.data.frame(x)) {
     stop("`x` must be a data frames with grant metadata.", call. = FALSE)
   }
 
-  df <- tsg_data_retrieval(x, verbose = verbose, timeout = timeout,
-                           retries = retries)
+  df <- tsg_data_retrieval(x,
+    verbose = verbose, timeout = timeout,
+    retries = retries
+  )
 
   df
 }
