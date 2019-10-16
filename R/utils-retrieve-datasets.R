@@ -1,14 +1,11 @@
 
-## Retrieve datasets for all specified datasets. Accepts returns of tsg_available and
-# tsg_specific_data
-tsg_data_retrieval <- function(query_df, verbose = verbose, timeout = timeout) {
+## Retrieve datasets for all specified datasets. Accepts returns of
+# tsg_available and tsg_specific_data
+tsg_data_retrieval <- function(query_df, verbose = TRUE,
+                               timeout = 30, retries = 3) {
   query_df$id2 <- c(1:nrow(query_df))
 
   spend_df <- list()
-
-  # handle360 <- curl::new_handle()
-  #
-  # curl::handle_setopt(handle360, timeout_ms = 10000);
 
   for (i in seq_along(query_df$title)) {
     if (verbose) {
@@ -26,32 +23,30 @@ tsg_data_retrieval <- function(query_df, verbose = verbose, timeout = timeout) {
 
      temp_f <- tempfile()
 
-     result <- tryCatch({ ## majority of returns
+     # Attempt return
 
+     result <- tryCatch({
      httr::RETRY("GET", query_df$distribution[[i]]$download_url,
-                      httr::write_disk(temp_f, overwrite=TRUE),
-                      httr::timeout(timeout), terminate_on_success = FALSE)
-
-      # x <- httr::GET(query_df$distribution[[i]]$download_url,
-      #            httr::write_disk(temp_f, overwrite=TRUE),
-      #            httr::timeout(timeout))#, col_types = "text"
+                 httr::write_disk(temp_f, overwrite=TRUE),
+                 times = retries,
+                 httr::timeout(timeout), terminate_on_success = FALSE)
       },
       error = function(cond) {
         return(NA)
       }
      )
 
-     if (httr::status_code(result) != 200) {
-
+     if (class(result) != "response") {
+       if (verbose) message("Could not connect to server")
        spend_df[[i]] <- NA
 
-     } else {
+     } else if (httr::http_status(result) != 200) {
+       resp <- httr::http_status(result)
 
-    #
-    #R.utils::withTimeout(
-       # curl::curl_download(query_df$distribution[[i]]$download_url, temp_f,
-       #                     mode = "wb", quiet = TRUE)#,# handle = handle360)
-    # timeout = 25, onTimeout = "warning") ## initial download, find some way to return error and skip things when this fails
+       message("Request failed: ", resp$message)
+
+       spend_df[[i]] <- NA
+     } else {
 
     if (!(suffix %in% c("xlsx", "csv", "json", "xls"))) {
       df_x <- curl::curl_fetch_memory(query_df$distribution[[i]]$download_url)
@@ -114,7 +109,7 @@ tsg_data_retrieval <- function(query_df, verbose = verbose, timeout = timeout) {
     #Not sure why the commented otu function above is included, should note the
     #rationale if there is one
 
-    ## some kind of mutate-if for values containing dates
+    ## some kind of mutate-if for values containing dates?
 
     spend_df[[i]]$publisher_prefix <- query_df$publisher_prefix[[i]]
     }

@@ -6,8 +6,9 @@
 #' matches one or more search strings.
 #'
 #' @param search The string(s) to search for. By default allows POSIX 1003.2
-#' regular expressions. Use `perl = TRUE` for perl-style regex.
-#' Accepts single strings or a character vector.
+#' regular expressions. Use `perl = TRUE` for perl-style regex, or
+#' `fixed = TRUE` for fixed strings.
+#' Accepts single strings or a character vector of strings.
 #' @param search_in The name of the column to search in. Accepts single strings
 #'  or a character vector of column names. If `NULL`, searches all columns.
 #' @inheritParams tsg_all_grants
@@ -20,10 +21,10 @@
 #'
 #' @examples
 #' \donttest{
-#'  search1 <- tsg_search_grants(search = c("bbc", "caBinet"))
+#'  search1 <- tsg_search_funders(search = c("bbc", "caBinet"))
 #' }
 #'
-tsg_search_grants <- function(search, search_in = NULL, verbose = TRUE,
+tsg_search_funders <- function(search, search_in = NULL, verbose = TRUE,
                               ignore_case = TRUE, perl = FALSE, fixed = FALSE) {
   grant_df <- tsg_available()
 
@@ -33,7 +34,8 @@ tsg_search_grants <- function(search, search_in = NULL, verbose = TRUE,
     search_in <- names(grant_df)
   } else {
     if (!all(search_in %in% names(grant_df))) {
-      stop("`search_in` must either be NULL or a character vector of values matching column names returned by `tsg_available()`", call. = FALSE)
+      stop("`search_in` must either be NULL or a character vector of values
+           matching column names returned by `tsg_available()`", call. = FALSE)
     }
   }
 
