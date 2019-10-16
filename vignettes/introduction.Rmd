@@ -27,13 +27,20 @@ library(threesixtygiving)
 library(purrr)
 library(dplyr)
 
-ag1 <- tsg_all_grants()
+ag1 <- tsg_all_grants(timeout = 13, retries = 1)
+
+## Need to do this to process multiple file types
+ag2 <- lapply(ag1, mutate_all, as.character)
 
 
-x <- bind_rows(ag1)
+# need to fill all this garbage
+df <- bind_rows(ag2) %>%
+  mutate(amount_awarded = as.numeric(amount_awarded)) %>%
+  filter(!is.na(amount_awarded)) %>%
+  mutate(grant_programme = factor(grant_programme))
 
 
-
+summary(df$grant_programme)
 
 ```
 

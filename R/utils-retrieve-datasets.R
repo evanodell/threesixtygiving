@@ -3,8 +3,6 @@
 # tsg_available and tsg_specific_data
 tsg_data_retrieval <- function(query_df, verbose = TRUE,
                                timeout = 30, retries = 3) {
-  query_df$id2 <- c(1:nrow(query_df))
-
   spend_df <- list()
 
   for (i in seq_along(query_df$title)) {
@@ -39,15 +37,16 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
 
     if (class(result) != "response") {
       if (verbose) message("Could not connect to server")
-      spend_df[[i]] <- NA
-    } else if (httr::http_status(result) != 200) {
+      spend_df[[i]] <- tibble(publisher_prefix = query_df$publisher_prefix[[i]])
+    } else if (httr::status_code(result) != 200) {
       resp <- httr::http_status(result)
 
       message("Request failed: ", resp$message)
 
-      spend_df[[i]] <- NA
+      spend_df[[i]] <- tibble(publisher_prefix = query_df$publisher_prefix[[i]])
     } else {
       if (!(suffix %in% c("xlsx", "csv", "json", "xls"))) {
+        #re-write this, get this info from the result var above?
         df_x <- curl::curl_fetch_memory(query_df$distribution[[i]]$download_url)
         if (df_x$type == "text/csv") {
           spend_df[[i]] <- readr::read_csv(
@@ -103,8 +102,9 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
       if (is.data.frame(spend_df[[i]])) {
         spend_df[[i]] <- janitor::clean_names(spend_df[[i]])
 
-        # spend_df[[i]] <- dplyr::mutate_if(spend_df[[i]], is.numeric, as.character)
-        # Not sure why the commented otu function above is included, should note the
+        # spend_df[[i]] <- dplyr::mutate_if(spend_df[[i]],
+        # is.numeric, as.character)
+        # Not sure why the commented function above is included, should note
         # rationale if there is one
 
         ## some kind of mutate-if for values containing dates?

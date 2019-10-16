@@ -25,7 +25,8 @@
 #' }
 #'
 tsg_search_funders <- function(search, search_in = NULL, verbose = TRUE,
-                               ignore_case = TRUE, perl = FALSE, fixed = FALSE) {
+                               ignore_case = TRUE, perl = FALSE,
+                               fixed = FALSE) {
   grant_df <- tsg_available()
 
   query <- paste0(search, collapse = "|")

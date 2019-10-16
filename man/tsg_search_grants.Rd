@@ -41,7 +41,7 @@ Use [tsg_specific_df()] to pass a dataframe.
 }
 \examples{
 \donttest{
- specific1 <- tsg_search_grants(search = c("bbc", "caBinet"))
+specific1 <- tsg_search_grants(search = c("bbc", "caBinet"))
 }
 
 }

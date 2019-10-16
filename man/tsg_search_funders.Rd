@@ -33,7 +33,7 @@ matches one or more search strings.
 }
 \examples{
 \donttest{
- search1 <- tsg_search_funders(search = c("bbc", "caBinet"))
+search1 <- tsg_search_funders(search = c("bbc", "caBinet"))
 }
 
 }
