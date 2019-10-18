@@ -37,10 +37,39 @@ ag2 <- lapply(ag1, mutate_all, as.character)
 df <- bind_rows(ag2) %>%
   mutate(amount_awarded = as.numeric(amount_awarded)) %>%
   filter(!is.na(amount_awarded)) %>%
-  mutate(grant_programme = factor(grant_programme))
+  mutate(title = factor(title))
+
+# summary(df$title)
+# 
+# ## Core data includes 
+# 
+# summary(factor(df$description))
+
+df2 <- df %>% select(title, identifier, identifier_2, identifier_1,
+                     id, funding_org_name,
+                     amount_awarded, currency,
+                     award_date, description, recipient_org_name,
+                     recipient_org_charity_number) %>%
+  mutate(identifier = if_else(is.na(identifier), identifier_2, identifier),
+         identifier = if_else(is.na(identifier), id, identifier))
 
 
-summary(df$grant_programme)
+df2 <- df2 %>% 
+  mutate_at(vars(identifier, identifier_2, identifier_1, id),
+    ~ifelse(!grepl("360G", .), NA, .) 
+  ) %>% janitor::remove_empty("cols") %>% 
+  mutate(identifier = case_when(is.na(identifier) ~ id,
+                                is.na(identifier) ~ identifier_2,
+         TRUE ~ identifier))
+
+
+map_dbl(df2, ~sum(is.na(.)))
+
+x <- df2 %>% filter(is.na(identifier))
+
+df3 <- df %>% select(identifier, identifier_2, identifier_1, id)
+
+y <- tsg_search_grants("Cheshire")
 
 ```
 

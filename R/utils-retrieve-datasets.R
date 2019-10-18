@@ -37,7 +37,7 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
 
     if (class(result) != "response") {
       if (verbose) message("Could not connect to server")
-      spend_df[[i]] <- tibble(publisher_prefix = query_df$publisher_prefix[[i]])
+      spend_df[[i]] <- dplyr::tibble(publisher_prefix = query_df$publisher_prefix[[i]])
     } else if (httr::status_code(result) != 200) {
       resp <- httr::http_status(result)
 
@@ -47,8 +47,8 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
     } else {
       if (!(suffix %in% c("xlsx", "csv", "json", "xls"))) {
         #re-write this, get this info from the result var above?
-        df_x <- curl::curl_fetch_memory(query_df$distribution[[i]]$download_url)
-        if (df_x$type == "text/csv") {
+        #df_x <- curl::curl_fetch_memory(query_df$distribution[[i]]$download_url)
+        if (result$headers$`content-type` == "text/csv") {
           spend_df[[i]] <- readr::read_csv(
             temp_f,
             col_types = readr::cols(.default = "c")
@@ -110,6 +110,8 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
         ## some kind of mutate-if for values containing dates?
 
         spend_df[[i]]$publisher_prefix <- query_df$publisher_prefix[[i]]
+
+        names(spend_df[[i]]) <- gsub("recepient", "recipient", names(spend_df[[i]]))
       }
     }
   }
