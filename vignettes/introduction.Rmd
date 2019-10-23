@@ -29,9 +29,15 @@ library(dplyr)
 
 ag1 <- tsg_all_grants(timeout = 13, retries = 1)
 
+for (i in 1:length(ag1)) {
+  ag1[[i]]$counter <- i
+}
 ## Need to do this to process multiple file types
-ag2 <- lapply(ag1, mutate_all, as.character)
 
+
+ag3 <- lapply(ag1, unnest_wider, names_sep = "_")
+
+ag2 <- lapply(ag3, mutate_all, as.character)
 
 # need to fill all this garbage
 df <- bind_rows(ag2) %>%
@@ -45,31 +51,39 @@ df <- bind_rows(ag2) %>%
 # 
 # summary(factor(df$description))
 
-df2 <- df %>% select(title, identifier, identifier_2, identifier_1,
-                     id, funding_org_name,
-                     amount_awarded, currency,
-                     award_date, description, recipient_org_name,
-                     recipient_org_charity_number) %>%
-  mutate(identifier = if_else(is.na(identifier), identifier_2, identifier),
-         identifier = if_else(is.na(identifier), id, identifier))
+x <- filter(df, counter == 28)
+
+req <- snakecase::to_snake_case(
+  c("Identifier", "Title", "Description", "Currency", "Amount Awarded",
+    "Award Date", "Recipient Org:Identifier", "Recipient Org:Name",
+    "Funding Org:Identifier", "Funding Org:Name",
+    "counter"))
 
 
-df2 <- df2 %>% 
-  mutate_at(vars(identifier, identifier_2, identifier_1, id),
-    ~ifelse(!grepl("360G", .), NA, .) 
-  ) %>% janitor::remove_empty("cols") %>% 
-  mutate(identifier = case_when(is.na(identifier) ~ id,
-                                is.na(identifier) ~ identifier_2,
-         TRUE ~ identifier))
+
+df2 <- df %>% select(req)# %>%
+  # mutate(identifier = if_else(is.na(identifier), identifier_2, identifier),
+  #          identifier = if_else(is.na(identifier), id, identifier))
+
+# 
+# df2 <- df2 %>%
+#   mutate_at(vars(identifier, identifier_2, identifier_1, id),
+#     ~ifelse(is.numeric(.), NA, .)
+#   ) %>% janitor::remove_empty("cols") %>%
+#   mutate(identifier = case_when(is.na(identifier) ~ id,
+#                                 is.na(identifier) ~ identifier_2,
+#          TRUE ~ identifier))
 
 
 map_dbl(df2, ~sum(is.na(.)))
 
-x <- df2 %>% filter(is.na(identifier))
+x <- df2 %>% filter(is.na(recipient_org_name))
 
 df3 <- df %>% select(identifier, identifier_2, identifier_1, id)
 
-y <- tsg_search_grants("Cheshire")
+y <- tsg_search_grants("birmingham")
+
+y2 <- bind_rows(y)
 
 ```
 

@@ -85,7 +85,7 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
         } else if (suffix == "json") { ## only a handful of JSON files
           spend_df[[i]] <- tryCatch({
             jsonlite::fromJSON(query_df$distribution[[i]]$download_url,
-              flatten = TRUE
+              flatten = FALSE
             )
           },
           error = function(cond) {
@@ -96,6 +96,40 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
           if (is.list(spend_df[[i]]) && is.data.frame(spend_df[[i]][[1]])) {
             spend_df[[i]] <- dplyr::as_tibble(spend_df[[i]][[1]])
           }
+
+          ## Something to process the nested data frames
+          #1. Select all the list cols
+          #2. Unlist them
+          #3. Name them from columns
+          #4. Bind together again?
+          # THe below kind works on same cases but not all
+         types <- sapply(spend_df[[i]],class)
+
+         types <- names(types[grepl("list", types)])
+         # Vectorise this, extract one at a time?
+
+         x <- spend_df[[i]] %>% unnest_wider(col = "recipientOrganization", names_sep = "_")
+
+          spend_df[[i]] <- tidyr::unnest_legacy(spend_df[[i]], .sep = "_")
+
+# d %>%  unnest_wider(recipientOrganization, names_sep = "_")
+#
+#          d2 <- d %>% select_if(is.list)
+#
+#          s <-lapply(d2, bind_rows)
+#
+#         s2 <- bind_cols(s)
+#
+#          d2 <- d %>% mutate_if(is.list, ~unnest_wider(., names_sep = "_"))
+#
+#          scale2 <- function(x, na.rm = FALSE) (x - mean(x, na.rm = na.rm)) / sd(x, na.rm)
+#
+#          d2 <- select_if(d, is.list)
+#
+#          d3 <- d2 %>% mutate_all( ~unnest_wider(., names_sep = "_"))
+#
+#          d3 <- d2 %>% mutate_all( ~unnest_legacy(.))
+
         }
       }
 
@@ -111,7 +145,18 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
 
         spend_df[[i]]$publisher_prefix <- query_df$publisher_prefix[[i]]
 
-        names(spend_df[[i]]) <- gsub("recepient", "recipient", names(spend_df[[i]]))
+        names(spend_df[[i]]) <- gsub("recepient", "recipient",
+                                     names(spend_df[[i]]))
+
+        if (suffix == "json") {
+          spend_df[[i]] <- rename(spend_df[[i]], "identifier" = "id")
+        }
+
+        # Handle weird naming problem
+        if(spend_df[[i]]$publisher_prefix == "360G-BirminghamCC") {
+          spend_df[[i]] <- rename(spend_df[[i]], "identifier" = "identifier_2")
+        }
+
       }
     }
   }
