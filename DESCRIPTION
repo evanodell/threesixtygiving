@@ -29,5 +29,7 @@ Suggests:
     testthat (>= 2.1.0),
     tibble,
     knitr,
-    rmarkdown
+    rmarkdown,
+    ggplot2,
+    scales
 VignetteBuilder: knitr

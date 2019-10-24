@@ -4,10 +4,12 @@
 \alias{tsg_core_data}
 \title{Core Data}
 \usage{
-tsg_core_data(x)
+tsg_core_data(x, verbose = TRUE)
 }
 \arguments{
 \item{x}{A list of tibble with grant data returned by [tsg_all_grants()].}
+
+\item{verbose}{If `TRUE`, prints console messages.}
 }
 \value{
 A tibble with core variables
@@ -15,7 +17,8 @@ A tibble with core variables
 \description{
 Given a list returned by [tsg_all_grants()] or [tsg_search_grants()], creates
 a tibble with the core variables required by the
-[360Giving](https://standard.threesixtygiving.org/en/latest/) open standard.
+[360Giving](https://standard.threesixtygiving.org/en/latest/) open standard,
+as well as the publisher prefix which is useful for data processing.
 }
 \examples{
 \donttest{

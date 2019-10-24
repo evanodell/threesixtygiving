@@ -42,10 +42,12 @@ tsg_search_funders <- function(search, search_in = NULL, verbose = TRUE,
 
   temp <- sapply(
     grant_df[search_in],
-    function(x) grepl(query, x,
+    function(x) {
+      grepl(query, x,
         ignore.case = ignore_case,
         perl = perl, fixed = fixed
       )
+    }
   )
 
   return <- grant_df[rowSums(temp) > 0L, ]

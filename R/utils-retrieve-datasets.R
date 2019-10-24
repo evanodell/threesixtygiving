@@ -23,16 +23,17 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
 
     # Attempt return
 
-    result <- tryCatch({
-      httr::RETRY("GET", query_df$distribution[[i]]$download_url,
-        httr::write_disk(temp_f, overwrite = TRUE),
-        times = retries,
-        httr::timeout(timeout), terminate_on_success = FALSE
-      )
-    },
-    error = function(cond) {
-      return(NA)
-    }
+    result <- tryCatch(
+      {
+        httr::RETRY("GET", query_df$distribution[[i]]$download_url,
+          httr::write_disk(temp_f, overwrite = TRUE),
+          times = retries,
+          httr::timeout(timeout), terminate_on_success = FALSE
+        )
+      },
+      error = function(cond) {
+        return(NA)
+      }
     )
 
     if (class(result) != "response") {
@@ -46,119 +47,105 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
       spend_df[[i]] <- tibble(publisher_prefix = query_df$publisher_prefix[[i]])
     } else {
       if (!(suffix %in% c("xlsx", "csv", "json", "xls"))) {
-        #re-write this, get this info from the result var above?
-        #df_x <- curl::curl_fetch_memory(query_df$distribution[[i]]$download_url)
+        # re-write this, get this info from the result var above?
+        # df_x <- curl::curl_fetch_memory(query_df$distribution[[i]]$download_url)
         if (result$headers$`content-type` == "text/csv") {
           spend_df[[i]] <- readr::read_csv(
             temp_f,
             col_types = readr::cols(.default = "c")
           )
         } else {
-          spend_df[[i]] <- tryCatch({ ## majority of returns
-            readxl::read_excel(temp_f) # , col_types = "text"
-          },
-          error = function(cond) {
-            return(NA)
-          }
+          spend_df[[i]] <- tryCatch(
+            { ## majority of returns
+              readxl::read_excel(temp_f) # , col_types = "text"
+            },
+            error = function(cond) {
+              return(NA)
+            }
           )
         }
       } else {
         if (suffix %in% c("xlsx", "xls")) {
-          spend_df[[i]] <- tryCatch({ ## majority of returns
-            readxl::read_excel(temp_f) # , col_types = "text"
-          },
-          error = function(cond) {
-            return(NA)
-          }
+          spend_df[[i]] <- tryCatch(
+            { ## majority of returns
+              if (length(readxl::excel_sheets(temp_f)) > 1) {
+              multi <- lapply(readxl::excel_sheets(temp_f),
+                          readxl::read_excel, path = temp_f)
+
+              s_rows <- nrow(multi[[1]])
+
+              s_list <- list()
+              for (k in seq_along(multi)) {
+                if (nrow(multi[[k]]) == s_rows) {
+                  s_list[[k]] <- multi[[k]]
+                }
+              }
+
+              s <- dplyr::bind_cols(s_list)
+
+              } else {
+              s <- readxl::read_excel(temp_f)
+              }
+
+              s
+
+              # , col_types = "text"
+            },
+            error = function(cond) {
+              return(NA)
+            }
           )
         } else if (suffix == "csv") { ## some csv returns
-          spend_df[[i]] <- tryCatch({
-            dplyr::as_tibble(readr::read_csv(
-              temp_f,
-              col_types = readr::cols(.default = "c")
-            ))
-          },
-          error = function(cond) {
-            return(NA)
-          }
+          spend_df[[i]] <- tryCatch(
+            {
+              dplyr::as_tibble(readr::read_csv(
+                temp_f,
+                col_types = readr::cols(.default = "c")
+              ))
+            },
+            error = function(cond) {
+              return(NA)
+            }
           )
         } else if (suffix == "json") { ## only a handful of JSON files
-          spend_df[[i]] <- tryCatch({
-            jsonlite::fromJSON(query_df$distribution[[i]]$download_url,
-              flatten = FALSE
-            )
-          },
-          error = function(cond) {
-            return(NA)
-          }
+          spend_df[[i]] <- tryCatch(
+            {
+              jsonlite::fromJSON(query_df$distribution[[i]]$download_url,
+                flatten = FALSE
+              )
+            },
+            error = function(cond) {
+              return(NA)
+            }
           )
 
           if (is.list(spend_df[[i]]) && is.data.frame(spend_df[[i]][[1]])) {
             spend_df[[i]] <- dplyr::as_tibble(spend_df[[i]][[1]])
           }
-
-          ## Something to process the nested data frames
-          #1. Select all the list cols
-          #2. Unlist them
-          #3. Name them from columns
-          #4. Bind together again?
-          # THe below kind works on same cases but not all
-         # types <- sapply(spend_df[[i]],class)
-         #
-         # types <- names(types[grepl("list", types)])
-         # # Vectorise this, extract one at a time?
-         #
-         # x <- spend_df[[i]] %>% unnest_wider(col = "recipientOrganization", names_sep = "_")
-         #
-         #  spend_df[[i]] <- tidyr::unnest_legacy(spend_df[[i]], .sep = "_")
-
-# d %>%  unnest_wider(recipientOrganization, names_sep = "_")
-#
-#          d2 <- d %>% select_if(is.list)
-#
-#          s <-lapply(d2, bind_rows)
-#
-#         s2 <- bind_cols(s)
-#
-#          d2 <- d %>% mutate_if(is.list, ~unnest_wider(., names_sep = "_"))
-#
-#          scale2 <- function(x, na.rm = FALSE) (x - mean(x, na.rm = na.rm)) / sd(x, na.rm)
-#
-#          d2 <- select_if(d, is.list)
-#
-#          d3 <- d2 %>% mutate_all( ~unnest_wider(., names_sep = "_"))
-#
-#          d3 <- d2 %>% mutate_all( ~unnest_legacy(.))
-
         }
       }
 
       if (is.data.frame(spend_df[[i]])) {
         spend_df[[i]] <- janitor::clean_names(spend_df[[i]])
 
-        # spend_df[[i]] <- dplyr::mutate_if(spend_df[[i]],
-        # is.numeric, as.character)
-        # Not sure why the commented function above is included, should note
-        # rationale if there is one
-
-        ## some kind of mutate-if for values containing dates?
-
         spend_df[[i]]$publisher_prefix <- query_df$publisher_prefix[[i]]
         spend_df[[i]]$data_type <- suffix
 
-        names(spend_df[[i]]) <- gsub("recepient", "recipient",
-                                     names(spend_df[[i]]))
+        names(spend_df[[i]]) <- gsub(
+          "recepient", "recipient",
+          names(spend_df[[i]]), fixed = TRUE
+        )
 
         if (suffix == "json") {
           spend_df[[i]] <- rename(spend_df[[i]], "identifier" = "id")
         }
 
         # Handle weird naming problem
-        if(spend_df[[i]]$publisher_prefix == "360G-BirminghamCC") {
-          spend_df[[i]] <- dplyr::rename(spend_df[[i]],
-                                         "identifier" = "identifier_2")
-        }
+        if (any(spend_df[[i]]$publisher_prefix == "360G-BirminghamCC")) {
+          names(spend_df[[i]]) <- gsub("identifier_2", "identifier",
+                                       names(spend_df[[i]]), fixed = TRUE)
 
+        }
       }
     }
   }
