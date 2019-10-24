@@ -24,7 +24,7 @@ library(threesixtygiving)
 ## Retrieve all grants
 
 ```{r retrieve-grants, eval=FALSE, include=FALSE}
-grants <- tsg_all_grants(timeout = 13, retries = 1)
+grants <- tsg_all_grants(timeout = 8, retries = 1)
 ```
 
 

@@ -1,3 +1,6 @@
-# threesixtygiving 0.0.9000
 
-* Package is undergoing development
+# threesixtygiving 0.1.0
+
+* First proper release, includes functions meeting basic requirements for use
+
+* A short vignette is available

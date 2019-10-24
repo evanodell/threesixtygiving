@@ -5,7 +5,7 @@ test_that("all grant retrieval works", {
   skip_on_appveyor()
   # skip("local-testing")
 
-  ag1 <- tsg_all_grants()
+  ag1 <- tsg_all_grants(timeout = 10, retries = 1)
   expect_true(is.list(ag1))
 
   core <- tsg_core_data(ag1)

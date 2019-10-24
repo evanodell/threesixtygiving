@@ -31,7 +31,7 @@ tsg_search_grants <- function(search, search_in = NULL, verbose = TRUE,
     perl = perl, fixed = fixed
   )
 
-  df <- tsg_data_retrieval(q_df, verbose = verbose)
+  df <- tsg_data_retrieval(q_df, verbose = verbose, ...)
 
   if (length(df) == 1) {
     df <- df[[1]]

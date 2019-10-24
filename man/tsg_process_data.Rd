@@ -4,10 +4,14 @@
 \alias{tsg_process_data}
 \title{Process to tibble}
 \usage{
-tsg_process_data(x, verbose = TRUE)
+tsg_process_data(x, min_coverage = 0, verbose = TRUE)
 }
 \arguments{
 \item{x}{A list of tibble with grant data returned by [tsg_all_grants()].}
+
+\item{min_coverage}{A number from 0 to 1. If >0, only returns variables
+with a value other than `NA` for at least that proportion of rows. Defaults
+to 0 and returns all columns}
 
 \item{verbose}{If `TRUE`, prints console messages.}
 }
@@ -27,6 +31,7 @@ grants <- tsg_all_grants()
 
 df <- tsg_process_data(grants)
 }
+
 }
 \seealso{
 tsg_core_data

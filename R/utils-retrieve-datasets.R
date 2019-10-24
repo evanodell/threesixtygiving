@@ -36,13 +36,13 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
 
     if (class(result) != "response") {
       if (verbose) message("Could not connect to server")
-      spend_df[[i]] <- dplyr::tibble(publisher_prefix = query_df$publisher_prefix[[i]])
+      spend_df[[i]] <- dplyr::tibble()
     } else if (httr::status_code(result) != 200) {
       resp <- httr::http_status(result)
 
       message("Request failed: ", resp$message)
 
-      spend_df[[i]] <- tibble(publisher_prefix = query_df$publisher_prefix[[i]])
+      spend_df[[i]] <- tibble()
     } else {
       if (!(suffix %in% c("xlsx", "csv", "json", "xls"))) {
         if (result$headers$`content-type` == "text/csv") {
@@ -119,7 +119,7 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
         }
       }
 
-      if (is.data.frame(spend_df[[i]])) {
+      if (is.data.frame(spend_df[[i]]) & length(spend_df[[i]]) > 1) {
         spend_df[[i]] <- janitor::clean_names(spend_df[[i]])
 
         spend_df[[i]] <- janitor::remove_empty(spend_df[[i]], which = "cols")
@@ -136,7 +136,9 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
         )
 
         if (suffix == "json") {
-          spend_df[[i]] <- rename(spend_df[[i]], "identifier" = "id")
+          names(spend_df[[i]]) <- gsub("id", "identifier",
+                                       names(spend_df[[i]]),
+                                       fixed = TRUE)
         }
 
         # Handle weird naming problem

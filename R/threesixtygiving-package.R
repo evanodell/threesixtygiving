@@ -8,7 +8,6 @@
 #' @docType package
 #' @name threesixtygiving
 #' @importFrom jsonlite fromJSON
-#' @importFrom dplyr inner_join bind_rows as_tibble mutate_if filter
 #' @importFrom readxl read_excel
 #' @importFrom readr read_csv cols
 #' @importFrom curl curl_fetch_memory
@@ -17,5 +16,6 @@
 #' @importFrom utils download.file
 #' @import tidyr
 #' @import httr
+#' @import dplyr
 #' @aliases NULL threesixtygiving-package
 NULL

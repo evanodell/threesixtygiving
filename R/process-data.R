@@ -9,6 +9,9 @@
 #'
 #' @seealso tsg_core_data
 #'
+#' @param min_coverage A number from 0 to 1. If >0, only returns variables
+#' with a value other than `NA` for at least that proportion of rows. Defaults
+#' to 0 and returns all columns
 #' @inheritParams tsg_core_data
 #'
 #' @return A tibble with all variables from all grants
@@ -21,7 +24,7 @@
 #' df <- tsg_process_data(grants)
 #' }
 #'
-tsg_process_data <- function(x, verbose = TRUE) {
+tsg_process_data <- function(x, min_coverage = 0, verbose = TRUE) {
   for (i in seq_along(x)) {
     if (any(x[[i]][["data_type"]] == "json")) {
       x[[i]] <- tidyr::unnest_wider(x[[i]], "funding_organization",
@@ -111,7 +114,25 @@ tsg_process_data <- function(x, verbose = TRUE) {
   x <- lapply(x, dplyr::mutate_all, as.character)
   df <- dplyr::bind_rows(x)
 
-  df <- dplyr::filter(df, !is.na(identifier))
+
+  if (min_coverage > 0) {
+    if (min_coverage > 1 | min_coverage < 0) {
+      message("`min_coverage` must be a number from 0 to 1.
+              All columns will be returned")
+    } else {
+      d <- purrr::map(df, ~sum(is.na(.)))
+
+      min_df <- data.frame("value" = unlist(d), "names" = names(d))
+
+      min_df$perc <- min_df$value/nrow(df)
+
+      min_df <- min_df[min_df$perc <= min_coverage,]
+
+      df <- df[names(df) %in% min_df$names]
+
+      }
+
+  }
 
   df
 }
