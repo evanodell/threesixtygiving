@@ -22,5 +22,23 @@ tsg_available <- function() {
 
   df <- janitor::clean_names(df)
 
+  for (i in seq_along(df$title)) {
+    df$distribution[[i]]$data_type <- sub(
+    ".*\\.", "",
+    substr(
+      df$distribution[[i]]$download_url,
+      (nchar(df$distribution[[i]]$download_url) - 3),
+      nchar(df$distribution[[i]]$download_url)
+    )
+  )
+
+    if (!(df$distribution[[i]]$data_type %in% c("json", "csv", "xlsx", "xls"))) {
+
+      df$distribution[[i]]$data_type <- "unknown"
+
+    }
+
+  }
+
   df
 }

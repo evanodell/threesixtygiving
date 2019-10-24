@@ -103,14 +103,14 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
           #3. Name them from columns
           #4. Bind together again?
           # THe below kind works on same cases but not all
-         types <- sapply(spend_df[[i]],class)
-
-         types <- names(types[grepl("list", types)])
-         # Vectorise this, extract one at a time?
-
-         x <- spend_df[[i]] %>% unnest_wider(col = "recipientOrganization", names_sep = "_")
-
-          spend_df[[i]] <- tidyr::unnest_legacy(spend_df[[i]], .sep = "_")
+         # types <- sapply(spend_df[[i]],class)
+         #
+         # types <- names(types[grepl("list", types)])
+         # # Vectorise this, extract one at a time?
+         #
+         # x <- spend_df[[i]] %>% unnest_wider(col = "recipientOrganization", names_sep = "_")
+         #
+         #  spend_df[[i]] <- tidyr::unnest_legacy(spend_df[[i]], .sep = "_")
 
 # d %>%  unnest_wider(recipientOrganization, names_sep = "_")
 #
@@ -144,6 +144,7 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
         ## some kind of mutate-if for values containing dates?
 
         spend_df[[i]]$publisher_prefix <- query_df$publisher_prefix[[i]]
+        spend_df[[i]]$data_type <- suffix
 
         names(spend_df[[i]]) <- gsub("recepient", "recipient",
                                      names(spend_df[[i]]))
@@ -154,7 +155,8 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
 
         # Handle weird naming problem
         if(spend_df[[i]]$publisher_prefix == "360G-BirminghamCC") {
-          spend_df[[i]] <- rename(spend_df[[i]], "identifier" = "identifier_2")
+          spend_df[[i]] <- dplyr::rename(spend_df[[i]],
+                                         "identifier" = "identifier_2")
         }
 
       }

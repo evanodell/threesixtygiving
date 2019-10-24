@@ -2,6 +2,7 @@
 
 export(tsg_all_grants)
 export(tsg_available)
+export(tsg_core_data)
 export(tsg_missing)
 export(tsg_search_funders)
 export(tsg_search_grants)

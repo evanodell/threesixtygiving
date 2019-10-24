@@ -29,15 +29,27 @@ library(dplyr)
 
 ag1 <- tsg_all_grants(timeout = 13, retries = 1)
 
+available <- tsg_available()
+
 for (i in 1:length(ag1)) {
   ag1[[i]]$counter <- i
+  
+  ag1[[i]]$suffix <- sub(
+      ".*\\.", "",
+      substr(
+        available$distribution[[i]]$download_url,
+        (nchar(available$distribution[[i]]$download_url) - 3),
+        nchar(available$distribution[[i]]$download_url)
+      )
+    )
 }
 ## Need to do this to process multiple file types
 
+# library(tidyr)
+# 
+# ag3 <- lapply(ag1, unnest_wider, names_sep = "_")
 
-ag3 <- lapply(ag1, unnest_wider, names_sep = "_")
-
-ag2 <- lapply(ag3, mutate_all, as.character)
+ag2 <- lapply(ag1, mutate_all, as.character)
 
 # need to fill all this garbage
 df <- bind_rows(ag2) %>%
@@ -53,11 +65,8 @@ df <- bind_rows(ag2) %>%
 
 x <- filter(df, counter == 28)
 
-req <- snakecase::to_snake_case(
-  c("Identifier", "Title", "Description", "Currency", "Amount Awarded",
-    "Award Date", "Recipient Org:Identifier", "Recipient Org:Name",
-    "Funding Org:Identifier", "Funding Org:Name",
-    "counter"))
+
+
 
 
 
@@ -65,7 +74,9 @@ df2 <- df %>% select(req)# %>%
   # mutate(identifier = if_else(is.na(identifier), identifier_2, identifier),
   #          identifier = if_else(is.na(identifier), id, identifier))
 
-# 
+df2 %>% filter_all( all_vars(!is.na(.))) 
+## Does the above drop all rows where all values are NA?
+ 
 # df2 <- df2 %>%
 #   mutate_at(vars(identifier, identifier_2, identifier_1, id),
 #     ~ifelse(is.numeric(.), NA, .)
@@ -77,7 +88,10 @@ df2 <- df %>% select(req)# %>%
 
 map_dbl(df2, ~sum(is.na(.)))
 
-x <- df2 %>% filter(is.na(recipient_org_name))
+
+x2 <- ag2[[111]]
+
+111  112  113  114   28   29 
 
 df3 <- df %>% select(identifier, identifier_2, identifier_1, id)
 
