@@ -27,77 +27,10 @@ library(threesixtygiving)
 library(purrr)
 library(dplyr)
 
-ag1 <- tsg_all_grants(timeout = 13, retries = 1)
-
-available <- tsg_available()
-
-for (i in 1:length(ag1)) {
-  ag1[[i]]$counter <- i
-  
-  ag1[[i]]$suffix <- sub(
-      ".*\\.", "",
-      substr(
-        available$distribution[[i]]$download_url,
-        (nchar(available$distribution[[i]]$download_url) - 3),
-        nchar(available$distribution[[i]]$download_url)
-      )
-    )
-}
-## Need to do this to process multiple file types
-
-# library(tidyr)
-# 
-# ag3 <- lapply(ag1, unnest_wider, names_sep = "_")
-
-ag2 <- lapply(ag1, mutate_all, as.character)
-
-# need to fill all this garbage
-df <- bind_rows(ag2) %>%
-  mutate(amount_awarded = as.numeric(amount_awarded)) %>%
-  filter(!is.na(amount_awarded)) %>%
-  mutate(title = factor(title))
-
-# summary(df$title)
-# 
-# ## Core data includes 
-# 
-# summary(factor(df$description))
-
-x <- filter(df, counter == 28)
+grants <- tsg_all_grants(timeout = 13, retries = 1)
 
 
-
-
-
-
-df2 <- df %>% select(req)# %>%
-  # mutate(identifier = if_else(is.na(identifier), identifier_2, identifier),
-  #          identifier = if_else(is.na(identifier), id, identifier))
-
-df2 %>% filter_all( all_vars(!is.na(.))) 
-## Does the above drop all rows where all values are NA?
- 
-# df2 <- df2 %>%
-#   mutate_at(vars(identifier, identifier_2, identifier_1, id),
-#     ~ifelse(is.numeric(.), NA, .)
-#   ) %>% janitor::remove_empty("cols") %>%
-#   mutate(identifier = case_when(is.na(identifier) ~ id,
-#                                 is.na(identifier) ~ identifier_2,
-#          TRUE ~ identifier))
-
-
-map_dbl(df2, ~sum(is.na(.)))
-
-
-x2 <- ag2[[111]]
-
-111  112  113  114   28   29 
-
-df3 <- df %>% select(identifier, identifier_2, identifier_1, id)
-
-y <- tsg_search_grants("birmingham")
-
-y2 <- bind_rows(y)
+df <- tsg_core_data(grants)
 
 ```
 
