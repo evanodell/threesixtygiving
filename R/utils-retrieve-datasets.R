@@ -129,9 +129,9 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
       if (is.data.frame(spend_df[[i]])) {
         spend_df[[i]] <- janitor::clean_names(spend_df[[i]])
 
-        spend_df[[i]]  <- janitor::remove_empty(spend_df[[i]], which = "cols")
+        spend_df[[i]] <- janitor::remove_empty(spend_df[[i]], which = "cols")
 
-        spend_df[[i]]  <- janitor::remove_empty(spend_df[[i]], which = "rows")
+        spend_df[[i]] <- janitor::remove_empty(spend_df[[i]], which = "rows")
 
         spend_df[[i]]$publisher_prefix <- query_df$publisher_prefix[[i]]
         spend_df[[i]]$data_type <- suffix
