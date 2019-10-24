@@ -39,8 +39,7 @@ library(dplyr)
 df <- tsg_core_data(grants)
 
 df2 <- df %>% 
-  mutate(amount_awarded = as.numeric(amount_awarded),
-         amount_awarded = case_when(
+  mutate(amount_awarded = case_when(
     currency == "USD" ~ amount_awarded/1.29, ## rate on 2019-10-24
     currency == "CAD" ~ amount_awarded/1.69, 
     currency == "CHF" ~ amount_awarded/1.28, 

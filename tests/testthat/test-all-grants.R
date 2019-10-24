@@ -10,6 +10,4 @@ test_that("all grant retrieval works", {
 
   core <- tsg_core_data(ag1)
   expect_length(core, 11)
-
-
 })

@@ -12,9 +12,10 @@
 #' @importFrom readxl read_excel
 #' @importFrom readr read_csv cols
 #' @importFrom curl curl_fetch_memory
-#' @importFrom janitor clean_names
+#' @importFrom janitor clean_names remove_empty
 #' @importFrom purrr map
 #' @importFrom utils download.file
+#' @import tidyr
 #' @import httr
 #' @aliases NULL threesixtygiving-package
 NULL

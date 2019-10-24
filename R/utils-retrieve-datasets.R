@@ -69,22 +69,23 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
           spend_df[[i]] <- tryCatch(
             { ## majority of returns
               if (length(readxl::excel_sheets(temp_f)) > 1) {
-              multi <- lapply(readxl::excel_sheets(temp_f),
-                          readxl::read_excel, path = temp_f)
+                multi <- lapply(readxl::excel_sheets(temp_f),
+                  readxl::read_excel,
+                  path = temp_f
+                )
 
-              s_rows <- nrow(multi[[1]])
+                s_rows <- nrow(multi[[1]])
 
-              s_list <- list()
-              for (k in seq_along(multi)) {
-                if (nrow(multi[[k]]) == s_rows) {
-                  s_list[[k]] <- multi[[k]]
+                s_list <- list()
+                for (k in seq_along(multi)) {
+                  if (nrow(multi[[k]]) == s_rows) {
+                    s_list[[k]] <- multi[[k]]
+                  }
                 }
-              }
 
-              s <- dplyr::bind_cols(s_list)
-
+                s <- dplyr::bind_cols(s_list)
               } else {
-              s <- readxl::read_excel(temp_f)
+                s <- readxl::read_excel(temp_f)
               }
 
               s
@@ -128,12 +129,17 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
       if (is.data.frame(spend_df[[i]])) {
         spend_df[[i]] <- janitor::clean_names(spend_df[[i]])
 
+        spend_df[[i]]  <- janitor::remove_empty(spend_df[[i]], which = "cols")
+
+        spend_df[[i]]  <- janitor::remove_empty(spend_df[[i]], which = "rows")
+
         spend_df[[i]]$publisher_prefix <- query_df$publisher_prefix[[i]]
         spend_df[[i]]$data_type <- suffix
 
         names(spend_df[[i]]) <- gsub(
           "recepient", "recipient",
-          names(spend_df[[i]]), fixed = TRUE
+          names(spend_df[[i]]),
+          fixed = TRUE
         )
 
         if (suffix == "json") {
@@ -143,8 +149,9 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
         # Handle weird naming problem
         if (any(spend_df[[i]]$publisher_prefix == "360G-BirminghamCC")) {
           names(spend_df[[i]]) <- gsub("identifier_2", "identifier",
-                                       names(spend_df[[i]]), fixed = TRUE)
-
+            names(spend_df[[i]]),
+            fixed = TRUE
+          )
         }
       }
     }
