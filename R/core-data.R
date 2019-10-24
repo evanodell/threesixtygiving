@@ -28,13 +28,6 @@ tsg_core_data <- function(x, verbose = TRUE) {
     "publisher_prefix", "counter", "suffix", "data_type"
   )
 
-  req_list2 <- c(
-    "identifier", "title", "description", "currency",
-    "amount_awarded", "award_date", "recipient_org_identifier",
-    "recipient_org_name", "funding_org_identifier",
-    "funding_org_name"
-  )
-
   y2 <- list()
 
   for (i in seq_along(x)) {

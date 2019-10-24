@@ -21,9 +21,7 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
 
     temp_f <- tempfile()
 
-    # Attempt return
-
-    result <- tryCatch(
+    result <- tryCatch( # Check availability
       {
         httr::RETRY("GET", query_df$distribution[[i]]$download_url,
           httr::write_disk(temp_f, overwrite = TRUE),
@@ -47,8 +45,6 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
       spend_df[[i]] <- tibble(publisher_prefix = query_df$publisher_prefix[[i]])
     } else {
       if (!(suffix %in% c("xlsx", "csv", "json", "xls"))) {
-        # re-write this, get this info from the result var above?
-        # df_x <- curl::curl_fetch_memory(query_df$distribution[[i]]$download_url)
         if (result$headers$`content-type` == "text/csv") {
           spend_df[[i]] <- readr::read_csv(
             temp_f,
@@ -82,15 +78,12 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
                     s_list[[k]] <- multi[[k]]
                   }
                 }
-
                 s <- dplyr::bind_cols(s_list)
               } else {
                 s <- readxl::read_excel(temp_f)
               }
 
               s
-
-              # , col_types = "text"
             },
             error = function(cond) {
               return(NA)
