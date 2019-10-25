@@ -130,3 +130,72 @@ p3
 
 ![](grant-size-n.png)
 
+
+### Award sizes
+
+In the two examples below, we can see differences between the amount of money applied for and the amount awarded. Not every funder reports the amount applied for, and some report what seem like placeholder values, such as grant programmes where applicants do not need to specify the value of the grant, only what they want to do and leave the award amount up to the funder. 
+
+```{r award-differences}
+
+
+proc_df <- tsg_process_data(grants) 
+
+proc_amount_df <- proc_df  %>% 
+  select(identifier, title, description, funding_org_name,
+         amount_awarded, amount_applied_for) %>%
+  mutate_at(.vars = vars(amount_awarded, amount_applied_for), as.numeric) %>% 
+  mutate(difference = amount_awarded-amount_applied_for,
+         percentage_of = amount_awarded/amount_applied_for) %>% 
+  filter(!is.na(amount_applied_for), amount_applied_for > 2500,
+         amount_awarded > 2500,
+         percent_rank(difference) >= 0.02 &
+           percent_rank(difference) <= 0.98) %>% ## remove outliers
+  mutate(difference = round(difference))
+
+count0 <- proc_amount_df %>%
+  filter(difference==0) %>%
+  tally()
+  
+p4 <- ggplot(proc_amount_df %>% filter(difference != 0),
+             aes(x = difference)) + 
+  geom_freqpoly(bins = 100) + 
+  geom_label_repel(
+    aes(x = 0, y = 4000,
+        label = paste0(scales::comma(n),
+                       " applications awarded exact amount applied for")),
+    data = count0) + 
+  scale_color_viridis_c() + 
+  scale_y_continuous(labels = scales::comma) + 
+  scale_x_continuous(labels = scales::dollar_format(prefix = "£"),
+                     breaks = c(-20000, -10000, -5000, -2500,
+                                0, 2500, 5000, 7500)) + 
+  labs(x = "Difference between Award and Application Amount",
+       y = "Number of Grants")
+
+p4
+
+```
+
+
+```{r percentage awarded}
+p5 <- ggplot(proc_amount_df %>%
+               filter(difference != 0, percentage_of != Inf),
+             aes(x = percentage_of)) + 
+  geom_freqpoly(bins = 200) + 
+  geom_label_repel(
+    aes(x = 1, y = 3000, hjust = 1,
+        label = paste0(scales::comma(n),
+                       " applications awarded amount applied for")),
+    data = count0) + 
+  scale_color_viridis_c() + 
+  scale_y_continuous(labels = scales::comma) + 
+  scale_x_continuous(labels = scales::percent,
+                     breaks = c(0, 0.25, 0.5, 0.75,0.9, 1, 1.25, 1.5, 2)) + 
+  labs(x = "Award size as percentage of amount applied for",
+       y = "Number of Grants")
+
+p5
+```
+
+
+

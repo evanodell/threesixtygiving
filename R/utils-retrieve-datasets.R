@@ -123,17 +123,37 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
         spend_df[[i]] <- janitor::clean_names(spend_df[[i]])
 
         spend_df[[i]] <- janitor::remove_empty(spend_df[[i]], which = "cols")
-
         spend_df[[i]] <- janitor::remove_empty(spend_df[[i]], which = "rows")
 
         spend_df[[i]]$publisher_prefix <- query_df$publisher_prefix[[i]]
         spend_df[[i]]$data_type <- suffix
 
+        # Fix bad names, need a better way to do this
         names(spend_df[[i]]) <- gsub(
           "recepient", "recipient",
           names(spend_df[[i]]),
           fixed = TRUE
         )
+
+        names(spend_df[[i]]) <- gsub(
+          "benificiary", "beneficiary",
+          names(spend_df[[i]]),
+          fixed = TRUE
+        )
+
+        names(spend_df[[i]]) <- gsub(
+          "sponsor_s", "sponsors",
+          names(spend_df[[i]]),
+          fixed = TRUE
+        )
+
+        # Handle weird naming problem
+        if (any(spend_df[[i]]$publisher_prefix == "360G-BirminghamCC")) {
+          names(spend_df[[i]]) <- gsub("identifier_2", "identifier",
+                                       names(spend_df[[i]]),
+                                       fixed = TRUE
+          )
+        }
 
         if (suffix == "json") {
           names(spend_df[[i]]) <- gsub("id", "identifier",
@@ -141,12 +161,16 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
                                        fixed = TRUE)
         }
 
-        # Handle weird naming problem
-        if (any(spend_df[[i]]$publisher_prefix == "360G-BirminghamCC")) {
-          names(spend_df[[i]]) <- gsub("identifier_2", "identifier",
-            names(spend_df[[i]]),
-            fixed = TRUE
-          )
+        if (suffix %in% c("xls", "xlsx")) {
+          spend_df[[i]]$award_date <- dplyr::case_when(
+            is.na(as.Date(spend_df[[i]]$award_date)) ~
+              janitor::excel_numeric_to_date(
+                as.numeric(spend_df[[i]]$award_date)
+                ),
+            TRUE ~ as.Date(spend_df[[i]]$award_date)
+            )
+        } else {
+          spend_df[[i]]$award_date <- as.Date(spend_df[[i]]$award_date)
         }
       }
     }

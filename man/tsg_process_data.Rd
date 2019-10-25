@@ -16,14 +16,14 @@ to 0 and returns all columns}
 \item{verbose}{If `TRUE`, prints console messages.}
 }
 \value{
-A tibble with all variables from all grants
+A tibble with all variables from all grants.
 }
 \description{
-Given a list returned by [tsg_all_grants()] or [tsg_search_grants()], creates
-a tibble with all available variables. All variables are converted to
-character class. This tibble contains roughly 200 columns if all available
-grants are used (as of October 2019), due to differences in labelling and
-structuring grant data.
+Given a list returned by [tsg_all_grants()] or [tsg_search_grants()],
+creates a tibble with all available variables. This tibble contains roughly
+200 columns if all
+available grants are used (as of October 2019), due to differences in
+how grant data is labelled and structured.
 }
 \examples{
 \donttest{

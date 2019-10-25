@@ -1,11 +1,11 @@
 
 #' Process to tibble
 #'
-#' Given a list returned by [tsg_all_grants()] or [tsg_search_grants()], creates
-#' a tibble with all available variables. All variables are converted to
-#' character class. This tibble contains roughly 200 columns if all available
-#' grants are used (as of October 2019), due to differences in labelling and
-#' structuring grant data.
+#' Given a list returned by [tsg_all_grants()] or [tsg_search_grants()],
+#' creates a tibble with all available variables. This tibble contains roughly
+#' 200 columns if all
+#' available grants are used (as of October 2019), due to differences in
+#' how grant data is labelled and structured.
 #'
 #' @seealso tsg_core_data
 #'
@@ -14,7 +14,7 @@
 #' to 0 and returns all columns
 #' @inheritParams tsg_core_data
 #'
-#' @return A tibble with all variables from all grants
+#' @return A tibble with all variables from all grants.
 #' @export
 #'
 #' @examples
@@ -114,7 +114,6 @@ tsg_process_data <- function(x, min_coverage = 0, verbose = TRUE) {
   x <- lapply(x, dplyr::mutate_all, as.character)
   df <- dplyr::bind_rows(x)
 
-
   if (min_coverage > 0) {
     if (min_coverage > 1 | min_coverage < 0) {
       message("`min_coverage` must be a number from 0 to 1.
@@ -129,10 +128,20 @@ tsg_process_data <- function(x, min_coverage = 0, verbose = TRUE) {
       min_df <- min_df[min_df$perc <= min_coverage,]
 
       df <- df[names(df) %in% min_df$names]
-
       }
 
   }
+
+  req_list <- c(
+    "identifier", "title", "description", "currency",
+    "amount_awarded", "award_date", "recipient_org_identifier",
+    "recipient_org_name", "funding_org_identifier",
+    "funding_org_name", "publisher_prefix"
+  )
+
+  df <- dplyr::select(df, req_list, dplyr::everything())
+
+  df$amount_awarded <- as.numeric(df$amount_awarded)
 
   df
 }

@@ -1,4 +1,12 @@
 
+# threesixtygiving 0.1.0.9000
+
+* Added date handling for Excel numeric date handling
+
+* `tsg_process_data()` now arranges the core variables on the left hand side of
+  the data frame.
+
+
 # threesixtygiving 0.1.0
 
 * First proper release, includes functions meeting basic requirements for use
