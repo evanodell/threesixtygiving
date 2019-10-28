@@ -5,6 +5,8 @@
 
 * `tsg_process_data()` now arranges the core variables on the left hand side of
   the data frame.
+  
+* Fixed warnings caused by non-matching column names in `tsg_core_data()`.
 
 
 # threesixtygiving 0.1.0

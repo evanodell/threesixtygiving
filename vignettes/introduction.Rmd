@@ -135,9 +135,7 @@ p3
 
 In the two examples below, we can see differences between the amount of money applied for and the amount awarded. Not every funder reports the amount applied for, and some report what seem like placeholder values, such as grant programmes where applicants do not need to specify the value of the grant, only what they want to do and leave the award amount up to the funder. 
 
-```{r award-differences}
-
-
+```{r award-differences, eval=FALSE}
 proc_df <- tsg_process_data(grants) 
 
 proc_amount_df <- proc_df  %>% 
@@ -177,7 +175,7 @@ p4
 ```
 
 
-```{r percentage awarded}
+```{r percentage awarded, eval=FALSE}
 p5 <- ggplot(proc_amount_df %>%
                filter(difference != 0, percentage_of != Inf),
              aes(x = percentage_of)) + 

@@ -119,17 +119,16 @@ tsg_process_data <- function(x, min_coverage = 0, verbose = TRUE) {
       message("`min_coverage` must be a number from 0 to 1.
               All columns will be returned")
     } else {
-      d <- purrr::map(df, ~sum(is.na(.)))
+      d <- purrr::map(df, ~ sum(is.na(.)))
 
       min_df <- data.frame("value" = unlist(d), "names" = names(d))
 
-      min_df$perc <- min_df$value/nrow(df)
+      min_df$perc <- min_df$value / nrow(df)
 
-      min_df <- min_df[min_df$perc <= min_coverage,]
+      min_df <- min_df[min_df$perc <= min_coverage, ]
 
       df <- df[names(df) %in% min_df$names]
-      }
-
+    }
   }
 
   req_list <- c(
@@ -139,7 +138,7 @@ tsg_process_data <- function(x, min_coverage = 0, verbose = TRUE) {
     "funding_org_name", "publisher_prefix"
   )
 
-  df <- dplyr::select(df, req_list, dplyr::everything())
+  df <- dplyr::select(df, req_list, tidyselect::everything())
 
   df$amount_awarded <- as.numeric(df$amount_awarded)
 

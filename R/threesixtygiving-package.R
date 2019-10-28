@@ -14,8 +14,10 @@
 #' @importFrom janitor clean_names remove_empty excel_numeric_to_date
 #' @importFrom purrr map
 #' @importFrom utils download.file
+#' @importFrom dplyr as_tibble vars select select_at mutate_all bind_rows filter tibble case_when
+#' @importFrom tidyselect one_of everything
+#' @importFrom anytime anydate
 #' @import tidyr
 #' @import httr
-#' @importFrom dplyr as_tibble one_of vars select select_at mutate_all bind_rows filter everything tibble case_when
 #' @aliases NULL threesixtygiving-package
 NULL

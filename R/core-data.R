@@ -31,21 +31,31 @@ tsg_core_data <- function(x, verbose = TRUE) {
   y2 <- list()
 
   for (i in seq_along(x)) {
-    y2[[i]] <- dplyr::select_at(x[[i]], dplyr::vars(dplyr::one_of(req_list)))
+
+    req_list2 <- req_list[req_list %in% colnames(x[[i]])]
+
+    y2[[i]] <- dplyr::select_at(x[[i]],
+                                dplyr::vars(tidyselect::one_of(req_list2)))
   }
 
   for (i in seq_along(y2)) {
     if (any(y2[[i]][["data_type"]] == "json")) {
       y2[[i]] <- tidyr::unnest_wider(y2[[i]], "funding_organization",
-                                     names_sep = "_")
+        names_sep = "_"
+      )
       y2[[i]] <- tidyr::unnest_wider(y2[[i]], "recipient_organization",
-                                     names_sep = "_")
+        names_sep = "_"
+      )
 
       y2[[i]] <- janitor::clean_names(y2[[i]])
       names(y2[[i]]) <- gsub("organization", "org", names(y2[[i]]))
       names(y2[[i]]) <- gsub("org_id$", "org_identifier", names(y2[[i]]))
 
-      y2[[i]] <- dplyr::select_at(y2[[i]], dplyr::vars(dplyr::one_of(req_list)))
+
+      req_list3 <- req_list[req_list %in% colnames(y2[[i]])]
+
+      y2[[i]] <- dplyr::select_at(y2[[i]],
+                                  dplyr::vars(tidyselect::one_of(req_list3)))
     }
 
     if (verbose) message(paste0("Processing ", i, " of ", length(y2)))
@@ -55,11 +65,12 @@ tsg_core_data <- function(x, verbose = TRUE) {
 
   df <- dplyr::bind_rows(y2)
 
-  #df <- dplyr::filter(df, !is.na(identifier))
+  # df <- dplyr::filter(df, !is.na(identifier))
 
   df$data_type <- NULL
 
   df$amount_awarded <- as.numeric(df$amount_awarded)
+  df$award_date <- as.Date(df$award_date)
 
   df
 }

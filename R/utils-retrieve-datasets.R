@@ -42,7 +42,7 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
 
       message("Request failed: ", resp$message)
 
-      spend_df[[i]] <- tibble()
+      spend_df[[i]] <- dplyr::tibble()
     } else {
       if (!(suffix %in% c("xlsx", "csv", "json", "xls"))) {
         if (result$headers$`content-type` == "text/csv") {
@@ -53,7 +53,7 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
         } else {
           spend_df[[i]] <- tryCatch(
             { ## majority of returns
-              readxl::read_excel(temp_f) # , col_types = "text"
+              readxl::read_excel(temp_f, guess_max = 21474836)
             },
             error = function(cond) {
               return(NA)
@@ -67,7 +67,8 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
               if (length(readxl::excel_sheets(temp_f)) > 1) {
                 multi <- lapply(readxl::excel_sheets(temp_f),
                   readxl::read_excel,
-                  path = temp_f
+                  path = temp_f,
+                  guess_max = 21474836
                 )
 
                 s_rows <- nrow(multi[[1]])
@@ -80,7 +81,7 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
                 }
                 s <- dplyr::bind_cols(s_list)
               } else {
-                s <- readxl::read_excel(temp_f)
+                s <- readxl::read_excel(temp_f, guess_max = 21474836)
               }
 
               s
@@ -150,31 +151,33 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
         # Handle weird naming problem
         if (any(spend_df[[i]]$publisher_prefix == "360G-BirminghamCC")) {
           names(spend_df[[i]]) <- gsub("identifier_2", "identifier",
-                                       names(spend_df[[i]]),
-                                       fixed = TRUE
+            names(spend_df[[i]]),
+            fixed = TRUE
           )
         }
 
         if (suffix == "json") {
-          names(spend_df[[i]]) <- gsub("id", "identifier",
-                                       names(spend_df[[i]]),
-                                       fixed = TRUE)
+          names(spend_df[[i]]) <- gsub("^id$", "identifier",
+            names(spend_df[[i]]),
+            fixed = TRUE
+          )
         }
 
         if (suffix %in% c("xls", "xlsx")) {
-          spend_df[[i]]$award_date <- dplyr::case_when(
-            is.na(as.Date(spend_df[[i]]$award_date)) ~
-              janitor::excel_numeric_to_date(
-                as.numeric(spend_df[[i]]$award_date)
-                ),
-            TRUE ~ as.Date(spend_df[[i]]$award_date)
-            )
+          spend_df[[i]]$award_date <- as.Date(anytime::anydate(ifelse(
+            is.na(as.Date(strptime(spend_df[[i]]$award_date, format = "%Y-%m-%d"))),
+            suppressWarnings(janitor::excel_numeric_to_date(
+              as.numeric(as.character(spend_df[[i]]$award_date))
+            )),
+            as.Date(strptime(spend_df[[i]]$award_date, format = "%Y-%m-%d"))
+          )))
+
+
         } else {
           spend_df[[i]]$award_date <- as.Date(spend_df[[i]]$award_date)
         }
       }
     }
   }
-
   spend_df
 }

@@ -1,12 +1,11 @@
 note <- sprintf("R package version %s", meta$Version)
 
-
 bibentry(
 bibtype = "manual",
-  title    = "threesixtygiving: Download Charitable Grants from the '360Giving' Platform",
+  title = "threesixtygiving: Download Charitable Grants from the '360Giving' Platform",
   author = c(person("Evan", "Odell"))
-  year     = 2019,
+  year = 2019,
   doi = "10.5281/zenodo.3474128",
-  url      = c("https://github.com/evanodell/threesixtygiving"),
+  url = c("https://github.com/evanodell/threesixtygiving"),
   note = note,
 )

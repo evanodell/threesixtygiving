@@ -20,10 +20,11 @@ Imports:
     readxl,
     readr,
     jsonlite,
-    magrittr,
     purrr,
     janitor,
-    tidyr
+    tidyr,
+    tidyselect,
+    anytime
 RoxygenNote: 6.1.1
 Suggests: 
     covr,
