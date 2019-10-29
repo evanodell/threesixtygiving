@@ -8,9 +8,6 @@
   
 * Fixed warnings caused by non-matching column names in `tsg_core_data()`.
 
-* Added code to extract grant amounts from description text if value missing
-  in `amount_awarded` column.
-
 
 # threesixtygiving 0.1.0
 

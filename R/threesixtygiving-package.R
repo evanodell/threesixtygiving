@@ -19,7 +19,7 @@
 #' @importFrom anytime anydate
 #' @importFrom tibble as_tibble tibble
 #' @importFrom tidyr unnest_wider
-#' @importFrom stringr str_extract str_remove_all
+# @importFrom stringr str_extract str_remove_all
 #' @importFrom httr RETRY write_disk timeout status_code http_status
 #' @aliases NULL threesixtygiving-package
 NULL
