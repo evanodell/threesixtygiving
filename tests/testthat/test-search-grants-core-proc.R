@@ -27,5 +27,4 @@ test_that("grant_search works", {
   spec3 <- tsg_search_grants(search = c("wolfson"))
 
   expect_true(is.numeric(spec3$amount_awarded))
-
 })

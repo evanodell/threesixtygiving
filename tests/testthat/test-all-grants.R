@@ -13,4 +13,5 @@ test_that("all grant retrieval works", {
   expect_equal(class(core$award_date), "Date")
   expect_equal(class(core$amount_awarded), "numeric")
 
+  core3 <- core %>% filter(amount_awarded == 0)
 })

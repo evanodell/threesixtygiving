@@ -165,7 +165,9 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
 
         if (suffix %in% c("xls", "xlsx")) {
           spend_df[[i]]$award_date <- as.Date(anytime::anydate(ifelse(
-            is.na(as.Date(strptime(spend_df[[i]]$award_date, format = "%Y-%m-%d"))),
+            is.na(as.Date(strptime(spend_df[[i]]$award_date,
+              format = "%Y-%m-%d"
+            ))),
             suppressWarnings(janitor::excel_numeric_to_date(
               as.numeric(as.character(spend_df[[i]]$award_date))
             )),
@@ -175,33 +177,34 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
           spend_df[[i]]$award_date <- as.Date(spend_df[[i]]$award_date)
         }
 
-      # Fix weird amount stuff
-        spend_df[[i]]$amount_awarded <- gsub("k", "000",
-                                             spend_df[[i]]$amount_awarded)
+        # award amount checks, as they are sometimes in the text of desc
+        # On pause for now as not clear how these are working
+        # if (min(as.numeric(spend_df[[i]]$amount_awarded)) == 0) {
+        #   spend_df[[i]]$amount_awarded <- ifelse(
+        #     spend_df[[i]]$amount_awarded == 0,
+        #     stringr::str_remove_all(
+        #       stringr::str_extract(
+        #         string = spend_df[[i]]$description,
+        #         pattern = "(?<=of £)[^ ]+"
+        #       ),
+        #       "[:punct:]"
+        #     ),
+        #     spend_df[[i]]$amount_awarded
+        #   )
+        # }
 
-      # award amount checks, as they are sometimes in the text of desc
-       if (min(as.numeric(spend_df[[i]]$amount_awarded)) == 0) {
-         spend_df[[i]]$description <- gsub("(Grant of £[0-9].*?)k", "\\1000",
-                                           spend_df[[i]]$description,
-                                           perl = TRUE)
+        spend_df[[i]]$amount_awarded[is.na(spend_df[[i]]$amount_awarded)] <- 0
 
-         spend_df[[i]]$amount_awarded <- ifelse(
-           spend_df[[i]]$amount_awarded==0,
-           stringr::str_remove_all(
-             stringr::str_extract(string = spend_df[[i]]$description,
-                                  pattern = "(?<=Grant of £)[^ ]+"),
-                          "[:punct:]"),
-           spend_df[[i]]$amount_awarded)
+        # Fix weird amount stuff
+        spend_df[[i]]$amount_awarded <- gsub(
+          "k", "000",
+          spend_df[[i]]$amount_awarded,
+          ignore.case = TRUE
+        )
 
-         spend_df[[i]]$amount_awarded[is.na(spend_df[[i]]$amount_awarded)] <- 0
-
-         spend_df[[i]]$amount_awarded <- as.integer(
-           spend_df[[i]]$amount_awarded
-           )
-
-
-       }
-
+        spend_df[[i]]$amount_awarded <- as.integer(
+          spend_df[[i]]$amount_awarded
+        )
       }
     }
   }
