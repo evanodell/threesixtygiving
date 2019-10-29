@@ -171,8 +171,6 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
             )),
             as.Date(strptime(spend_df[[i]]$award_date, format = "%Y-%m-%d"))
           )))
-
-
         } else {
           spend_df[[i]]$award_date <- as.Date(spend_df[[i]]$award_date)
         }

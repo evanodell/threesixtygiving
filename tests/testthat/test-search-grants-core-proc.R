@@ -17,5 +17,4 @@ test_that("grant_search works", {
   expect_true(tibble::is_tibble(core_df))
   expect_length(core_df, 11)
   expect_gte(nrow(core_df), 1)
-
 })

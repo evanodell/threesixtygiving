@@ -31,11 +31,12 @@ tsg_core_data <- function(x, verbose = TRUE) {
   y2 <- list()
 
   for (i in seq_along(x)) {
-
     req_list2 <- req_list[req_list %in% colnames(x[[i]])]
 
-    y2[[i]] <- dplyr::select_at(x[[i]],
-                                dplyr::vars(tidyselect::one_of(req_list2)))
+    y2[[i]] <- dplyr::select_at(
+      x[[i]],
+      dplyr::vars(tidyselect::one_of(req_list2))
+    )
   }
 
   for (i in seq_along(y2)) {
@@ -54,8 +55,10 @@ tsg_core_data <- function(x, verbose = TRUE) {
 
       req_list3 <- req_list[req_list %in% colnames(y2[[i]])]
 
-      y2[[i]] <- dplyr::select_at(y2[[i]],
-                                  dplyr::vars(tidyselect::one_of(req_list3)))
+      y2[[i]] <- dplyr::select_at(
+        y2[[i]],
+        dplyr::vars(tidyselect::one_of(req_list3))
+      )
     }
 
     if (verbose) message(paste0("Processing ", i, " of ", length(y2)))
