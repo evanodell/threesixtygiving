@@ -14,9 +14,9 @@
 tsg_available <- function() {
   url <- "http://data.threesixtygiving.org/data.json"
 
-  df <- dplyr::as_tibble(jsonlite::fromJSON(url, flatten = TRUE))
+  df <- tibble::as_tibble(jsonlite::fromJSON(url, flatten = TRUE))
 
-  df$distribution <- lapply(df$distribution, dplyr::as_tibble)
+  df$distribution <- lapply(df$distribution, tibble::as_tibble)
 
   df$distribution <- lapply(df$distribution, janitor::clean_names)
 

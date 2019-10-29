@@ -1,5 +1,5 @@
 
-#' Process to tibble
+#' Convert data to tibble
 #'
 #' Given a list returned by [tsg_all_grants()] or [tsg_search_grants()],
 #' creates a tibble with all available variables. This tibble contains roughly
@@ -141,6 +141,7 @@ tsg_process_data <- function(x, min_coverage = 0, verbose = TRUE) {
   df <- dplyr::select(df, req_list, tidyselect::everything())
 
   df$amount_awarded <- as.numeric(df$amount_awarded)
+  df$award_date <- as.Date(df$award_date)
 
   df
 }

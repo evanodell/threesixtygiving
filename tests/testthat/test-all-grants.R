@@ -10,4 +10,7 @@ test_that("all grant retrieval works", {
 
   core <- tsg_core_data(ag1)
   expect_length(core, 11)
+  expect_equal(class(core$award_date), "Date")
+  expect_equal(class(core$amount_awarded), "numeric")
+
 })

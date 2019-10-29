@@ -36,13 +36,13 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
 
     if (class(result) != "response") {
       if (verbose) message("Could not connect to server")
-      spend_df[[i]] <- dplyr::tibble()
+      spend_df[[i]] <- tibble::tibble()
     } else if (httr::status_code(result) != 200) {
       resp <- httr::http_status(result)
 
       message("Request failed: ", resp$message)
 
-      spend_df[[i]] <- dplyr::tibble()
+      spend_df[[i]] <- tibble::tibble()
     } else {
       if (!(suffix %in% c("xlsx", "csv", "json", "xls"))) {
         if (result$headers$`content-type` == "text/csv") {
@@ -93,7 +93,7 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
         } else if (suffix == "csv") { ## some csv returns
           spend_df[[i]] <- tryCatch(
             {
-              dplyr::as_tibble(readr::read_csv(
+              tibble::as_tibble(readr::read_csv(
                 temp_f,
                 col_types = readr::cols(.default = "c")
               ))
@@ -115,7 +115,7 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
           )
 
           if (is.list(spend_df[[i]]) && is.data.frame(spend_df[[i]][[1]])) {
-            spend_df[[i]] <- dplyr::as_tibble(spend_df[[i]][[1]])
+            spend_df[[i]] <- tibble::as_tibble(spend_df[[i]][[1]])
           }
         }
       }
@@ -174,6 +174,34 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
         } else {
           spend_df[[i]]$award_date <- as.Date(spend_df[[i]]$award_date)
         }
+
+      # Fix weird amount stuff
+        spend_df[[i]]$amount_awarded <- gsub("k", "000",
+                                             spend_df[[i]]$amount_awarded)
+
+      # award amount checks, as they are sometimes in the text of desc
+       if (min(as.numeric(spend_df[[i]]$amount_awarded)) == 0) {
+         spend_df[[i]]$description <- gsub("(Grant of £[0-9].*?)k", "\\1000",
+                                           spend_df[[i]]$description,
+                                           perl = TRUE)
+
+         spend_df[[i]]$amount_awarded <- ifelse(
+           spend_df[[i]]$amount_awarded==0,
+           stringr::str_remove_all(
+             stringr::str_extract(string = spend_df[[i]]$description,
+                                  pattern = "(?<=Grant of £)[^ ]+"),
+                          "[:punct:]"),
+           spend_df[[i]]$amount_awarded)
+
+         spend_df[[i]]$amount_awarded[is.na(spend_df[[i]]$amount_awarded)] <- 0
+
+         spend_df[[i]]$amount_awarded <- as.integer(
+           spend_df[[i]]$amount_awarded
+           )
+
+
+       }
+
       }
     }
   }

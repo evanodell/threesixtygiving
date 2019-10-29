@@ -14,10 +14,12 @@
 #' @importFrom janitor clean_names remove_empty excel_numeric_to_date
 #' @importFrom purrr map
 #' @importFrom utils download.file
-#' @importFrom dplyr as_tibble vars select select_at mutate_all bind_rows filter tibble case_when
+#' @importFrom dplyr vars select select_at mutate_all bind_rows filter case_when
 #' @importFrom tidyselect one_of everything
 #' @importFrom anytime anydate
-#' @import tidyr
-#' @import httr
+#' @importFrom tibble as_tibble tibble
+#' @importFrom tidyr unnest_wider
+#' @importFrom stringr str_extract str_remove_all
+#' @importFrom httr RETRY write_disk timeout status_code http_status
 #' @aliases NULL threesixtygiving-package
 NULL

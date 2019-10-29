@@ -24,12 +24,13 @@ Imports:
     janitor,
     tidyr,
     tidyselect,
-    anytime
+    anytime,
+    tibble,
+    stringr
 RoxygenNote: 6.1.1
 Suggests: 
     covr,
     testthat (>= 2.1.0),
-    tibble,
     knitr,
     rmarkdown,
     ggplot2,

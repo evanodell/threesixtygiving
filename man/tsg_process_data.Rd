@@ -2,7 +2,7 @@
 % Please edit documentation in R/process-data.R
 \name{tsg_process_data}
 \alias{tsg_process_data}
-\title{Process to tibble}
+\title{Convert data to tibble}
 \usage{
 tsg_process_data(x, min_coverage = 0, verbose = TRUE)
 }
