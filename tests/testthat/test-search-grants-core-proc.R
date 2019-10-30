@@ -21,7 +21,7 @@ test_that("grant_search works", {
 
   core_df <- tsg_core_data(spec2)
   expect_true(tibble::is_tibble(core_df))
-  expect_length(core_df, 11)
+  expect_length(core_df, 12)
   expect_gte(nrow(core_df), 1)
 
   spec3 <- tsg_search_grants(search = c("wolfson"))

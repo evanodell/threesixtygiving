@@ -23,20 +23,36 @@ library(threesixtygiving)
 
 ## Retrieve all grants
 
-```{r retrieve-grants, eval=FALSE, include=FALSE}
+```{r retrieve-grants, eval=FALSE}
 grants <- tsg_all_grants(timeout = 8, retries = 1)
 ```
+
+```{r save-grants eval=FALSE, include=FALSE}
+library(readr)
+
+write_rds(grants, "vignettes/grants.rds")
+
+```
+
 
 
 ## Core data
 
 `tsg_all_grants` returns a list of tibbles, due to differences in the data provided by each funder. `tsg_core_data` returns a tibble with the 10 columns in the [360Giving Open Standard](https://standard.threesixtygiving.org/en/latest/#), plus the publisher prefix used to identify each funder. In the case below I have converted non-GBP currencies to GBP on the rates on 2019-10-24.
 
-``` {r core-data, eval=FALSE}
+```{r read-in-grant-rds eval=FALSE, include=FALSE}
+library(readr)
+
+grants <- read_rds("vignettes/grants.rds")
+```
+
+
+```{r core-data, eval=FALSE}
 library(purrr)
 library(dplyr)
 
 df <- tsg_core_data(grants)
+df3 <- tsg_process_data(grants)
 
 df2 <- df %>% 
   mutate(amount_awarded = case_when(
@@ -138,6 +154,8 @@ In the two examples below, we can see differences between the amount of money ap
 ```{r award-differences, eval=FALSE}
 proc_df <- tsg_process_data(grants) 
 
+library(ggrepel)
+
 proc_amount_df <- proc_df  %>% 
   select(identifier, title, description, funding_org_name,
          amount_awarded, amount_applied_for) %>%
@@ -193,6 +211,90 @@ p5 <- ggplot(proc_amount_df %>%
        y = "Number of Grants")
 
 p5
+```
+
+
+Organisations that are focused on systemic change and policy-influencing seem to be particularly reliant on trusts and foundations for income, as their work is harder to sell to ordinary members of the public motivated by emotional connections with an issue, and see their money going to directly help an identifiable person.
+
+
+```{r}
+proc_df <- tsg_process_data(grants)
+
+library(stringr)
+
+strat_df <- proc_df %>%
+  filter_at(.vars = vars(description, title, contains("primary"),
+                         contains("impact"), contains("category"),
+                         contains("classificat")),
+            .vars_predicate = any_vars(
+              str_detect(., regex('strategy|strategic|systemic', 
+                                  ignore_case=TRUE))
+              )) %>%
+  filter(amount_awarded >= 2500) 
+
+strat_df
+
+
+proc_df <- proc_df %>%
+  mutate(
+    strategic = str_detect(description, regex('strategy|strategic|systemic', 
+                                  ignore_case=TRUE)
+              )
+  )
+
+
+
+
+proc_df2 <- proc_df %>% 
+  group_by(funding_org_name, strategic) %>% 
+  summarise(total = sum(amount_awarded),
+            mean = mean(amount_awarded),
+            median= median(amount_awarded),
+            n= n())
+
+p6 <- ggplot(proc_df2 %>% group_by(strategic) %>% top_n(2, n),
+             aes(x = funding_org_name, y = mean, fill = strategic)) + 
+  geom_col(position = "dodge")
+
+p6
+
+strat_df <- proc_df %>% filter(strategic)
+
+strat_funders <- strat_df %>%
+  group_by(funding_org_name)  %>% 
+  summarise(strategic_funding = sum(amount_awarded),
+            mean_strategic = mean(amount_awarded),
+            median_strategic = median(amount_awarded),
+            n_strategic = n()) %>% full_join( proc_df %>% 
+  filter(amount_awarded >= 2500) %>%
+  group_by(funding_org_name) %>% 
+  summarise(total_funding = sum(amount_awarded),
+            mean_total = mean(amount_awarded),
+            median_total= median(amount_awarded),
+            n_total = n())) %>% 
+  mutate(percent_strategic = n_strategic/n_total)
+
+library(tidyr)
+
+strat_funders2 <- strat_funders %>%
+  pivot_longer(cols = c(mean_strategic, mean_total)) %>%
+
+
+
+p7 <- ggplot(data = bind_rows(
+  strat_funders %>% top_n(10, n_strategic),
+  strat_funders %>% top_n(10, mean_strategic),
+  strat_funders %>% top_n(10, strategic_funding)) %>%
+    distinct(), aes(x = funding_org_name, colour = strategic)) + 
+  geom_col()
+  scale_color_viridis_d() + 
+  scale_y_log10() + 
+  scale_x_continuous() + 
+  labs(x = "Award size as percentage of amount applied for",
+       y = "Number of Grants")
+
+p7
+
 ```
 
 

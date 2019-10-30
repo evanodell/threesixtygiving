@@ -25,7 +25,8 @@ Imports:
     tidyr,
     tidyselect,
     anytime,
-    tibble
+    tibble,
+    stringi
 RoxygenNote: 6.1.1
 Suggests: 
     covr,

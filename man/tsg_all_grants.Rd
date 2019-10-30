@@ -4,7 +4,8 @@
 \alias{tsg_all_grants}
 \title{All grants}
 \usage{
-tsg_all_grants(verbose = TRUE, timeout = 30, retries = 3)
+tsg_all_grants(verbose = TRUE, timeout = 30, retries = 3,
+  correct_names = TRUE)
 }
 \arguments{
 \item{verbose}{If `TRUE`, prints console messages.}
@@ -14,6 +15,9 @@ in this time, a value of `NA` is returned for that dataset.}
 
 \item{retries}{The number of retries to make if a request is not successful.
 Defaults to 3.}
+
+\item{correct_names}{If `TRUE`, corrects known mistakes in column names,
+such as spelling mistakes. Defaults to `TRUE`.}
 }
 \value{
 A list of tibbles with grant data.

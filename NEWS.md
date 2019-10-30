@@ -8,6 +8,8 @@
   
 * Fixed warnings caused by non-matching column names in `tsg_core_data()`.
 
+* New internal data processing function
+
 
 # threesixtygiving 0.1.0
 

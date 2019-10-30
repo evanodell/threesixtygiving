@@ -1,8 +1,8 @@
 
 ## Retrieve datasets for all specified datasets. Accepts returns of
 # tsg_available and tsg_specific_data
-tsg_data_retrieval <- function(query_df, verbose = TRUE,
-                               timeout = 30, retries = 3) {
+tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
+                               retries = 3, correct_names = TRUE) {
   spend_df <- list()
 
   for (i in seq_along(query_df$title)) {
@@ -79,7 +79,9 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
                     s_list[[k]] <- multi[[k]]
                   }
                 }
-                s <- dplyr::bind_cols(s_list)
+                s_list[sapply(s_list, is.null)] <- NULL
+
+                s <- purrr::reduce(s_list, dplyr::inner_join)
               } else {
                 s <- readxl::read_excel(temp_f, guess_max = 21474836)
               }
@@ -128,25 +130,15 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
 
         spend_df[[i]]$publisher_prefix <- query_df$publisher_prefix[[i]]
         spend_df[[i]]$data_type <- suffix
+        spend_df[[i]]$license_name <- query_df$license_name[[i]]
 
-        # Fix bad names, need a better way to do this
-        names(spend_df[[i]]) <- gsub(
-          "recepient", "recipient",
-          names(spend_df[[i]]),
-          fixed = TRUE
-        )
-
-        names(spend_df[[i]]) <- gsub(
-          "benificiary", "beneficiary",
-          names(spend_df[[i]]),
-          fixed = TRUE
-        )
-
-        names(spend_df[[i]]) <- gsub(
-          "sponsor_s", "sponsors",
-          names(spend_df[[i]]),
-          fixed = TRUE
-        )
+        if (correct_names == TRUE) {
+          names(spend_df[[i]]) <- stringi::stri_replace_all_fixed(
+            names(spend_df[[i]]),
+            c("recepient", "benificiary", "sponsor_s"),
+            c("recipient", "beneficiary", "sponsors"),
+            vectorize_all = FALSE)
+        }
 
         # Handle weird naming problem
         if (any(spend_df[[i]]$publisher_prefix == "360G-BirminghamCC")) {
@@ -158,8 +150,7 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE,
 
         if (suffix == "json") {
           names(spend_df[[i]]) <- gsub("^id$", "identifier",
-            names(spend_df[[i]]),
-            fixed = TRUE
+            names(spend_df[[i]])
           )
         }
 

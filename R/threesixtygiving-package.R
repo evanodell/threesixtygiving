@@ -12,13 +12,14 @@
 #' @importFrom readr read_csv cols
 #' @importFrom curl curl_fetch_memory
 #' @importFrom janitor clean_names remove_empty excel_numeric_to_date
-#' @importFrom purrr map
+#' @importFrom purrr map reduce
 #' @importFrom utils download.file
-#' @importFrom dplyr vars select select_at mutate_all bind_rows filter case_when
+#' @importFrom dplyr vars select select_at mutate_all bind_rows filter case_when inner_join
 #' @importFrom tidyselect one_of everything
 #' @importFrom anytime anydate
 #' @importFrom tibble as_tibble tibble
 #' @importFrom tidyr unnest_wider
+#' @importFrom stringi stri_replace_all_fixed
 # @importFrom stringr str_extract str_remove_all
 #' @importFrom httr RETRY write_disk timeout status_code http_status
 #' @aliases NULL threesixtygiving-package

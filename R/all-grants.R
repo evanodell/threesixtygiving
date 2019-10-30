@@ -14,6 +14,8 @@
 #' in this time, a value of `NA` is returned for that dataset.
 #' @param retries The number of retries to make if a request is not successful.
 #' Defaults to 3.
+#' @param correct_names If `TRUE`, corrects known mistakes in column names,
+#' such as spelling mistakes. Defaults to `TRUE`.
 #'
 #' @return A list of tibbles with grant data.
 #' @export
@@ -23,12 +25,13 @@
 #' all_grants <- tsg_all_grants()
 #' }
 #'
-tsg_all_grants <- function(verbose = TRUE, timeout = 30, retries = 3) {
+tsg_all_grants <- function(verbose = TRUE, timeout = 30, retries = 3,
+                           correct_names = TRUE) {
   grant_df <- tsg_available()
 
   df <- tsg_data_retrieval(grant_df,
     verbose = verbose, timeout = timeout,
-    retries = retries
+    retries = retries, correct_names = correct_names
   )
 
   df
