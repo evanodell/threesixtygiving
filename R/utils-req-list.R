@@ -5,8 +5,7 @@ tsg_req_list <- c(
   "funding_org_name", "publisher_prefix"
 )
 
-
-tsg_proc_req_list <-  c(
+tsg_proc_req_list <- c(
   "identifier", "title", "description", "currency",
   "amount_awarded", "award_date", "recipient_org_identifier",
   "recipient_org_name", "funding_org_identifier",

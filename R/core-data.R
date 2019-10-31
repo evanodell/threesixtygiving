@@ -20,7 +20,6 @@
 #' df <- tsg_core_data(grants)
 #' }
 tsg_core_data <- function(x, verbose = TRUE) {
-
   df <- tsg_core_process(x, verbose, process_type = "core")
 
   df

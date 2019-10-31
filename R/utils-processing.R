@@ -13,93 +13,91 @@ tsg_core_process <- function(x, verbose, process_type) {
   }
 
   if (process_type == "core") {
-  for (i in seq_along(x)) {
-    req2 <- tsg_proc_req_list[tsg_proc_req_list %in% colnames(x[[i]])]
+    for (i in seq_along(x)) {
+      req2 <- tsg_proc_req_list[tsg_proc_req_list %in% colnames(x[[i]])]
 
-    x[[i]] <- dplyr::select_at(x[[i]], dplyr::vars(tidyselect::one_of(req2))
-    )
-  }
+      x[[i]] <- dplyr::select_at(x[[i]], dplyr::vars(tidyselect::one_of(req2)))
+    }
   }
 
   for (i in seq_along(x)) {
     if (any(x[[i]][["data_type"]] == "json")) {
       x[[i]] <- tidyr::unnest_wider(x[[i]], "funding_organization",
-                                    names_sep = "_"
+        names_sep = "_"
       )
       x[[i]] <- tidyr::unnest_wider(x[[i]], "recipient_organization",
-                                    names_sep = "_"
+        names_sep = "_"
       )
 
       if (process_type == "all") { ## to avoid a bunch of needless code running
 
-      if ("recipient_organization_location" %in% colnames(x[[i]])) {
-        x[[i]][["recipient_organization_location"]] <- purrr::flatten(
-          x[[i]][["recipient_organization_location"]]
-        )
-        x[[i]] <- tidyr::unnest_wider(x[[i]], "recipient_organization_location",
-                                      names_sep = "_"
-        )
-      }
-
-      if ("funding_organization_location" %in% colnames(x[[i]])) {
-        x[[i]][["funding_organization_location"]] <- purrr::flatten(
-          x[[i]][["funding_organization_location"]]
-        )
-        x[[i]] <- tidyr::unnest_wider(x[[i]], "funding_organization_location",
-                                      names_sep = "_"
-        )
-      }
-
-      if ("planned_dates" %in% colnames(x[[i]])) {
-        x[[i]] <- tidyr::unnest_wider(x[[i]], "planned_dates", names_sep = "_")
-      }
-
-      if ("grant_programme" %in% colnames(x[[i]])) {
-        x[[i]] <- tidyr::unnest_wider(x[[i]], "grant_programme",
-                                      names_sep = "_"
-        )
-      }
-
-      if ("beneficiary_location" %in% colnames(x[[i]])) {
-        x[[i]] <- tidyr::unnest_wider(x[[i]], "beneficiary_location",
-                                      names_sep = "_"
-        )
-      }
-
-      if ("classifications" %in% colnames(x[[i]])) {
-        x[[i]] <- tidyr::unnest_wider(x[[i]], "classifications",
-                                      names_sep = "_"
-        )
-
-        if ("classifications_code" %in% colnames(x[[i]])) {
-          x[[i]][["classifications_code"]] <- unlist(lapply(
-            x[[i]][["classifications_code"]], paste,
-            collapse = ", "
-          ))
+        if ("recipient_organization_location" %in% colnames(x[[i]])) {
+          x[[i]][["recipient_organization_location"]] <- purrr::flatten(
+            x[[i]][["recipient_organization_location"]]
+          )
+          x[[i]] <- tidyr::unnest_wider(x[[i]], "recipient_organization_location",
+            names_sep = "_"
+          )
         }
 
-        if ("classifications_title" %in% colnames(x[[i]])) {
-          x[[i]][["classifications_title"]] <- unlist(lapply(
-            x[[i]][["classifications_title"]], paste,
-            collapse = ", "
-          ))
+        if ("funding_organization_location" %in% colnames(x[[i]])) {
+          x[[i]][["funding_organization_location"]] <- purrr::flatten(
+            x[[i]][["funding_organization_location"]]
+          )
+          x[[i]] <- tidyr::unnest_wider(x[[i]], "funding_organization_location",
+            names_sep = "_"
+          )
         }
 
-        if ("classifications_url" %in% colnames(x[[i]])) {
-          x[[i]][["classifications_url"]] <- unlist(lapply(
-            x[[i]][["classifications_url"]], paste,
-            collapse = ", "
-          ))
+        if ("planned_dates" %in% colnames(x[[i]])) {
+          x[[i]] <- tidyr::unnest_wider(x[[i]], "planned_dates", names_sep = "_")
         }
 
-        if ("classifications_vocabulary" %in% colnames(x[[i]])) {
-          x[[i]][["classifications_vocabulary"]] <- unlist(lapply(
-            x[[i]][["classifications_vocabulary"]], paste,
-            collapse = ", "
-          ))
+        if ("grant_programme" %in% colnames(x[[i]])) {
+          x[[i]] <- tidyr::unnest_wider(x[[i]], "grant_programme",
+            names_sep = "_"
+          )
         }
-      }
 
+        if ("beneficiary_location" %in% colnames(x[[i]])) {
+          x[[i]] <- tidyr::unnest_wider(x[[i]], "beneficiary_location",
+            names_sep = "_"
+          )
+        }
+
+        if ("classifications" %in% colnames(x[[i]])) {
+          x[[i]] <- tidyr::unnest_wider(x[[i]], "classifications",
+            names_sep = "_"
+          )
+
+          if ("classifications_code" %in% colnames(x[[i]])) {
+            x[[i]][["classifications_code"]] <- unlist(lapply(
+              x[[i]][["classifications_code"]], paste,
+              collapse = ", "
+            ))
+          }
+
+          if ("classifications_title" %in% colnames(x[[i]])) {
+            x[[i]][["classifications_title"]] <- unlist(lapply(
+              x[[i]][["classifications_title"]], paste,
+              collapse = ", "
+            ))
+          }
+
+          if ("classifications_url" %in% colnames(x[[i]])) {
+            x[[i]][["classifications_url"]] <- unlist(lapply(
+              x[[i]][["classifications_url"]], paste,
+              collapse = ", "
+            ))
+          }
+
+          if ("classifications_vocabulary" %in% colnames(x[[i]])) {
+            x[[i]][["classifications_vocabulary"]] <- unlist(lapply(
+              x[[i]][["classifications_vocabulary"]], paste,
+              collapse = ", "
+            ))
+          }
+        }
       }
 
       x[[i]] <- janitor::clean_names(x[[i]])
@@ -107,15 +105,15 @@ tsg_core_process <- function(x, verbose, process_type) {
 
       names(x[[i]]) <- gsub("organization", "org", names(x[[i]]))
       names(x[[i]]) <- gsub("org_id$", "org_identifier", names(x[[i]]))
+    }
 
-
-      if (process_type == "core") {
+    if (process_type == "core") {
       req3 <- tsg_req_list[tsg_req_list %in% colnames(x[[i]])]
 
-      x[[i]] <- dplyr::select_at(x[[i]], dplyr::vars(tidyselect::one_of(req3)))
-      }
-
+      x[[i]] <- dplyr::select_at(x[[i]],
+                                 dplyr::vars(tidyselect::one_of(req3)))
     }
+
     if (verbose) message(paste0("Processing ", i, " of ", length(x)))
   }
 
@@ -128,5 +126,4 @@ tsg_core_process <- function(x, verbose, process_type) {
   df$award_date <- as.Date(df$award_date)
 
   df
-
 }

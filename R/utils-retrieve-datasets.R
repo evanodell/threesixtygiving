@@ -137,7 +137,8 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
             names(spend_df[[i]]),
             c("recepient", "benificiary", "sponsor_s"),
             c("recipient", "beneficiary", "sponsors"),
-            vectorize_all = FALSE)
+            vectorize_all = FALSE
+          )
         }
 
         # Handle weird naming problem
@@ -149,7 +150,8 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
         }
 
         if (suffix == "json") {
-          names(spend_df[[i]]) <- gsub("^id$", "identifier",
+          names(spend_df[[i]]) <- gsub(
+            "^id$", "identifier",
             names(spend_df[[i]])
           )
         }

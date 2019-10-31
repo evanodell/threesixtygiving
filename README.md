@@ -31,7 +31,6 @@ giving.
 
 <!--
 You can install the released version of threesixtygiving from [CRAN](https://CRAN.R-project.org) with:
-
 ``` r
 install.packages("threesixtygiving")
 ```
@@ -42,6 +41,11 @@ You can install the development version from
 
     # install.packages("devtools")
     devtools::install_github("evanodell/threesixtygiving")
+
+### Purpose
+
+The `threesixtygiving` package provides tools for programmatically
+downloading and analysing grants made by charitable trusts.
 
 ### Data licences
 
@@ -70,7 +74,6 @@ A BibTeX entry for LaTeX users is
     url = {https://github.com/evanodell/threesixtygiving},
     note = {R package version 0.1.0.9000},
   }
-  
 ```
 
 Please note that the ‘threesixtygiving’ project is released with a

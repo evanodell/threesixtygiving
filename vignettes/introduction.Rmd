@@ -27,7 +27,7 @@ library(threesixtygiving)
 grants <- tsg_all_grants(timeout = 8, retries = 1)
 ```
 
-```{r save-grants eval=FALSE, include=FALSE}
+```{r save-grants, eval=FALSE, include=FALSE}
 library(readr)
 
 write_rds(grants, "vignettes/grants.rds")
@@ -40,7 +40,7 @@ write_rds(grants, "vignettes/grants.rds")
 
 `tsg_all_grants` returns a list of tibbles, due to differences in the data provided by each funder. `tsg_core_data` returns a tibble with the 10 columns in the [360Giving Open Standard](https://standard.threesixtygiving.org/en/latest/#), plus the publisher prefix used to identify each funder. In the case below I have converted non-GBP currencies to GBP on the rates on 2019-10-24.
 
-```{r read-in-grant-rds eval=FALSE, include=FALSE}
+```{r read-in-grant-rds, eval=FALSE, include=FALSE}
 library(readr)
 
 grants <- read_rds("vignettes/grants.rds")
@@ -217,7 +217,7 @@ p5
 Organisations that are focused on systemic change and policy-influencing seem to be particularly reliant on trusts and foundations for income, as their work is harder to sell to ordinary members of the public motivated by emotional connections with an issue, and see their money going to directly help an identifiable person.
 
 
-```{r}
+```{r eval=FALSE}
 proc_df <- tsg_process_data(grants)
 
 library(stringr)
