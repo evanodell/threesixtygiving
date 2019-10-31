@@ -124,7 +124,6 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
 
       if (is.data.frame(spend_df[[i]]) & length(spend_df[[i]]) > 1) {
         spend_df[[i]] <- janitor::clean_names(spend_df[[i]])
-
         spend_df[[i]] <- janitor::remove_empty(spend_df[[i]], which = "cols")
         spend_df[[i]] <- janitor::remove_empty(spend_df[[i]], which = "rows")
 
@@ -170,25 +169,9 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
           spend_df[[i]]$award_date <- as.Date(spend_df[[i]]$award_date)
         }
 
-        # award amount checks, as they are sometimes in the text of desc
-        # On pause for now as not clear how these are working
-        # if (min(as.numeric(spend_df[[i]]$amount_awarded)) == 0) {
-        #   spend_df[[i]]$amount_awarded <- ifelse(
-        #     spend_df[[i]]$amount_awarded == 0,
-        #     stringr::str_remove_all(
-        #       stringr::str_extract(
-        #         string = spend_df[[i]]$description,
-        #         pattern = "(?<=of £)[^ ]+"
-        #       ),
-        #       "[:punct:]"
-        #     ),
-        #     spend_df[[i]]$amount_awarded
-        #   )
-        # }
-
         spend_df[[i]]$amount_awarded[is.na(spend_df[[i]]$amount_awarded)] <- 0
 
-        # Fix weird amount stuff
+        # Fix weird amounts stuff
         spend_df[[i]]$amount_awarded <- gsub(
           "k", "000",
           spend_df[[i]]$amount_awarded,

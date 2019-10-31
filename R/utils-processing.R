@@ -1,6 +1,4 @@
 
-
-
 # Utility function to process list to a tibble
 #
 # @param x the list to process
@@ -110,8 +108,10 @@ tsg_core_process <- function(x, verbose, process_type) {
     if (process_type == "core") {
       req3 <- tsg_req_list[tsg_req_list %in% colnames(x[[i]])]
 
-      x[[i]] <- dplyr::select_at(x[[i]],
-                                 dplyr::vars(tidyselect::one_of(req3)))
+      x[[i]] <- dplyr::select_at(
+        x[[i]],
+        dplyr::vars(tidyselect::one_of(req3))
+      )
     }
 
     if (verbose) message(paste0("Processing ", i, " of ", length(x)))
