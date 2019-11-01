@@ -32,7 +32,8 @@ tsg_available <- function() {
       )
     )
 
-    if (!(df$distribution[[i]]$data_type %in% c("json", "csv", "xlsx", "xls"))) {
+    if (!(df$distribution[[i]]$data_type %in% c("json", "csv",
+                                                "xlsx", "xls"))) {
       df$distribution[[i]]$data_type <- "unknown"
     }
   }

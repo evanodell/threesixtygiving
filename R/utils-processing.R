@@ -33,8 +33,9 @@ tsg_core_process <- function(x, verbose, process_type) {
           x[[i]][["recipient_organization_location"]] <- purrr::flatten(
             x[[i]][["recipient_organization_location"]]
           )
-          x[[i]] <- tidyr::unnest_wider(x[[i]], "recipient_organization_location",
-            names_sep = "_"
+          x[[i]] <- tidyr::unnest_wider(x[[i]],
+                                        "recipient_organization_location",
+                                        names_sep = "_"
           )
         }
 
@@ -48,7 +49,8 @@ tsg_core_process <- function(x, verbose, process_type) {
         }
 
         if ("planned_dates" %in% colnames(x[[i]])) {
-          x[[i]] <- tidyr::unnest_wider(x[[i]], "planned_dates", names_sep = "_")
+          x[[i]] <- tidyr::unnest_wider(x[[i]],
+                                        "planned_dates", names_sep = "_")
         }
 
         if ("grant_programme" %in% colnames(x[[i]])) {

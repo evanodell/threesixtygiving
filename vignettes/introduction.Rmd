@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
 ```
 
 
+_Still a work in progress_
+
 ```{r setup}
 library(threesixtygiving)
 ```
@@ -52,7 +54,6 @@ library(purrr)
 library(dplyr)
 
 df <- tsg_core_data(grants)
-df3 <- tsg_process_data(grants)
 
 df2 <- df %>% 
   mutate(amount_awarded = case_when(
@@ -73,22 +74,31 @@ library(ggplot2)
 
 theme_set(theme_bw())
 
-p1 <- ggplot(df2 %>% top_frac(0.2, amount_awarded),
-             aes(x = reorder(funding_org_name, -amount_awarded),
-                 y = amount_awarded, fill = amount_awarded)) + 
+p1 <- ggplot(df2 %>% top_n(20, amount_awarded) %>% 
+               mutate(amount_awarded2 = amount_awarded/100000),
+             aes(x = reorder(funding_org_name, -amount_awarded2),
+                 y = amount_awarded2, fill = amount_awarded2)) + 
   geom_col() + 
   scale_y_sqrt(labels = scales::dollar_format(prefix = "£"),
-               breaks = c(1e8, 1e9, 25e8, 4e9, 5e9, 75e8, 1e10)) + 
-  scale_x_discrete(labels = scales::wrap_format(25)) + 
+               breaks = c(1000, 5000, 10000, 25000, 50000, 75000, 100000)) + 
+  scale_x_discrete(labels = scales::wrap_format(30)) + 
   scale_fill_viridis_c() + 
-  labs(x = "Funder", y = "Amount Awarded",
-       title = "Total Value of Grants Awarded",
+  labs(x = "Funder", y = "Amount Awarded 
+       (in 100,000s, note logarithmic scale)",
+       title = "Total Value of Grants Awarded by Twenty Largest Funders",
        caption = "(c) Evan Odell | 2019 | CC-BY-SA
        Data from 360Giving") + 
-  theme(axis.text.x = element_text(angle = 60, hjust = 1),
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
         legend.position = "none") 
   
 p1
+```
+
+```{r value-of-all-grants-save, eval=FALSE, include=FALSE}
+
+ggsave("vignettes/total-value.png", p1, type = "cairo",
+       width = 20, height = 15, units = "cm", dpi = 96)
+
 ```
 
 
@@ -98,40 +108,52 @@ The plot below shows the average grant value from each funder, with the number o
 
 ```{r avg-grant-size, eval=FALSE}
 
-p2 <- ggplot(df2 %>% top_frac(0.2, avg),
+library(ggrepel)
+
+p2 <- ggplot(df2 %>% top_n(20, amount_awarded),
              aes(x = reorder(funding_org_name, -avg),
                  y = avg, fill = avg)) + 
   geom_col() + 
-   geom_label(aes(label = scales::comma(n), y = 10000),
-              fill = "white", alpha = 0.5, size = 3.5) + 
+  geom_label_repel(aes(label = scales::comma(n)), nudge_y = 1,
+              alpha = 0.35, size = 3.25, hjust =0.5, direction = "y") + 
   scale_y_sqrt(labels = scales::dollar_format(prefix = "£")) + 
   scale_x_discrete(labels = scales::wrap_format(25)) + 
   scale_fill_viridis_c() + 
   labs(x = "Funder", y = "Average Grant Value",
        title = "Average Grant Value",
-       subtitle = "Label is the number of grants awarded",
+       subtitle = "Label is the total number of grants awarded",
        caption = "(c) Evan Odell | 2019 | CC-BY-SA
        Data from 360Giving") + 
-  theme(axis.text.x = element_text(angle = 60, hjust = 1),
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
         legend.position = "none") 
 
 p2
 ```
 
+
+
+```{r avg-grant-size-save, eval=FALSE, include=FALSE}
+
+ggsave("vignettes/avg-grant-value.png", p2, type = "cairo",
+       width = 20, height = 15, units = "cm", dpi = 96)
+
+```
+
 ![](avg-grant-value.png)
 
 ```{r size, eval=FALSE}
-library(ggrepel)
 
 p3 <- ggplot(df2, aes(x = n, y = avg, colour = amount_awarded)) + 
   geom_point(alpha = 0.7, size = 4) + 
   geom_text_repel(data = bind_rows(df2 %>% top_n(5, avg),
                                    df2 %>% top_n(5, amount_awarded),
-                                   df2 %>% top_n(5, n)) %>% 
+                                   df2 %>% top_n(5, n),
+                                   df2 %>% top_n(5, -n),
+                                   df2 %>% top_n(5, -amount_awarded)) %>% 
                     distinct(),
-                  mapping = aes(label =funding_org_name), colour = "black",
+                  mapping = aes(label = funding_org_name), colour = "black",
                   direction = "both",
-                  nudge_x = 0.2) + 
+                  arrow = arrow(length = unit(0.03, "npc"), type = "open", ends = "last")) + 
   scale_colour_viridis_c() + 
   scale_y_log10(labels = scales::dollar_format(prefix = "£")) + 
   scale_x_log10(labels = scales::comma) + 
@@ -144,6 +166,15 @@ p3 <- ggplot(df2, aes(x = n, y = avg, colour = amount_awarded)) +
 p3
 ```
 
+```{r size-save, eval=FALSE, include=FALSE}
+
+ggsave("vignettes/grant-size-n.png", p3, type = "cairo",
+       width = 20, height = 18, units = "cm", dpi = 96)
+```
+
+
+In the the plot below I've highlighted funders that make very many or very few grants, and that are either very large or very small.
+
 ![](grant-size-n.png)
 
 
@@ -153,8 +184,6 @@ In the two examples below, we can see differences between the amount of money ap
 
 ```{r award-differences, eval=FALSE}
 proc_df <- tsg_process_data(grants) 
-
-library(ggrepel)
 
 proc_amount_df <- proc_df  %>% 
   select(identifier, title, description, funding_org_name,
@@ -192,8 +221,16 @@ p4
 
 ```
 
+```{r award-differences-save, eval=FALSE, include=FALSE}
 
-```{r percentage awarded, eval=FALSE}
+ggsave("vignettes/grant-diff-value.png", p4, type = "cairo",
+       width = 20, height = 18, units = "cm", dpi = 96)
+```
+
+![](grant-diff-value.png)
+
+
+```{r percentage-awarded, eval=FALSE}
 p5 <- ggplot(proc_amount_df %>%
                filter(difference != 0, percentage_of != Inf),
              aes(x = percentage_of)) + 
@@ -201,7 +238,7 @@ p5 <- ggplot(proc_amount_df %>%
   geom_label_repel(
     aes(x = 1, y = 3000, hjust = 1,
         label = paste0(scales::comma(n),
-                       " applications awarded amount applied for")),
+                       " applications awarded exact amount applied for")),
     data = count0) + 
   scale_color_viridis_c() + 
   scale_y_continuous(labels = scales::comma) + 
@@ -212,6 +249,18 @@ p5 <- ggplot(proc_amount_df %>%
 
 p5
 ```
+
+```{r percentage-awardeds-save, eval=FALSE, include=FALSE}
+
+ggsave("vignettes/grant-diff-perc.png", p4, type = "cairo",
+       width = 20, height = 18, units = "cm", dpi = 96)
+```
+
+![](grant-diff-perc.png)
+
+
+
+### Systemic change funders
 
 
 Organisations that are focused on systemic change and policy-influencing seem to be particularly reliant on trusts and foundations for income, as their work is harder to sell to ordinary members of the public motivated by emotional connections with an issue, and see their money going to directly help an identifiable person.
@@ -252,7 +301,7 @@ proc_df2 <- proc_df %>%
             median= median(amount_awarded),
             n= n())
 
-p6 <- ggplot(proc_df2 %>% group_by(strategic) %>% top_n(2, n),
+p6 <- ggplot(proc_df2 %>% filter(strategic==TRUE) %>% ungroup() %>% top_n(10, n),
              aes(x = funding_org_name, y = mean, fill = strategic)) + 
   geom_col(position = "dodge")
 
