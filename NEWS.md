@@ -8,7 +8,9 @@
   
 * Fixed warnings caused by non-matching column names in `tsg_core_data()`.
 
-* New internal data processing function
+* New internal data processing functions and file-reading functions
+
+* Reduce calls to grant files.
 
 
 # threesixtygiving 0.1.0

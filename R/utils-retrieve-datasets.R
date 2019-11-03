@@ -3,7 +3,7 @@
 # tsg_available and tsg_specific_data
 tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
                                retries = 3, correct_names = TRUE) {
-  spend_df <- list()
+  g_list <- list()
 
   for (i in seq_along(query_df$title)) {
     if (verbose) {
@@ -36,64 +36,28 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
 
     if (class(result) != "response") {
       if (verbose) message("Could not connect to server")
-      spend_df[[i]] <- tibble::tibble()
+      g_list[[i]] <- tibble::tibble()
     } else if (httr::status_code(result) != 200) {
       resp <- httr::http_status(result)
-
       message("Request failed: ", resp$message)
-
-      spend_df[[i]] <- tibble::tibble()
+      g_list[[i]] <- tibble::tibble()
     } else {
       if (!(suffix %in% c("xlsx", "csv", "json", "xls"))) {
         if (result$headers$`content-type` == "text/csv") {
-          spend_df[[i]] <- readr::read_csv(
+          g_list[[i]] <- readr::read_csv(
             temp_f,
             col_types = readr::cols(.default = "c")
           )
+        } else if (result$headers$`content-type` == "application/json") {
+          g_list[[i]] <- tsg_json(temp_f)
         } else {
-          spend_df[[i]] <- tryCatch(
-            { ## majority of returns
-              readxl::read_excel(temp_f, guess_max = 21474836)
-            },
-            error = function(cond) {
-              return(NA)
-            }
-          )
+          g_list[[i]]  <- tsg_excel(temp_f)
         }
       } else {
         if (suffix %in% c("xlsx", "xls")) {
-          spend_df[[i]] <- tryCatch(
-            { ## majority of returns
-              if (length(readxl::excel_sheets(temp_f)) > 1) {
-                multi <- lapply(readxl::excel_sheets(temp_f),
-                  readxl::read_excel,
-                  path = temp_f,
-                  guess_max = 21474836
-                )
-
-                s_rows <- nrow(multi[[1]])
-
-                s_list <- list()
-                for (k in seq_along(multi)) {
-                  if (nrow(multi[[k]]) == s_rows) {
-                    s_list[[k]] <- multi[[k]]
-                  }
-                }
-                s_list[sapply(s_list, is.null)] <- NULL
-
-                s <- purrr::reduce(s_list, dplyr::inner_join)
-              } else {
-                s <- readxl::read_excel(temp_f, guess_max = 21474836)
-              }
-
-              s
-            },
-            error = function(cond) {
-              return(NA)
-            }
-          )
+          g_list[[i]]  <- tsg_excel(temp_f)
         } else if (suffix == "csv") { ## some csv returns
-          spend_df[[i]] <- tryCatch(
+          g_list[[i]] <- tryCatch(
             {
               tibble::as_tibble(readr::read_csv(
                 temp_f,
@@ -104,85 +68,78 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
               return(NA)
             }
           )
-        } else if (suffix == "json") { ## only a handful of JSON files
-          spend_df[[i]] <- tryCatch(
-            {
-              jsonlite::fromJSON(query_df$distribution[[i]]$download_url,
-                flatten = FALSE
-              )
-            },
-            error = function(cond) {
-              return(NA)
-            }
-          )
-
-          if (is.list(spend_df[[i]]) && is.data.frame(spend_df[[i]][[1]])) {
-            spend_df[[i]] <- tibble::as_tibble(spend_df[[i]][[1]])
-          }
+        } else if (suffix == "json") {
+          g_list[[i]] <- tsg_json(temp_f)
         }
       }
 
-      if (is.data.frame(spend_df[[i]]) & length(spend_df[[i]]) > 1) {
-        spend_df[[i]] <- janitor::clean_names(spend_df[[i]])
-        spend_df[[i]] <- janitor::remove_empty(spend_df[[i]], which = "cols")
-        spend_df[[i]] <- janitor::remove_empty(spend_df[[i]], which = "rows")
+      if (is.data.frame(g_list[[i]]) & length(g_list[[i]]) > 1) {
+        g_list[[i]] <- janitor::remove_empty(
+          janitor::clean_names(g_list[[i]]), which = c("rows", "cols"))
 
-        spend_df[[i]]$publisher_prefix <- query_df$publisher_prefix[[i]]
-        spend_df[[i]]$data_type <- suffix
-        spend_df[[i]]$license_name <- query_df$license_name[[i]]
+        g_list[[i]]$publisher_prefix <- query_df$publisher_prefix[[i]]
+        g_list[[i]]$data_type <- suffix
+        g_list[[i]]$license_name <- query_df$license_name[[i]]
 
         if (correct_names == TRUE) {
-          names(spend_df[[i]]) <- stringi::stri_replace_all_fixed(
-            names(spend_df[[i]]),
-            c("recepient", "benificiary", "sponsor_s"),
-            c("recipient", "beneficiary", "sponsors"),
-            vectorize_all = FALSE
-          )
+
+          if (requireNamespace("stringi", quietly = TRUE)) {
+            names(g_list[[i]]) <- stringi::stri_replace_all_fixed(
+              names(g_list[[i]]),
+              c("recepient", "benificiary", "sponsor_s"),
+              c("recipient", "beneficiary", "sponsors"),
+              vectorize_all = FALSE
+            )
+          } else {
+            names(g_list[[i]]) <- gsub("recepient", "recipient",
+                                       names(g_list[[i]]))
+            names(g_list[[i]]) <- gsub("benificiary", "beneficiary",
+                                       names(g_list[[i]]))
+            names(g_list[[i]]) <- gsub("sponsor_s", "sponsors",
+                                       names(g_list[[i]]))
+          }
+
+
         }
 
         # Handle weird naming problem
-        if (any(spend_df[[i]]$publisher_prefix == "360G-BirminghamCC")) {
-          names(spend_df[[i]]) <- gsub("identifier_2", "identifier",
-            names(spend_df[[i]]),
+        if (any(g_list[[i]]$publisher_prefix == "360G-BirminghamCC")) {
+          names(g_list[[i]]) <- gsub("identifier_2", "identifier",
+            names(g_list[[i]]),
             fixed = TRUE
           )
         }
 
         if (suffix == "json") {
-          names(spend_df[[i]]) <- gsub(
+          names(g_list[[i]]) <- gsub(
             "^id$", "identifier",
-            names(spend_df[[i]])
+            names(g_list[[i]])
           )
         }
 
         if (suffix %in% c("xls", "xlsx")) {
-          spend_df[[i]]$award_date <- as.Date(anytime::anydate(ifelse(
-            is.na(as.Date(strptime(spend_df[[i]]$award_date,
+          g_list[[i]]$award_date <- as.Date(anytime::anydate(ifelse(
+            is.na(as.Date(strptime(g_list[[i]]$award_date,
               format = "%Y-%m-%d"
             ))),
             suppressWarnings(janitor::excel_numeric_to_date(
-              as.numeric(as.character(spend_df[[i]]$award_date))
+              as.numeric(as.character(g_list[[i]]$award_date))
             )),
-            as.Date(strptime(spend_df[[i]]$award_date, format = "%Y-%m-%d"))
+            as.Date(strptime(g_list[[i]]$award_date, format = "%Y-%m-%d"))
           )))
         } else {
-          spend_df[[i]]$award_date <- as.Date(spend_df[[i]]$award_date)
+          g_list[[i]]$award_date <- as.Date(g_list[[i]]$award_date)
         }
-
-        spend_df[[i]]$amount_awarded[is.na(spend_df[[i]]$amount_awarded)] <- 0
-
         # Fix weird amounts stuff
-        spend_df[[i]]$amount_awarded <- gsub(
+        g_list[[i]]$amount_awarded <- gsub(
           "k", "000",
-          spend_df[[i]]$amount_awarded,
+          g_list[[i]]$amount_awarded,
           ignore.case = TRUE
         )
-
-        spend_df[[i]]$amount_awarded <- as.integer(
-          spend_df[[i]]$amount_awarded
-        )
+        # Make award amounts an integer
+        g_list[[i]]$amount_awarded <- as.integer(g_list[[i]]$amount_awarded)
       }
     }
   }
-  spend_df
+  g_list
 }
