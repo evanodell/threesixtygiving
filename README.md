@@ -60,8 +60,7 @@ Please cite `threesixtygiving` as:
 
 Odell, Evan (2019). *threesixtygiving: Download Charitable Grants from
 the ‘360Giving’ Platform*. doi: 10.5281/zenodo.3474128, R package
-version 0.1.0.9000, \<URL:
-<https://github.com/evanodell/threesixtygiving>\>.
+version 0.1.1, URL: <https://github.com/evanodell/threesixtygiving>
 
 A BibTeX entry for LaTeX users is
 
@@ -72,7 +71,7 @@ A BibTeX entry for LaTeX users is
     year = {2019},
     doi = {10.5281/zenodo.3474128},
     url = {https://github.com/evanodell/threesixtygiving},
-    note = {R package version 0.1.0.9000},
+    note = {R package version 0.1.1},
   }
 ```
 
