@@ -13,7 +13,7 @@ A tibble with details on all available datasets.
 Information on the available datasets
 }
 \examples{
-\donttest{
+\dontrun{
 available <- tsg_available()
 }
 

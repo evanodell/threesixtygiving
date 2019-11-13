@@ -20,7 +20,7 @@
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' search1 <- tsg_search_funders(search = c("bbc", "caBinet"))
 #' }
 #'

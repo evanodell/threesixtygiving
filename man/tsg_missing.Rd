@@ -18,7 +18,7 @@ Returns a tibble with details on any available data missing from a list
 of grants returned by [tsg_all_grants()].
 }
 \examples{
-\donttest{
+\dontrun{
 all_grants <- tsg_all_grants()
 
 missing_grants <- tsg_missing(all_grants)

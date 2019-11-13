@@ -11,7 +11,7 @@
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' all_grants <- tsg_all_grants()
 #'
 #' missing_grants <- tsg_missing(all_grants)

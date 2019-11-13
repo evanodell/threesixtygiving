@@ -18,7 +18,7 @@
 #' @seealso tsg_specific_df
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' specific1 <- tsg_search_grants(search = c("bbc", "caBinet"))
 #' }
 #'

@@ -40,7 +40,7 @@ matches queries, returns a tibble of that dataset.
 Use [tsg_specific_df()] to pass a dataframe.
 }
 \examples{
-\donttest{
+\dontrun{
 specific1 <- tsg_search_grants(search = c("bbc", "caBinet"))
 }
 

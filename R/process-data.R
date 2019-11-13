@@ -18,7 +18,7 @@
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' grants <- tsg_all_grants()
 #'
 #' df <- tsg_process_data(grants)

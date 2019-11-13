@@ -26,7 +26,7 @@ Retrieve data contained with all or specific rows of a tibble
 returned by [tsg_available()] or [tsg_missing()].
 }
 \examples{
-\donttest{
+\dontrun{
 all_grants <- tsg_all_grants()
 
 missing_grants <- tsg_missing(all_grants)

@@ -32,7 +32,7 @@ Return a tibble with information on all grant datasets where funder data
 matches one or more search strings.
 }
 \examples{
-\donttest{
+\dontrun{
 search1 <- tsg_search_funders(search = c("bbc", "caBinet"))
 }
 

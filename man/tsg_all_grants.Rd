@@ -33,7 +33,7 @@ automatically blocking requests, you can use [tsg_missing()] to identify
 missing sets of grant data.
 }
 \examples{
-\donttest{
+\dontrun{
 all_grants <- tsg_all_grants()
 }
 

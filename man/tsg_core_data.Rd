@@ -22,7 +22,7 @@ as well as the publisher prefix, which is useful for data processing,
 and the licence the data was published under.
 }
 \examples{
-\donttest{
+\dontrun{
 grants <- tsg_all_grants()
 
 df <- tsg_core_data(grants)

@@ -21,7 +21,7 @@
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' all_grants <- tsg_all_grants()
 #' }
 #'

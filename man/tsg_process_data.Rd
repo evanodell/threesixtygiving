@@ -26,7 +26,7 @@ available grants are used (as of October 2019), due to differences in
 how grant data is labelled and structured.
 }
 \examples{
-\donttest{
+\dontrun{
 grants <- tsg_all_grants()
 
 df <- tsg_process_data(grants)
