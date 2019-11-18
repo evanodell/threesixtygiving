@@ -156,13 +156,27 @@ write_rds(grants, "vignettes/grants.rds")
 
 
 ```{r read-in-grant-rds, include=FALSE}
-grants <- read_rds("grants.rds")
+grants <- read_rds("vignettes/grants.rds")
 ```
 
 Because of my minimal timeout and retries, as well as possible other problems with how organisations configure their servers, there are some datasets missing: 
 
-```{r missing-data}
+```{r missing-data, eval=FALSE}
 tsg_missing(grants)
+
+# # A tibble: 7 x 14
+#   title description identifier license license_name issued modified download_url access_url data_type
+#   <chr> <chr>       <chr>      <chr>   <chr>        <chr>  <chr>    <chr>        <chr>      <chr>    
+# 1 Gran~ ""          a001p0000~ https:~ Creative Co~ 2019-~ 2019-11~ https://jof~ https://j~ xlsx     
+# 2 Gran~ ""          a00240000~ https:~ Creative Co~ 2017-~ 2018-08~ https://pea~ https://p~ xlsx     
+# 3 Gran~ ""          a00240000~ https:~ Creative Co~ 2017-~ 2018-08~ https://pea~ https://p~ xlsx     
+# 4 Gran~ ""          a001p0000~ https:~ Creative Co~ 2018-~ 2019-03~ https://pea~ https://p~ xlsx     
+# 5 Gran~ ""          a001p0000~ https:~ Creative Co~ 2018-~ 2019-08~ https://tud~ https://t~ xlsx     
+# 6 True~ ""          a00240000~ https:~ Creative Co~ 2016-~ 2018-08~ http://ods.~ http://ww~ unknown  
+# 7 Wood~ ""          a001p0000~ https:~ Creative Co~ 2017-~ 2018-08~ http://ods.~ http://ww~ unknown  
+# # ... with 4 more variables: publisher_name <chr>, publisher_website <chr>, publisher_logo <chr>,
+# #   publisher_prefix <chr>
+
 ```
 
 However, we know they are missing, and we can retry downloading just them if needed using the `tsg_specific_df()` function. But I'll ignore them for now.
@@ -383,7 +397,7 @@ Organisations that are focused on systemic change and policy-influencing seem to
 The code below is going to get a little bit more complicated, it includes some very basic functional programming and regular expressions. If you don't know what functional programming is, it's basically a way of turning everything into a mathematical formula. If you don't know what regular expressions are, count yourself lucky.
 
 
-```{r process-data}
+```{r process-data, eval=FALSE}
 proc_df <- tsg_process_data(grants)
 
 animal_df <- proc_df %>%
@@ -406,7 +420,7 @@ strat_df <- proc_df %>%
 ```
 
 
-For example, there are `r nrow(animal_df)` donations to animal-related organisations from `r length(unique(animal_df$funding_org_name))` trusts in this dataset, compared to `r nrow(strat_df)` strategic and system change grants from `r length(unique(strat_df$funding_org_name))` funders. However there do not appear to be any funders focused on strategic funding and systemic change. The plot below shows the twenty funders that have allocated the greatest percentages of their overall funding to what I've deemed strategic issues.
+For example, there are 1673 donations to animal-related organisations from 23 trusts in this dataset, compared to 2897 strategic and system change grants from 75 funders. However there do not appear to be any funders focused on strategic funding and systemic change. The plot below shows the twenty funders that have allocated the greatest percentages of their overall funding to what I've deemed strategic issues.
 
 ```{r strategic-plot, eval=FALSE}
 proc_df <- proc_df %>%
