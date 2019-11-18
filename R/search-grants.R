@@ -10,7 +10,7 @@
 #' Use [tsg_specific_df()] to pass a dataframe.
 #'
 #' @inheritParams tsg_search_funders
-#' @param ... Additional params passed to [tsg_data_retrieval()]
+#' @param ... Additional params passed to [tsg_all_grants()]
 #'
 #' @return A single tibble (if only one grant maker matches the queries) or a
 #' list of tibbles (if the query matches multiple datasets).

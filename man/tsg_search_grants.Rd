@@ -32,7 +32,7 @@ Defaults to \code{TRUE}.}
 
 \item{fixed}{If \code{TRUE}, searches will be matched as-is.}
 
-\item{...}{Additional params passed to \code{\link[=tsg_data_retrieval]{tsg_data_retrieval()}}}
+\item{...}{Additional params passed to \code{\link[=tsg_all_grants]{tsg_all_grants()}}}
 }
 \value{
 A single tibble (if only one grant maker matches the queries) or a
