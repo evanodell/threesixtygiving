@@ -155,7 +155,7 @@ write_rds(grants, "vignettes/grants.rds")
 ```
 
 
-```{r read-in-grant-rds, include=FALSE}
+```{r read-in-grant-rds, include=FALSE, eval=FALSE}
 grants <- read_rds("vignettes/grants.rds")
 ```
 
