@@ -131,7 +131,7 @@ Say you want to include all the grants that are in currencies other than pounds,
 
 Below are all the R packages that I'm using create the graphs and such in this article.
 
-```{r packages}
+```{r packages, eval=FALSE}
 library(threesixtygiving)
 library(ggrepel)
 library(readr)
@@ -155,7 +155,7 @@ write_rds(grants, "vignettes/grants.rds")
 ```
 
 
-```{r read-in-grant-rds, include=FALSE}
+```{r read-in-grant-rds, include=FALSE, eval=FALSE}
 grants <- read_rds("vignettes/grants.rds")
 ```
 
