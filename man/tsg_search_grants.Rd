@@ -4,27 +4,35 @@
 \alias{tsg_search_grants}
 \title{Search for specific datasets}
 \usage{
-tsg_search_grants(search, search_in = NULL, verbose = TRUE,
-  ignore_case = TRUE, perl = FALSE, fixed = FALSE, ...)
+tsg_search_grants(
+  search,
+  search_in = NULL,
+  verbose = TRUE,
+  ignore_case = TRUE,
+  perl = FALSE,
+  fixed = FALSE,
+  ...
+)
 }
 \arguments{
 \item{search}{The string(s) to search for. By default allows POSIX 1003.2
-regular expressions. Use `perl = TRUE` for perl-style regex, or
-`fixed = TRUE` for fixed strings.
+regular expressions. Use \code{perl = TRUE} for perl-style regex, or
+\code{fixed = TRUE} for fixed strings.
 Accepts single strings or a character vector of strings.}
 
 \item{search_in}{The name of the column to search in. Accepts single strings
-or a character vector of column names. If `NULL`, searches all columns.}
+or a character vector of column names. If \code{NULL}, searches all columns.}
 
-\item{verbose}{If `TRUE`, prints console messages.}
+\item{verbose}{If \code{TRUE}, prints console messages on data retrieval progress.
+Defaults to \code{TRUE}.}
 
-\item{ignore_case}{If `TRUE` ignores case.}
+\item{ignore_case}{If \code{TRUE} ignores case.}
 
-\item{perl}{If `TRUE`, uses perl-style regex.}
+\item{perl}{If \code{TRUE}, uses perl-style regex.}
 
-\item{fixed}{If `TRUE`, searches will be matched as-is.}
+\item{fixed}{If \code{TRUE}, searches will be matched as-is.}
 
-\item{...}{Additional params passed to [tsg_data_retrieval()]}
+\item{...}{Additional params passed to \code{\link[=tsg_data_retrieval]{tsg_data_retrieval()}}}
 }
 \value{
 A single tibble (if only one grant maker matches the queries) or a
@@ -34,10 +42,10 @@ list of tibbles (if the query matches multiple datasets).
 Returns a list of tibbles with details of all grants from specific funders.
 }
 \details{
-`tsg_specific_data_search` retrieves grants where funder data
+\code{tsg_search_grants} retrieves grants where funder data
 matches one or more search strings. If only one dataset
 matches queries, returns a tibble of that dataset.
-Use [tsg_specific_df()] to pass a dataframe.
+Use \code{\link[=tsg_specific_df]{tsg_specific_df()}} to pass a dataframe.
 }
 \examples{
 \donttest{
@@ -46,5 +54,8 @@ specific1 <- tsg_search_grants(search = c("bbc", "caBinet"))
 
 }
 \seealso{
-tsg_specific_df
+\code{\link[=tsg_search_funders]{tsg_search_funders()}} for retrieving information on available
+datasets from matching funders. \code{\link[=tsg_specific_df]{tsg_specific_df()}} to retrieve data
+contained with all or specific rows of a tibble returned
+by \code{\link[=tsg_available]{tsg_available()}} or \code{\link[=tsg_missing]{tsg_missing()}}.
 }

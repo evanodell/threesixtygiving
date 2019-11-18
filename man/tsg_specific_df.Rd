@@ -8,12 +8,14 @@ tsg_specific_df(x, verbose = TRUE, timeout = 30, retries = 3)
 }
 \arguments{
 \item{x}{All or a subset of a tibble returned by
-[tsg_available()] or [tsg_missing()]}
+\code{\link[=tsg_available]{tsg_available()}} or \code{\link[=tsg_missing]{tsg_missing()}}}
 
-\item{verbose}{If `TRUE`, prints console messages.}
+\item{verbose}{If \code{TRUE}, prints console messages on data retrieval progress.
+Defaults to \code{TRUE}.}
 
 \item{timeout}{The maximum request time, in seconds. If data is not returned
-in this time, a value of `NA` is returned for that dataset.}
+in this time, a value of \code{NA} is returned for that dataset.
+Defaults to 30 seconds.}
 
 \item{retries}{The number of retries to make if a request is not successful.
 Defaults to 3.}
@@ -23,10 +25,10 @@ A list of tibbles with grant data.
 }
 \description{
 Retrieve data contained with all or specific rows of a tibble
-returned by [tsg_available()] or [tsg_missing()].
+returned by \code{\link[=tsg_available]{tsg_available()}} or \code{\link[=tsg_missing]{tsg_missing()}}.
 }
 \examples{
-\donttest{
+\dontrun{
 all_grants <- tsg_all_grants()
 
 missing_grants <- tsg_missing(all_grants)
@@ -36,9 +38,9 @@ more_grants <- tsg_specific_df(missing_grants)
 
 }
 \seealso{
-tsg_specific_data_search
+\code{\link[=tsg_search_grants]{tsg_search_grants()}}
 
-tsg_available
+\code{\link[=tsg_available]{tsg_available()}}
 
-tsg_missing
+\code{\link[=tsg_missing]{tsg_missing()}}
 }

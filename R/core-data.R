@@ -9,12 +9,14 @@
 #'
 #' @param x A list of tibble with grant data returned by [tsg_all_grants()].
 #' @inheritParams tsg_all_grants
+#' @seealso [tsg_process_data()], which does the same processing but returns
+#' all available variables.
 #'
-#' @return A tibble with core variables
+#' @return A tibble with the core variables in the 360Giving standard.
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' grants <- tsg_all_grants()
 #'
 #' df <- tsg_core_data(grants)

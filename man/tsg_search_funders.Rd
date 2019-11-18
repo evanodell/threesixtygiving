@@ -4,25 +4,32 @@
 \alias{tsg_search_funders}
 \title{Search funders}
 \usage{
-tsg_search_funders(search, search_in = NULL, verbose = TRUE,
-  ignore_case = TRUE, perl = FALSE, fixed = FALSE)
+tsg_search_funders(
+  search,
+  search_in = NULL,
+  verbose = TRUE,
+  ignore_case = TRUE,
+  perl = FALSE,
+  fixed = FALSE
+)
 }
 \arguments{
 \item{search}{The string(s) to search for. By default allows POSIX 1003.2
-regular expressions. Use `perl = TRUE` for perl-style regex, or
-`fixed = TRUE` for fixed strings.
+regular expressions. Use \code{perl = TRUE} for perl-style regex, or
+\code{fixed = TRUE} for fixed strings.
 Accepts single strings or a character vector of strings.}
 
 \item{search_in}{The name of the column to search in. Accepts single strings
-or a character vector of column names. If `NULL`, searches all columns.}
+or a character vector of column names. If \code{NULL}, searches all columns.}
 
-\item{verbose}{If `TRUE`, prints console messages.}
+\item{verbose}{If \code{TRUE}, prints console messages on data retrieval progress.
+Defaults to \code{TRUE}.}
 
-\item{ignore_case}{If `TRUE` ignores case.}
+\item{ignore_case}{If \code{TRUE} ignores case.}
 
-\item{perl}{If `TRUE`, uses perl-style regex.}
+\item{perl}{If \code{TRUE}, uses perl-style regex.}
 
-\item{fixed}{If `TRUE`, searches will be matched as-is.}
+\item{fixed}{If \code{TRUE}, searches will be matched as-is.}
 }
 \value{
 A tibble with information on matching datasets
@@ -36,4 +43,8 @@ matches one or more search strings.
 search1 <- tsg_search_funders(search = c("bbc", "caBinet"))
 }
 
+}
+\seealso{
+\code{\link[=tsg_search_grants]{tsg_search_grants()}} for retrieving all grants
+from matching funders.
 }

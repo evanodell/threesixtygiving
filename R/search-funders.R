@@ -17,6 +17,10 @@
 #' @param fixed If `TRUE`, searches will be matched as-is.
 #'
 #' @return A tibble with information on matching datasets
+#'
+#' @seealso [tsg_search_grants()] for retrieving all grants
+#' from matching funders.
+#'
 #' @export
 #'
 #' @examples

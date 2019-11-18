@@ -1,5 +1,5 @@
 
-# threesixtygiving 0.1.0.9000
+# threesixtygiving 0.1.1
 
 * Added date handling for Excel numeric date handling
 
@@ -8,9 +8,11 @@
   
 * Fixed warnings caused by non-matching column names in `tsg_core_data()`.
 
-* New internal data processing functions and file-reading functions
+* New internal data processing and file-reading functions
 
-* Reduce calls to grant files.
+* Replaced some `dplyr` functions with faster and more stable base-R functions.
+
+* Eliminated redundant calls to grant files URLS
 
 
 # threesixtygiving 0.1.0

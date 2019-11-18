@@ -10,12 +10,12 @@
 #'
 #' @return A list of tibbles with grant data.
 #' @export
-#' @seealso tsg_specific_data_search
-#' @seealso tsg_available
-#' @seealso tsg_missing
+#' @seealso [tsg_search_grants()]
+#' @seealso [tsg_available()]
+#' @seealso [tsg_missing()]
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' all_grants <- tsg_all_grants()
 #'
 #' missing_grants <- tsg_missing(all_grants)

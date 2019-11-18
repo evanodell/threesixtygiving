@@ -3,18 +3,18 @@
 #'
 #' Given a list returned by [tsg_all_grants()] or [tsg_search_grants()],
 #' creates a tibble with all available variables. This tibble contains roughly
-#' 200 columns if all
-#' available grants are used (as of October 2019), due to differences in
-#' how grant data is labelled and structured.
+#' 200 columns if all available grants are used (as of October 2019),
+#' due to differences in how grant data is labelled and structured.
 #'
-#' @seealso tsg_core_data
+#' @seealso [tsg_core_data()], which does the same processing but only returns
+#' the core variables in the 360Giving standard.
 #'
 #' @param min_coverage A number from 0 to 1. If >0, only returns variables
 #' with a value other than `NA` for at least that proportion of rows. Defaults
-#' to 0 and returns all columns
+#' to 0 and returns all columns.
 #' @inheritParams tsg_core_data
 #'
-#' @return A tibble with all variables from all grants.
+#' @return A tibble with all variables from all provided grants.
 #' @export
 #'
 #' @examples
@@ -23,7 +23,7 @@
 #'
 #' df <- tsg_process_data(grants)
 #' }
-#'
+
 tsg_process_data <- function(x, min_coverage = 0, verbose = TRUE) {
   df <- tsg_core_process(x, verbose, process_type = "all")
 

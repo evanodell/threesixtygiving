@@ -9,9 +9,11 @@
 #' automatically blocking requests, you can use [tsg_missing()] to identify
 #' missing sets of grant data.
 #'
-#' @param verbose If `TRUE`, prints console messages.
+#' @param verbose If `TRUE`, prints console messages on data retrieval progress.
+#' Defaults to `TRUE`.
 #' @param timeout The maximum request time, in seconds. If data is not returned
 #' in this time, a value of `NA` is returned for that dataset.
+#' Defaults to 30 seconds.
 #' @param retries The number of retries to make if a request is not successful.
 #' Defaults to 3.
 #' @param correct_names If `TRUE`, corrects known mistakes in column names,
@@ -21,7 +23,7 @@
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' all_grants <- tsg_all_grants()
 #' }
 #'

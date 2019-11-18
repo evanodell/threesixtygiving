@@ -8,14 +8,19 @@ Authors@R:
            email = "evanodell91@gmail.com",
            comment = c(ORCID='0000-0003-1845-808X'))
 Description: Access open data from <https://www.threesixtygiving.org>, a 
-    database of charitable grant giving in the UK. The package provides 
-    functions to search and retrieve data on charitable giving.
+    database of charitable grant giving in the UK operated by '360Giving'.
+    The package provides functions to search and retrieve data on charitable 
+    grant giving, and process that data into tidy formats. It relies on the 
+    '360Giving' data standard, described at 
+    <https://standard.threesixtygiving.org/>.
+URL: https://docs.evanodell.com/threesixtygiving, 
+     https://github.com/evanodell/threesixtygiving,
+BugReports: https://github.com/evanodell/threesixtygiving/issues
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports: 
     dplyr,
-    curl,
     httr,
     readxl,
     readr,
@@ -26,7 +31,8 @@ Imports:
     tidyselect,
     anytime,
     tibble
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0
+Roxygen: list(markdown = TRUE)
 Suggests: 
     covr,
     testthat (>= 2.1.0),

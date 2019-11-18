@@ -7,23 +7,23 @@
 tsg_process_data(x, min_coverage = 0, verbose = TRUE)
 }
 \arguments{
-\item{x}{A list of tibble with grant data returned by [tsg_all_grants()].}
+\item{x}{A list of tibble with grant data returned by \code{\link[=tsg_all_grants]{tsg_all_grants()}}.}
 
 \item{min_coverage}{A number from 0 to 1. If >0, only returns variables
-with a value other than `NA` for at least that proportion of rows. Defaults
-to 0 and returns all columns}
+with a value other than \code{NA} for at least that proportion of rows. Defaults
+to 0 and returns all columns.}
 
-\item{verbose}{If `TRUE`, prints console messages.}
+\item{verbose}{If \code{TRUE}, prints console messages on data retrieval progress.
+Defaults to \code{TRUE}.}
 }
 \value{
-A tibble with all variables from all grants.
+A tibble with all variables from all provided grants.
 }
 \description{
-Given a list returned by [tsg_all_grants()] or [tsg_search_grants()],
+Given a list returned by \code{\link[=tsg_all_grants]{tsg_all_grants()}} or \code{\link[=tsg_search_grants]{tsg_search_grants()}},
 creates a tibble with all available variables. This tibble contains roughly
-200 columns if all
-available grants are used (as of October 2019), due to differences in
-how grant data is labelled and structured.
+200 columns if all available grants are used (as of October 2019),
+due to differences in how grant data is labelled and structured.
 }
 \examples{
 \donttest{
@@ -31,8 +31,8 @@ grants <- tsg_all_grants()
 
 df <- tsg_process_data(grants)
 }
-
 }
 \seealso{
-tsg_core_data
+\code{\link[=tsg_core_data]{tsg_core_data()}}, which does the same processing but only returns
+the core variables in the 360Giving standard.
 }
