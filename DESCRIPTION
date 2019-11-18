@@ -40,5 +40,6 @@ Suggests:
     rmarkdown,
     ggplot2,
     scales,
-    stringi
+    stringi,
+    ggrepel
 VignetteBuilder: knitr
