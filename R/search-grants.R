@@ -4,18 +4,23 @@
 #'
 #' Returns a list of tibbles with details of all grants from specific funders.
 #'
-#' @details `tsg_specific_data_search` retrieves grants where funder data
+#' @details `tsg_search_grants` retrieves grants where funder data
 #' matches one or more search strings. If only one dataset
 #' matches queries, returns a tibble of that dataset.
 #' Use [tsg_specific_df()] to pass a dataframe.
 #'
 #' @inheritParams tsg_search_funders
-#' @param ... Additional params passed to [tsg_data_retrieval()]
+#' @param ... Additional params passed to [tsg_all_grants()]
 #'
 #' @return A single tibble (if only one grant maker matches the queries) or a
 #' list of tibbles (if the query matches multiple datasets).
 #' @export
-#' @seealso tsg_specific_df
+#'
+#' @seealso [tsg_search_funders()] for retrieving information on available
+#' datasets from matching funders. [tsg_specific_df()] to retrieve data
+#' contained with all or specific rows of a tibble returned
+#' by [tsg_available()] or [tsg_missing()].
+#'
 #'
 #' @examples
 #' \dontrun{

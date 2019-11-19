@@ -5,7 +5,13 @@
 \alias{threesixtygiving-package}
 \title{threesixtygiving package}
 \description{
-Charity funding data for the UK. See the
-[360 Giving website](https://www.threesixtygiving.org) for more information
-on the source of this data.
+360Giving is a data standard for publishing information about
+charitable grant giving in the UK. \code{threesixtygiving} provides functions to
+retrieve and process charitable grant funding data from 360Giving.
+}
+\details{
+See the \href{https://www.threesixtygiving.org/}{360 Giving website}
+for more information on the source of this data, and the
+\href{https://standard.threesixtygiving.org}{360Giving Standard} page for
+details of the data standard this package relies on.
 }

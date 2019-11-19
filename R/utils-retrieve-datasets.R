@@ -10,20 +10,13 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
       message(paste0("Downloading ", i, " of ", length(query_df$title)))
     }
 
-    suffix <- sub(
-      ".*\\.", "",
-      substr(
-        query_df$distribution[[i]]$download_url,
-        (nchar(query_df$distribution[[i]]$download_url) - 3),
-        nchar(query_df$distribution[[i]]$download_url)
-      )
-    )
+    suffix <- query_df$data_type[[i]]
 
     temp_f <- tempfile()
 
     result <- tryCatch( # Check availability
       {
-        httr::RETRY("GET", query_df$distribution[[i]]$download_url,
+        httr::RETRY("GET", query_df$download_url[[i]],
           httr::write_disk(temp_f, overwrite = TRUE),
           times = retries,
           httr::timeout(timeout), terminate_on_success = FALSE
@@ -33,6 +26,10 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
         return(NA)
       }
     )
+
+    suffix <- ifelse(suffix=="unknown",
+                     sub('.*/', '', result$headers$`content-type`),
+                     suffix)
 
     if (class(result) != "response") {
       if (verbose) message("Could not connect to server")
@@ -80,9 +77,10 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
         g_list[[i]]$publisher_prefix <- query_df$publisher_prefix[[i]]
         g_list[[i]]$data_type <- suffix
         g_list[[i]]$license_name <- query_df$license_name[[i]]
+        g_list[[i]]$license <- query_df$license[[i]]
 
-        if (correct_names == TRUE) {
-
+        if (correct_names == TRUE) { ## Name corrections
+          # The stringi option is about four times faster than base option
           if (requireNamespace("stringi", quietly = TRUE)) {
             names(g_list[[i]]) <- stringi::stri_replace_all_fixed(
               names(g_list[[i]]),
@@ -98,12 +96,11 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
             names(g_list[[i]]) <- gsub("sponsor_s", "sponsors",
                                        names(g_list[[i]]))
           }
-
-
         }
 
         # Handle weird naming problem
-        if (any(g_list[[i]]$publisher_prefix == "360G-BirminghamCC")) {
+        if ("identifier_2" %in% colnames(g_list[[i]]) &&
+             !("identifier" %in% colnames(g_list[[i]]))) {
           names(g_list[[i]]) <- gsub("identifier_2", "identifier",
             names(g_list[[i]]),
             fixed = TRUE

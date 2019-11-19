@@ -7,7 +7,7 @@
 tsg_missing(x)
 }
 \arguments{
-\item{x}{A list of tibble with grant data returned by [tsg_all_grants()].}
+\item{x}{A list of tibble with grant data returned by \code{\link[=tsg_all_grants]{tsg_all_grants()}}.}
 }
 \value{
 A tibble with details on funders missing data from a list of tibbles
@@ -15,7 +15,7 @@ passed to the function.
 }
 \description{
 Returns a tibble with details on any available data missing from a list
-of grants returned by [tsg_all_grants()].
+of grants returned by \code{\link[=tsg_all_grants]{tsg_all_grants()}}.
 }
 \examples{
 \dontrun{

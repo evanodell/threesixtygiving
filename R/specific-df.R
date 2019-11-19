@@ -10,9 +10,9 @@
 #'
 #' @return A list of tibbles with grant data.
 #' @export
-#' @seealso tsg_specific_data_search
-#' @seealso tsg_available
-#' @seealso tsg_missing
+#' @seealso [tsg_search_grants()]
+#' @seealso [tsg_available()]
+#' @seealso [tsg_missing()]
 #'
 #' @examples
 #' \dontrun{

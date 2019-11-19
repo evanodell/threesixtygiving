@@ -2,7 +2,8 @@ test_that("grant search and processing", {
   skip_on_cran()
 
   # Grant searching
-  spec1 <- tsg_search_grants(search = c("bbc", "caBinet"))
+  spec1 <- tsg_search_grants(search = c("bbc", "caBinet",
+                                        "Dundee", "Co-operative Group"))
   expect_type(spec1, "list")
   expect_true(tibble::is_tibble(spec1[[1]]))
 
@@ -21,10 +22,19 @@ test_that("grant search and processing", {
 
   core_df <- tsg_core_data(spec2)
   expect_true(tibble::is_tibble(core_df))
-  expect_length(core_df, 11)
+  expect_length(core_df, 12)
   expect_gte(nrow(core_df), 1)
 
   spec3 <- tsg_search_grants(search = c("wolfson"))
 
   expect_true(is.numeric(spec3$amount_awarded))
+
+  missing <- tsg_missing(spec1)
+
+  expect_true(tibble::is_tibble(missing))
+  expect_gte(nrow(missing), 10)
+  expect_length(missing, 14)
+
+  expect_error(tsg_missing("spec1"))
+
 })

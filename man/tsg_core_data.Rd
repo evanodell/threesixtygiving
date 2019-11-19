@@ -7,17 +7,18 @@
 tsg_core_data(x, verbose = TRUE)
 }
 \arguments{
-\item{x}{A list of tibble with grant data returned by [tsg_all_grants()].}
+\item{x}{A list of tibble with grant data returned by \code{\link[=tsg_all_grants]{tsg_all_grants()}}.}
 
-\item{verbose}{If `TRUE`, prints console messages.}
+\item{verbose}{If \code{TRUE}, prints console messages on data retrieval progress.
+Defaults to \code{TRUE}.}
 }
 \value{
-A tibble with core variables
+A tibble with the core variables in the 360Giving standard.
 }
 \description{
-Given a list returned by [tsg_all_grants()] or [tsg_search_grants()], creates
+Given a list returned by \code{\link[=tsg_all_grants]{tsg_all_grants()}} or \code{\link[=tsg_search_grants]{tsg_search_grants()}}, creates
 a tibble with the core variables required by the
-[360Giving](https://standard.threesixtygiving.org/en/latest/) open standard,
+\href{https://standard.threesixtygiving.org/en/latest/}{360Giving} open standard,
 as well as the publisher prefix, which is useful for data processing,
 and the licence the data was published under.
 }
@@ -27,4 +28,8 @@ grants <- tsg_all_grants()
 
 df <- tsg_core_data(grants)
 }
+}
+\seealso{
+\code{\link[=tsg_process_data]{tsg_process_data()}}, which does the same processing but returns
+all available variables.
 }

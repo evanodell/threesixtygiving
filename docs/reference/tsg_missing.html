@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -37,7 +37,7 @@
 
 <meta property="og:title" content="Identify missing data sets — tsg_missing" />
 <meta property="og:description" content="Returns a tibble with details on any available data missing from a list
-of grants returned by [tsg_all_grants()]." />
+of grants returned by tsg_all_grants()." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -52,6 +52,16 @@ of grants returned by [tsg_all_grants()]." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-90706059-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-90706059-1');
+</script>
 
 
   </head>
@@ -70,39 +80,50 @@ of grants returned by [tsg_all_grants()]." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">threesixtygiving</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="https://docs.evanodell.com">Docs Home</a>
+</li>
+<li>
+  <a href="../news/index.html">News</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../articles/introduction.html">Introduction</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Packages
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/introduction.html">Introduction</a>
+      <a href="https://docs.evanodell.com">Documentation Home</a>
     </li>
   </ul>
 </li>
-<li>
-  <a href="../news/index.html">Changelog</a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/EvanOdell/threesixtygiving">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://evanodell.com">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -117,13 +138,13 @@ of grants returned by [tsg_all_grants()]." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Identify missing data sets</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/evanodell/threesixtygiving/blob/master/R/missing-data.R'><code>R/missing-data.R</code></a></small>
     <div class="hidden name"><code>tsg_missing.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Returns a tibble with details on any available data missing from a list
-of grants returned by [tsg_all_grants()].</p>
+of grants returned by <code><a href='tsg_all_grants.html'>tsg_all_grants()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>tsg_missing</span>(<span class='no'>x</span>)</pre>
@@ -133,7 +154,7 @@ of grants returned by [tsg_all_grants()].</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A list of tibble with grant data returned by [tsg_all_grants()].</p></td>
+      <td><p>A list of tibble with grant data returned by <code><a href='tsg_all_grants.html'>tsg_all_grants()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -143,16 +164,11 @@ of grants returned by [tsg_all_grants()].</p>
 passed to the function.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='no'>all_grants</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tsg_all_grants.html'>tsg_all_grants</a></span>()</div><div class='output co'>#&gt; <span class='message'>Downloading 1 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 2 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 3 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 4 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 5 of 195</span></div><div class='output co'>#&gt; <span class='message'>New names:</span>
-#&gt; <span class='message'>* Identifier -&gt; Identifier...1</span>
-#&gt; <span class='message'>* Identifier -&gt; Identifier...2</span></div><div class='output co'>#&gt; <span class='message'>Downloading 6 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 7 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 8 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 9 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 10 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 11 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 12 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 13 of 195</span></div><div class='output co'>#&gt; <span class='message'>New names:</span>
-#&gt; <span class='message'>* `` -&gt; ...17</span></div><div class='output co'>#&gt; <span class='message'>Downloading 14 of 195</span></div><div class='output co'>#&gt; <span class='message'>New names:</span>
-#&gt; <span class='message'>* `` -&gt; ...17</span></div><div class='output co'>#&gt; <span class='message'>Downloading 15 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 16 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 17 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 18 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 19 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 20 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 21 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 22 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 23 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 24 of 195</span></div><div class='output co'>#&gt; <span class='message'>New names:</span>
-#&gt; <span class='message'>* `` -&gt; ...2</span></div><div class='output co'>#&gt; <span class='message'>Downloading 25 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 26 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 27 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 28 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 29 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 30 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 31 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 32 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 33 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 34 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 35 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 36 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 37 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 38 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 39 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 40 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 41 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 42 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 43 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 44 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 45 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 46 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 47 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 48 of 195</span></div><div class='output co'>#&gt; <span class='message'>Request failed [403]. Retrying in 1 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Request failed [403]. Retrying in 2.1 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Request failed: Client error: (403) Forbidden</span></div><div class='output co'>#&gt; <span class='message'>Downloading 49 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 50 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 51 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 52 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 53 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 54 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 55 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 56 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 57 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 58 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 59 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 60 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 61 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 62 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 63 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 64 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 65 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 66 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 67 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 68 of 195</span></div><div class='output co'>#&gt; <span class='message'>Joining, by = "Identifier"</span></div><div class='output co'>#&gt; <span class='message'>Downloading 69 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 70 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 71 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 72 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 73 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 74 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 75 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 76 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 77 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 78 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 79 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 80 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 81 of 195</span></div><div class='output co'>#&gt; <span class='message'>Joining, by = c("Identifier", "Funding Org:Identifier", "Funding Org:Name", "Funding Org:Department")</span></div><div class='output co'>#&gt; <span class='message'>Downloading 82 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 83 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 84 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 85 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 86 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 87 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 88 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 89 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 90 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 91 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 92 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 93 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 94 of 195</span></div><div class='output co'>#&gt; <span class='message'>New names:</span>
-#&gt; <span class='message'>* `` -&gt; ...27</span></div><div class='output co'>#&gt; <span class='message'>Downloading 95 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 96 of 195</span></div><div class='output co'>#&gt; <span class='message'>Request failed [404]. Retrying in 1.4 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Request failed [404]. Retrying in 2.8 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Request failed: Client error: (404) Not Found</span></div><div class='output co'>#&gt; <span class='message'>Downloading 97 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 98 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 99 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 100 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 101 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 102 of 195</span></div><div class='output co'>#&gt; <span class='message'>Request failed [403]. Retrying in 1 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Request failed [403]. Retrying in 1 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Request failed: Client error: (403) Forbidden</span></div><div class='output co'>#&gt; <span class='message'>Downloading 103 of 195</span></div><div class='output co'>#&gt; <span class='message'>Request failed [403]. Retrying in 1 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Request failed [403]. Retrying in 2.5 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Request failed: Client error: (403) Forbidden</span></div><div class='output co'>#&gt; <span class='message'>Downloading 104 of 195</span></div><div class='output co'>#&gt; <span class='message'>Request failed [403]. Retrying in 1 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Request failed [403]. Retrying in 1.7 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Request failed: Client error: (403) Forbidden</span></div><div class='output co'>#&gt; <span class='message'>Downloading 105 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 106 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 107 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 108 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 109 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 110 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 111 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 112 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 113 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 114 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 115 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 116 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 117 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 118 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 119 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 120 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 121 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 122 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 123 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 124 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 125 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 126 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 127 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 128 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 129 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 130 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 131 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 132 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 133 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 134 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 135 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 136 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 137 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 138 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 139 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 140 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 141 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 142 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 143 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 144 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 145 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 146 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 147 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 148 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 149 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 150 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 151 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 152 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 153 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 154 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 155 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 156 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 157 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 158 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 159 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 160 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 161 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 162 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 163 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 164 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 165 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 166 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 167 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 168 of 195</span></div><div class='output co'>#&gt; <span class='message'>Request failed [403]. Retrying in 1.4 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Request failed [403]. Retrying in 3.8 seconds...</span></div><div class='output co'>#&gt; <span class='message'>Request failed: Client error: (403) Forbidden</span></div><div class='output co'>#&gt; <span class='message'>Downloading 169 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 170 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 171 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 172 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 173 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 174 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 175 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 176 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 177 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 178 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 179 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 180 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 181 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 182 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 183 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 184 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 185 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 186 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 187 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 188 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 189 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 190 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 191 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 192 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 193 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 194 of 195</span></div><div class='output co'>#&gt; <span class='message'>Downloading 195 of 195</span></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>all_grants</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tsg_all_grants.html'>tsg_all_grants</a></span>()
+
 <span class='no'>missing_grants</span> <span class='kw'>&lt;-</span> <span class='fu'>tsg_missing</span>(<span class='no'>all_grants</span>)
-<span class='co'># }</span></div></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -168,7 +184,7 @@ passed to the function.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Evan Odell.</p>
+  <p>Developed by <a href='https://evanodell.com'>Evan Odell</a>.</p>
 </div>
 
 <div class="pkgdown">

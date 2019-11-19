@@ -4,32 +4,33 @@
 \alias{tsg_all_grants}
 \title{All grants}
 \usage{
-tsg_all_grants(verbose = TRUE, timeout = 30, retries = 3,
-  correct_names = TRUE)
+tsg_all_grants(verbose = TRUE, timeout = 30, retries = 3, correct_names = TRUE)
 }
 \arguments{
-\item{verbose}{If `TRUE`, prints console messages.}
+\item{verbose}{If \code{TRUE}, prints console messages on data retrieval progress.
+Defaults to \code{TRUE}.}
 
 \item{timeout}{The maximum request time, in seconds. If data is not returned
-in this time, a value of `NA` is returned for that dataset.}
+in this time, a value of \code{NA} is returned for that dataset.
+Defaults to 30 seconds.}
 
 \item{retries}{The number of retries to make if a request is not successful.
 Defaults to 3.}
 
-\item{correct_names}{If `TRUE`, corrects known mistakes in column names,
-such as spelling mistakes. Defaults to `TRUE`.}
+\item{correct_names}{If \code{TRUE}, corrects known mistakes in column names,
+such as spelling mistakes. Defaults to \code{TRUE}.}
 }
 \value{
 A list of tibbles with grant data.
 }
 \description{
 Returns a list of data frames with details of all grants from funders
-returned by [tsg_available()].
+returned by \code{\link[=tsg_available]{tsg_available()}}.
 }
 \details{
 Due to the structure of the 360 Giving data, the package will make
 multiple attempts to request data. This can cause issues with servers
-automatically blocking requests, you can use [tsg_missing()] to identify
+automatically blocking requests, you can use \code{\link[=tsg_missing]{tsg_missing()}} to identify
 missing sets of grant data.
 }
 \examples{

@@ -6,6 +6,6 @@ bibtype = "manual",
   author = c(person("Evan", "Odell")),
   year = 2019,
   doi = "10.5281/zenodo.3474128",
-  url = c("https://github.com/evanodell/threesixtygiving"),
+  url = c("https://docs.evanodell.com/threesixtygiving"),
   note = note
 )

@@ -1,7 +1,7 @@
 
 #' Available datasets
 #'
-#' Information on the available datasets
+#' Information on the available datasets.
 #'
 #' @return A tibble with details on all available datasets.
 #' @export
@@ -36,7 +36,12 @@ tsg_available <- function() {
                                                 "xlsx", "xls"))) {
       df$distribution[[i]]$data_type <- "unknown"
     }
+
+    df$distribution[[i]]$title <- NULL
+
   }
+
+  df <- tidyr::unnest_wider(df, col = "distribution")
 
   df
 }

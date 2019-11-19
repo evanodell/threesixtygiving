@@ -14,4 +14,12 @@ test_that("funder searching works", {
 
   # expect_length(search2, 13)
   expect_true(any(grepl("City Bridge", search2$publisher_name)))
+
+  search2 <- tsg_specific_df(search1)
+
+  expect_true(tibble::is_tibble(search2[[1]]))
+  expect_equal(length(search2), nrow(search1))
+
+  expect_error(tsg_specific_df("search1"))
+
 })

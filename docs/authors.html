@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -50,6 +50,16 @@
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-90706059-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-90706059-1');
+</script>
+
 
   </head>
 
@@ -67,39 +77,50 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">threesixtygiving</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="https://docs.evanodell.com">Docs Home</a>
+</li>
+<li>
+  <a href="news/index.html">News</a>
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="articles/introduction.html">Introduction</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Packages
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="articles/introduction.html">Introduction</a>
+      <a href="https://docs.evanodell.com">Documentation Home</a>
     </li>
   </ul>
 </li>
-<li>
-  <a href="news/index.html">Changelog</a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/EvanOdell/threesixtygiving">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://evanodell.com">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -114,20 +135,20 @@
   <div class="contents col-md-9">
     <div class="page-header">
       <h1>Citation</h1>
-      
+      <small class="dont-index">Source: <a href='https://github.com/evanodell/threesixtygiving/blob/master/inst/CITATION'><code>inst/CITATION</code></a></small>
     </div>
 
     <p>Odell E (2019).
 <em>threesixtygiving: Download Charitable Grants from the '360Giving' Platform</em>.
-doi: <a href="https://doi.org/10.5281/zenodo.3474128">10.5281/zenodo.3474128</a>, R package version 0.1.0.9000, <a href="https://github.com/evanodell/threesixtygiving">https://github.com/evanodell/threesixtygiving</a>. 
+doi: <a href="https://doi.org/10.5281/zenodo.3474128">10.5281/zenodo.3474128</a>, R package version 0.1.1, <a href="https://docs.evanodell.com/threesixtygiving">https://docs.evanodell.com/threesixtygiving</a>. 
 </p>
     <pre>@Manual{,
   title = {threesixtygiving: Download Charitable Grants from the '360Giving' Platform},
   author = {Evan Odell},
   year = {2019},
   doi = {10.5281/zenodo.3474128},
-  url = {https://github.com/evanodell/threesixtygiving},
-  note = {R package version 0.1.0.9000},
+  url = {https://docs.evanodell.com/threesixtygiving},
+  note = {R package version 0.1.1},
 }</pre>
 
     <div class="page-header">
@@ -136,7 +157,7 @@ doi: <a href="https://doi.org/10.5281/zenodo.3474128">10.5281/zenodo.3474128</a>
 
     <ul class="list-unstyled">
       <li>
-        <p><strong>Evan Odell</strong>. Author, maintainer. <a href='https://orcid.org/0000-0003-1845-808X' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid' alt='ORCID'></a>
+        <p><strong><a href='https://evanodell.com'>Evan Odell</a></strong>. Author, maintainer. <a href='https://orcid.org/0000-0003-1845-808X' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid' alt='ORCID'></a>
         </p>
       </li>
     </ul>
@@ -149,7 +170,7 @@ doi: <a href="https://doi.org/10.5281/zenodo.3474128">10.5281/zenodo.3474128</a>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Evan Odell.</p>
+  <p>Developed by <a href='https://evanodell.com'>Evan Odell</a>.</p>
 </div>
 
 <div class="pkgdown">

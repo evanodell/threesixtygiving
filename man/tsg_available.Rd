@@ -10,7 +10,7 @@ tsg_available()
 A tibble with details on all available datasets.
 }
 \description{
-Information on the available datasets
+Information on the available datasets.
 }
 \examples{
 \dontrun{
