@@ -2,8 +2,8 @@ test_that("grant search and processing", {
   skip_on_cran()
 
   # Grant searching
-  spec1 <- tsg_search_grants(search = c("bbc", "caBinet",
-                                        "Dundee", "Co-operative Group"))
+  spec1 <- tsg_search_grants(search = c("bbc", "caBinet", "Dundee",
+                                        "Co-operative Group", "masoNIC"))
   expect_type(spec1, "list")
   expect_true(tibble::is_tibble(spec1[[1]]))
 
@@ -13,6 +13,13 @@ test_that("grant search and processing", {
   expect_gte(nrow(proc_df), 1)
   expect_equal(class(proc_df$award_date), "Date")
   expect_equal(class(proc_df$amount_awarded), "numeric")
+
+  proc_df2 <- tsg_process_data(spec1, min_coverage = 0.5)
+  expect_gte(length(proc_df), length(proc_df2))
+  expect_true(tibble::is_tibble(proc_df2))
+  expect_gte(nrow(proc_df2), 1)
+  expect_equal(class(proc_df2$award_date), "Date")
+  expect_equal(class(proc_df2$amount_awarded), "numeric")
 
 
   spec2 <- tsg_search_grants("ear",
