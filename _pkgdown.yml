@@ -22,10 +22,8 @@ navbar:
       menu:
     - text: "Introduction"
       href: articles/introduction.html
-    - text: "Packages"
-      menu:
-        - text: "Documentation Home"
-          href: https://docs.evanodell.com
+    - text: "All Packages"
+      href: https://docs.evanodell.com
 
   right:
     - icon: fa-github fa-lg
