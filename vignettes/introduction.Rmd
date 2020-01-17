@@ -58,15 +58,15 @@ Now, here's how you do it in R. The bits with "#"'s in front of them are comment
 
 ```{r grouping-example, eval=FALSE}
 library(threesixtygiving)
-library(dpyr) ## A package used to manipulate and process data
+library(dplyr) ## A package used to manipulate and process data
 
 # Download all the grant data available.
 # It comes out in a list of tibbles but that's not a problem:
-grant_list <- tsg_all_grants() 
+grants <- tsg_all_grants(timeout = 10, retries = 0) 
 
 # Get just the core data required by the 360Giving standard.
 # Convert that list of tibbles into a tidy format:
-all_data <- tsg_core_data(grant_list) 
+all_data <- tsg_core_data(grants) 
 
 avg_size <- all_data %>% #This %>% thing is a called a pipe. Pipes are love. Pipes are life.
   filter(currency == "GBP") %>% # Filter out non-£ data
@@ -181,7 +181,6 @@ tsg_missing(grants)
 
 However, we know they are missing, and we can retry downloading just them if needed using the `tsg_specific_df()` function. But I'll ignore them for now.
 
-
 ## Core data
 
 `tsg_all_grants` returns a list of tibbles, due to differences in the data provided by each funder. `tsg_core_data` returns a tibble with the 10 columns in the [360Giving Open Standard](https://standard.threesixtygiving.org/en/latest/#), plus the publisher prefix used to identify each funder. In the case below I have converted non-GBP currencies to GBP on the rates on 2019-11-14.
@@ -192,10 +191,10 @@ df <- tsg_core_data(grants)
 
 df2 <- df %>% 
   mutate(amount_awarded = case_when(
-    currency == "USD" ~ amount_awarded/1.29, ## rate on 2019-10-24
-    currency == "CAD" ~ amount_awarded/1.70, 
-    currency == "CHF" ~ amount_awarded/1.27, 
-    currency == "EUR" ~ amount_awarded/1.17,
+    currency == "USD" ~ amount_awarded/1.3044, ## rate on 2020-01-17
+    currency == "CAD" ~ amount_awarded/1.7017, 
+    currency == "CHF" ~ amount_awarded/1.2630, 
+    currency == "EUR" ~ amount_awarded/1.1750,
     TRUE ~ amount_awarded)) %>%
   group_by(funding_org_name) %>%
   summarise(n = n(),
@@ -219,9 +218,9 @@ p1 <- ggplot(df2 %>% top_n(20, amount_awarded) %>%
   scale_x_discrete(labels = scales::wrap_format(30)) + 
   scale_fill_viridis_c() + 
   labs(x = "Funder", y = "Amount Awarded 
-       (in 100,000s, note logarithmic scale)",
+       (in 100,000s, note square-root scale)",
        title = "Total Value of Grants Awarded by Twenty Largest Funders",
-       caption = "(c) Evan Odell | Disability Rights UK | 2019 | CC-BY-SA
+       caption = "(c) Evan Odell | Disability Rights UK | 2020 | CC-BY-SA
        Data from 360Giving") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
         legend.position = "none") 
@@ -252,7 +251,7 @@ p2 <- ggplot(df2 %>% top_n(20, amount_awarded),
   labs(x = "Funder", y = "Average Grant Value",
        title = "Average Grant Value",
        subtitle = "Label is the total number of grants awarded",
-       caption = "(c) Evan Odell | Disability Rights UK | 2019 | CC-BY-SA
+       caption = "(c) Evan Odell | Disability Rights UK | 2020 | CC-BY-SA
        Data from 360Giving") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
         legend.position = "none") 
@@ -280,13 +279,14 @@ p3 <- ggplot(df2, aes(x = n, y = avg, colour = amount_awarded)) +
                     distinct(),
                   mapping = aes(label = funding_org_name), colour = "black",
                   direction = "both",
-                  arrow = arrow(length = unit(0.03, "npc"), type = "open", ends = "last")) + 
+                  arrow = arrow(length = unit(0.03, "npc"),
+                                type = "open", ends = "last")) + 
   scale_colour_viridis_c() + 
   scale_y_log10(labels = scales::dollar_format(prefix = "£")) + 
   scale_x_log10(labels = scales::comma) + 
   labs(y = "Average Grant Value", x = "Number of Grants",
        title = "Average Grant Value vs Number of Grants",
-       caption = "(c) Evan Odell | Disability Rights UK | 2019 | CC-BY-SA
+       caption = "(c) Evan Odell | Disability Rights UK | 2020 | CC-BY-SA
        Data from 360Giving") +
   theme(legend.position = "none") 
 
@@ -342,14 +342,13 @@ p4 <- ggplot(proc_amount_df %>% filter(difference != 0),
                                 0, 2500, 5000, 7500)) + 
   labs(x = "Difference between Award and Application Amount",
        y = "Number of Grants",
-       caption = "(c) Evan Odell | Disability Rights UK | 2019 | CC-BY-SA
+       caption = "(c) Evan Odell | Disability Rights UK | 2020 | CC-BY-SA
        Data from 360Giving")
 
 p4
 ```
 
 ```{r award-differences-save, eval=FALSE, include=FALSE}
-
 ggsave("vignettes/grant-diff-value.png", p4, type = "cairo",
        width = 20, height = 18, units = "cm", dpi = 96)
 ```
@@ -370,27 +369,23 @@ p5 <- ggplot(proc_amount_df %>%
   scale_color_viridis_c() + 
   scale_y_continuous(labels = scales::comma) + 
   scale_x_continuous(labels = scales::percent,
-                     breaks = c(0, 0.25, 0.5, 0.75,0.9, 1, 1.25, 1.5, 2)) + 
+                     breaks = c(0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 2)) + 
   labs(x = "Award size as percentage of amount applied for",
        y = "Number of Grants",
-       caption = "(c) Evan Odell | Disability Rights UK | 2019 | CC-BY-SA
+       caption = "(c) Evan Odell | Disability Rights UK | 2020 | CC-BY-SA
        Data from 360Giving")
 
 p5
 ```
 
 ```{r percentage-awardeds-save, eval=FALSE, include=FALSE}
-
-ggsave("vignettes/grant-diff-perc.png", p4, type = "cairo",
+ggsave("vignettes/grant-diff-perc.png", p5, type = "cairo",
        width = 20, height = 18, units = "cm", dpi = 96)
 ```
 
 ![](grant-diff-perc.png)
 
-
-
 ### Systemic change funders
-
 
 Organisations that are focused on systemic change and policy-influencing seem to be particularly reliant on trusts and foundations for income. This may be because charitable trusts, particularly large, professionalised funders, have different criteria than members of the public donating money. The most popular type of charity for public donations is animal welfare, according to the [Charities Aid Foundation](https://www.cafonline.org/docs/default-source/about-us-publications/caf-uk-giving-2019-report-an-overview-of-charitable-giving-in-the-uk.pdf?sfvrsn=c4a29a40_4), likely because of the emotional connection many people feel with animals.
 
@@ -453,7 +448,7 @@ p6 <- ggplot(data = twenty_strats,
         legend.position = "none") + 
   labs(x = "Funder", y ="Percentage of Total Grants",
        title = "Percentage of Total Grant Values to Strategic and Systemic Change",
-       caption = "(c) Evan Odell | Disability Rights UK | 2019 | CC-BY-SA
+       caption = "(c) Evan Odell | Disability Rights UK | 2020 | CC-BY-SA
        Data from 360Giving")
 
 p6

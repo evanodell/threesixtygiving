@@ -27,7 +27,7 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
       }
     )
 
-    suffix <- ifelse(suffix=="unknown",
+    suffix <- ifelse((suffix=="unknown" && !is.na(result)),
                      sub('.*/', '', result$headers$`content-type`),
                      suffix)
 

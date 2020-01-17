@@ -34,7 +34,24 @@ tsg_available <- function() {
 
     if (!(df$distribution[[i]]$data_type %in% c("json", "csv",
                                                 "xlsx", "xls"))) {
-      df$distribution[[i]]$data_type <- "unknown"
+
+      url_check <- sub(
+        ".*\\.", "",
+        substr(
+          df$distribution[[i]]$access_url,
+          (nchar(df$distribution[[i]]$access_url) - 3),
+          nchar(df$distribution[[i]]$access_url)
+        )
+      )
+
+      if (url_check %in% c("json", "csv", "xlsx", "xls")) {
+        url_hold <- df$distribution[[i]]$download_url
+        df$distribution[[i]]$download_url <- df$distribution[[i]]$access_url
+        df$distribution[[i]]$access_url <- url_hold
+        df$distribution[[i]]$data_type <- url_check
+      } else {
+        df$distribution[[i]]$data_type <- "unknown"
+      }
     }
 
     df$distribution[[i]]$title <- NULL
