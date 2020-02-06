@@ -87,7 +87,7 @@ p1 <- ggplot(df2 %>% top_n(20, amount_awarded) %>%
   labs(x = "Funder", y = "Amount Awarded 
        (in 100,000s, note logarithmic scale)",
        title = "Total Value of Grants Awarded by Twenty Largest Funders",
-       caption = "(c) Evan Odell | Disability Rights UK | 2019 | CC-BY-SA
+       caption = "(c) Evan Odell | Disability Rights UK | 2020 | CC-BY-SA
        Data from 360Giving") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
         legend.position = "none") 

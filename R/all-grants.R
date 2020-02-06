@@ -15,7 +15,7 @@
 #' in this time, a value of `NA` is returned for that dataset.
 #' Defaults to 30 seconds.
 #' @param retries The number of retries to make if a request is not successful.
-#' Defaults to 3.
+#' Defaults to 0.
 #' @param correct_names If `TRUE`, corrects known mistakes in column names,
 #' such as spelling mistakes. Defaults to `TRUE`.
 #'
@@ -27,7 +27,7 @@
 #' all_grants <- tsg_all_grants()
 #' }
 #'
-tsg_all_grants <- function(verbose = TRUE, timeout = 30, retries = 3,
+tsg_all_grants <- function(verbose = TRUE, timeout = 30, retries = 0,
                            correct_names = TRUE) {
   grant_df <- tsg_available()
 

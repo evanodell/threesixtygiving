@@ -1,8 +1,8 @@
 
 ## Retrieve datasets for all specified datasets. Accepts returns of
 # tsg_available and tsg_specific_data
-tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
-                               retries = 3, correct_names = TRUE) {
+tsg_data_retrieval <- function(query_df, verbose = verbose, timeout = timeout,
+                               retries = retries, correct_names = correct_names) {
   g_list <- list()
 
   for (i in seq_along(query_df$title)) {
@@ -17,6 +17,7 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
     result <- tryCatch( # Check availability
       {
         httr::RETRY("GET", query_df$download_url[[i]],
+                    httr::user_agent("Mozilla/5.0"),
           httr::write_disk(temp_f, overwrite = TRUE),
           times = retries,
           httr::timeout(timeout), terminate_on_success = FALSE
@@ -34,7 +35,23 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
     if (class(result) != "response") {
       if (verbose) message("Could not connect to server")
       g_list[[i]] <- tibble::tibble()
-    } else if (httr::status_code(result) != 200) {
+    } else if (httr::status_code(result) == 403) {
+      data_dir <- tempdir()
+
+      destfile <- file.path(data_dir, basename(query_df$download_url[[i]]))
+
+      curl::curl_download(query_df$download_url[[i]], destfile)
+      if (suffix == "csv") {
+        g_list[[i]] <- readr::read_csv(
+          destfile,
+          col_types = readr::cols(.default = "c")
+        )
+      } else if (suffix %in% c("xlsx", "xls")) {
+        g_list[[i]] <- tsg_excel(destfile)
+      } else if (suffix == "json") {
+        g_list[[i]] <- tsg_json(destfile)
+      }
+    } else if (!(httr::status_code(result) %in% c(200, 403))) {
       resp <- httr::http_status(result)
       message("Request failed: ", resp$message)
       g_list[[i]] <- tibble::tibble()
@@ -69,6 +86,8 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
           g_list[[i]] <- tsg_json(temp_f)
         }
       }
+
+    }
 
       if (is.data.frame(g_list[[i]]) & length(g_list[[i]]) > 1) {
         g_list[[i]] <- janitor::remove_empty(
@@ -136,7 +155,7 @@ tsg_data_retrieval <- function(query_df, verbose = TRUE, timeout = 30,
         # Make award amounts an integer
         g_list[[i]]$amount_awarded <- as.integer(g_list[[i]]$amount_awarded)
       }
-    }
+
   }
   g_list
 }

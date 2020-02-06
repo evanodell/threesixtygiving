@@ -54,6 +54,12 @@ tsg_available <- function() {
       }
     }
 
+    if (grepl("glasgow", df$publisher_name[[i]], ignore.case = TRUE)) {
+      df$distribution[[i]]$download_url <- gsub(
+        "http:", "https:", df$distribution[[i]]$download_url, fixed = TRUE
+        )
+    }
+
     df$distribution[[i]]$title <- NULL
 
   }

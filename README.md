@@ -89,7 +89,7 @@ p1 <- ggplot(df2 %>% top_n(20, amount_awarded) %>%
   labs(x = "Funder", y = "Amount Awarded 
        (in 100,000s, note logarithmic scale)",
        title = "Total Value of Grants Awarded by Twenty Largest Funders",
-       caption = "(c) Evan Odell | Disability Rights UK | 2019 | CC-BY-SA
+       caption = "(c) Evan Odell | Disability Rights UK | 2020 | CC-BY-SA
        Data from 360Giving") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
         legend.position = "none") 
@@ -119,7 +119,7 @@ Please cite `threesixtygiving` as:
 Odell, Evan (2019). *threesixtygiving: Download Charitable Grants from
 the ‘360Giving’ Platform*. doi:
 [10.5281/zenodo.3474128](https://doi.org/10.5281/zenodo.3474128), R
-package version 0.1.1, URL:
+package version 0.1.1.9000, URL:
 <https://docs.evanodell.com/threesixtygiving>
 
 A BibTeX entry for LaTeX users is:
@@ -131,7 +131,7 @@ A BibTeX entry for LaTeX users is:
     year = {2019},
     doi = {10.5281/zenodo.3474128},
     url = {https://docs.evanodell.com/threesixtygiving},
-    note = {R package version 0.1.1},
+    note = {R package version 0.1.1.9000},
   }
 ```
 

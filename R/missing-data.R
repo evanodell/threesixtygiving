@@ -30,3 +30,49 @@ tsg_missing <- function(x) {
 
   missing_df
 }
+
+
+
+
+
+
+# tsg_download_missing <- function(x, data_dir = tempdir()) {
+# ## Not working yet, need to complete to download missing data
+#
+#   g_list <- list()
+#
+#   for (i in seq_along(x$title)) {
+#     if (verbose) {
+#       message(paste0("Downloading ", i, " of ", length(x$title)))
+#     }
+#
+#     suffix <- x$data_type[[i]]
+#
+#     result <- tryCatch( # Check availability
+#       {
+#         httr::RETRY("GET", x$download_url[[i]], httr::user_agent("Mozilla/5.0"),
+#                     httr::write_disk(temp_f, overwrite = TRUE),
+#                     times = retries,
+#                     httr::timeout(timeout), terminate_on_success = FALSE
+#         )
+#       },
+#       error = function(cond) {
+#         return(NA)
+#       }
+#     )
+#
+#     g_list[[i]] <- result
+#
+#
+#   # destfile <- file.path (data_dir, basename(x$download_url[[i]]))
+#   #
+#   # curl::curl_download(x$download_url[[i]], destfile)
+#   #
+#   #
+#   # resp <- httr::GET (x$download_url[[i]],
+#   #                    httr::write_disk (destfile, overwrite = TRUE))
+#
+#   }
+#
+# }
+

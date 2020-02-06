@@ -3,6 +3,8 @@
 
 * More testing coverage
 
+* Fixing 403 errors and problems caused by HTTPS redirects.
+
 
 # threesixtygiving 0.1.1
 

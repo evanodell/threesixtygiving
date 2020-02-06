@@ -22,6 +22,6 @@
 #' @importFrom anytime anydate
 #' @importFrom tibble as_tibble tibble
 #' @importFrom tidyr unnest_wider
-#' @importFrom httr RETRY write_disk timeout status_code http_status
+#' @importFrom httr RETRY write_disk timeout status_code http_status user_agent
 #' @aliases NULL threesixtygiving-package
 NULL
