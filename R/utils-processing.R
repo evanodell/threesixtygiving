@@ -33,6 +33,12 @@ tsg_core_process <- function(x, verbose, process_type) {
           x[[i]][["recipient_organization_location"]] <- purrr::flatten(
             x[[i]][["recipient_organization_location"]]
           )
+
+          x[[i]][["recipient_organization_location"]] <- lapply(
+            x[[i]][["recipient_organization_location"]],
+            tibble::as_tibble)
+
+
           x[[i]] <- tidyr::unnest_wider(x[[i]],
                                         "recipient_organization_location",
                                         names_sep = "_"
@@ -43,6 +49,7 @@ tsg_core_process <- function(x, verbose, process_type) {
           x[[i]][["funding_organization_location"]] <- purrr::flatten(
             x[[i]][["funding_organization_location"]]
           )
+
           x[[i]] <- tidyr::unnest_wider(x[[i]], "funding_organization_location",
             names_sep = "_"
           )
