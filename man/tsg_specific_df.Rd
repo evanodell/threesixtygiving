@@ -18,7 +18,7 @@ in this time, a value of \code{NA} is returned for that dataset.
 Defaults to 30 seconds.}
 
 \item{retries}{The number of retries to make if a request is not successful.
-Defaults to 3.}
+Defaults to 0.}
 }
 \value{
 A list of tibbles with grant data.

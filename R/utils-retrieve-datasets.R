@@ -1,8 +1,8 @@
 
 ## Retrieve datasets for all specified datasets. Accepts returns of
 # tsg_available and tsg_specific_data
-tsg_data_retrieval <- function(query_df, verbose = verbose, timeout = timeout,
-                               retries = retries, correct_names = correct_names) {
+tsg_data_retrieval <- function(query_df, verbose = verbose, timeout = 30,
+                               retries = 0, correct_names = TRUE) {
   g_list <- list()
 
   for (i in seq_along(query_df$title)) {

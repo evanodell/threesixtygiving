@@ -4,7 +4,7 @@
 \alias{tsg_all_grants}
 \title{All grants}
 \usage{
-tsg_all_grants(verbose = TRUE, timeout = 30, retries = 3, correct_names = TRUE)
+tsg_all_grants(verbose = TRUE, timeout = 30, retries = 0, correct_names = TRUE)
 }
 \arguments{
 \item{verbose}{If \code{TRUE}, prints console messages on data retrieval progress.
@@ -15,7 +15,7 @@ in this time, a value of \code{NA} is returned for that dataset.
 Defaults to 30 seconds.}
 
 \item{retries}{The number of retries to make if a request is not successful.
-Defaults to 3.}
+Defaults to 0.}
 
 \item{correct_names}{If \code{TRUE}, corrects known mistakes in column names,
 such as spelling mistakes. Defaults to \code{TRUE}.}
