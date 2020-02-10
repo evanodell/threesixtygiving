@@ -66,5 +66,7 @@ tsg_available <- function() {
 
   df <- tidyr::unnest_wider(df, col = "distribution")
 
+  df$modified <- as.POSIXct(gsub("T", " ", df$modified))
+
   df
 }
