@@ -23,5 +23,6 @@
 #' @importFrom tibble as_tibble tibble
 #' @importFrom tidyr unnest_wider
 #' @importFrom httr RETRY write_disk timeout status_code http_status user_agent
+#' @importFrom curl curl_download
 #' @aliases NULL threesixtygiving-package
 NULL

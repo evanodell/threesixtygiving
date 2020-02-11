@@ -30,7 +30,8 @@ Imports:
     tidyr,
     tidyselect,
     anytime,
-    tibble
+    tibble,
+    curl
 RoxygenNote: 7.0.2
 Roxygen: list(markdown = TRUE)
 Suggests: 
