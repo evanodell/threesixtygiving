@@ -1,9 +1,11 @@
 
 #' Available datasets
 #'
-#' Information on the available datasets.
+#' Returns a tibble with information on all datasets available through
+#' 360Giving. Some funders have multiple datasets
 #'
 #' @return A tibble with details on all available datasets.
+#'
 #' @export
 #'
 #' @examples
@@ -54,11 +56,11 @@ tsg_available <- function() {
       }
     }
 
-    if (grepl("glasgow", df$publisher_name[[i]], ignore.case = TRUE)) {
-      df$distribution[[i]]$download_url <- gsub(
-        "http:", "https:", df$distribution[[i]]$download_url, fixed = TRUE
-        )
-    }
+    # if (grepl("glasgow", df$publisher_name[[i]], ignore.case = TRUE)) {
+    #   df$distribution[[i]]$download_url <- gsub(
+    #     "http:", "https:", df$distribution[[i]]$download_url, fixed = TRUE
+    #     )
+    # }
 
     df$distribution[[i]]$title <- NULL
 
@@ -67,6 +69,8 @@ tsg_available <- function() {
   df <- tidyr::unnest_wider(df, col = "distribution")
 
   df$modified <- as.POSIXct(gsub("T", " ", df$modified))
+
+  df$issued <- as.Date(df$issued)
 
   df
 }

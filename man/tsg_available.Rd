@@ -10,11 +10,30 @@ tsg_available()
 A tibble with details on all available datasets.
 }
 \description{
-Information on the available datasets.
+Returns a tibble with information on all datasets available through
+360Giving.
 }
 \examples{
 \dontrun{
 available <- tsg_available()
 }
 
+}
+\section{Available data}{
+\itemize{
+\item "title"
+\item "description"
+\item "identifier"
+\item "license"
+\item "license_name"
+\item "issued"
+\item "modified"
+\item "download_url"
+\item "access_url"
+\item "data_type"
+\item "publisher_name"
+\item "publisher_website"
+\item "publisher_logo"
+\item "publisher_prefix"
+}
 }
