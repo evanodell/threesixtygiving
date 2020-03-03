@@ -23,7 +23,7 @@
 #' more_grants <- tsg_specific_df(missing_grants)
 #' }
 #'
-tsg_specific_df <- function(x, verbose = TRUE, timeout = 30, retries = 3) {
+tsg_specific_df <- function(x, verbose = TRUE, timeout = 30, retries = 0) {
   if (!is.data.frame(x)) {
     stop("`x` must be a data frames with grant metadata.", call. = FALSE)
   }

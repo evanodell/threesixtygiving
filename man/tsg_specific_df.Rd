@@ -4,7 +4,7 @@
 \alias{tsg_specific_df}
 \title{Get specific datasets}
 \usage{
-tsg_specific_df(x, verbose = TRUE, timeout = 30, retries = 3)
+tsg_specific_df(x, verbose = TRUE, timeout = 30, retries = 0)
 }
 \arguments{
 \item{x}{All or a subset of a tibble returned by
