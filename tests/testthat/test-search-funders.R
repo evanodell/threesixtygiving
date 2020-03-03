@@ -21,5 +21,4 @@ test_that("funder searching works", {
   expect_equal(length(search2), nrow(search1))
 
   expect_error(tsg_specific_df("search1"))
-
 })

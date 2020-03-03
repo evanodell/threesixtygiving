@@ -23,7 +23,7 @@
 #'
 #' df <- tsg_process_data(grants)
 #' }
-
+#'
 tsg_process_data <- function(x, min_coverage = 0, verbose = TRUE) {
   df <- tsg_core_process(x, verbose, process_type = "all")
 

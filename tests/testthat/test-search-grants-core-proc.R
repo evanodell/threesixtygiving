@@ -2,8 +2,10 @@ test_that("grant search and processing", {
   skip_on_cran()
 
   # Grant searching
-  spec1 <- tsg_search_grants(search = c("bbc", "caBinet", "Dundee",
-                                        "Co-operative Group", "masoNIC"))
+  spec1 <- tsg_search_grants(search = c(
+    "bbc", "caBinet", "Dundee",
+    "Co-operative Group", "masoNIC"
+  ))
   expect_type(spec1, "list")
   expect_true(tibble::is_tibble(spec1[[1]]))
 
@@ -43,5 +45,4 @@ test_that("grant search and processing", {
   expect_length(missing, 14)
 
   expect_error(tsg_missing("spec1"))
-
 })

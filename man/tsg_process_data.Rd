@@ -31,6 +31,7 @@ grants <- tsg_all_grants()
 
 df <- tsg_process_data(grants)
 }
+
 }
 \seealso{
 \code{\link[=tsg_core_data]{tsg_core_data()}}, which does the same processing but only returns

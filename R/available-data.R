@@ -34,9 +34,10 @@ tsg_available <- function() {
       )
     )
 
-    if (!(df$distribution[[i]]$data_type %in% c("json", "csv",
-                                                "xlsx", "xls"))) {
-
+    if (!(df$distribution[[i]]$data_type %in% c(
+      "json", "csv",
+      "xlsx", "xls"
+    ))) {
       url_check <- sub(
         ".*\\.", "",
         substr(
@@ -63,7 +64,6 @@ tsg_available <- function() {
     # }
 
     df$distribution[[i]]$title <- NULL
-
   }
 
   df <- tidyr::unnest_wider(df, col = "distribution")

@@ -5,9 +5,9 @@ tsg_excel <- function(temp_f) {
     { ## majority of returns
       if (length(readxl::excel_sheets(temp_f)) > 1) {
         multi <- lapply(readxl::excel_sheets(temp_f),
-                        readxl::read_excel,
-                        path = temp_f,
-                        guess_max = 21474836
+          readxl::read_excel,
+          path = temp_f,
+          guess_max = 21474836
         )
 
         s_rows <- nrow(multi[[1]])
