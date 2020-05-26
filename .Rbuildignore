@@ -7,3 +7,5 @@
 ^appveyor\.yml$
 ^CODE_OF_CONDUCT\.md$
 vignettes/grants.rds
+docs
+^\_pkgdown\.yml$

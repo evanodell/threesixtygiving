@@ -150,13 +150,13 @@ grants <- tsg_all_grants(timeout = 8, retries = 1)
 ```{r save-grants, eval=FALSE, include=FALSE}
 library(readr)
 
-write_rds(grants, "vignettes/grants.rds")
+write_rds(grants, "grants.rds")
 
 ```
 
 
 ```{r read-in-grant-rds, include=FALSE, eval=FALSE}
-grants <- read_rds("vignettes/grants.rds")
+grants <- read_rds("grants.rds")
 ```
 
 Because of my minimal timeout and retries, as well as possible other problems with how organisations configure their servers, there are some datasets missing: 
