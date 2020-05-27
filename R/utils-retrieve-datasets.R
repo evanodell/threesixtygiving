@@ -155,7 +155,15 @@ tsg_data_retrieval <- function(query_df, verbose = verbose, timeout = 30,
         # Make award amounts an integer
         g_list[[i]]$amount_awarded <- as.integer(g_list[[i]]$amount_awarded)
       }
-
   }
+
+  for (i in seq_along(g_list)) {
+    if (length(g_list[[i]]) == 0) {
+      g_list[[i]] <- NA
+    }
+  }
+
+  g_list <- g_list[!is.na(g_list)]
+
   g_list
 }

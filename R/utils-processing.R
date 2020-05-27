@@ -10,15 +10,23 @@ tsg_core_process <- function(x, verbose, process_type) {
     x <- list(x)
   }
 
+  ## need to somehow deal with the missing tibbles
+
   if (process_type == "core") {
     for (i in seq_along(x)) {
       req2 <- tsg_proc_req_list[tsg_proc_req_list %in% colnames(x[[i]])]
 
+      if (length(req2) >= 1) {
       x[[i]] <- dplyr::select_at(x[[i]], dplyr::vars(tidyselect::one_of(req2)))
+      } else {
+      x[[i]] <- NA
+      }
     }
   }
 
   for (i in seq_along(x)) {
+    if (all(is.na(x[[i]]))) {
+      } else {
     if (any(x[[i]][["data_type"]] == "json")) {
       x[[i]] <- tidyr::unnest_wider(x[[i]], "funding_organization",
         names_sep = "_"
@@ -125,14 +133,15 @@ tsg_core_process <- function(x, verbose, process_type) {
         dplyr::vars(tidyselect::one_of(req3))
       )
     }
-
+    }
     if (verbose) message(paste0("Processing ", i, " of ", length(x)))
   }
 
   x <- lapply(x, dplyr::mutate_all, as.character)
   df <- dplyr::bind_rows(x)
 
-  df <- dplyr::select(df, tsg_req_list, tidyselect::everything())
+  df <- dplyr::select(df, tidyselect::all_of(tsg_req_list),
+                      tidyselect::everything())
 
   df$amount_awarded <- as.numeric(df$amount_awarded)
   df$award_date <- as.Date(df$award_date)

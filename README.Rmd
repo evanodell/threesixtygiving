@@ -111,7 +111,7 @@ The actual grant data is available under a variety of open licences, typically a
 
 Please cite `threesixtygiving` as:
 
-Odell, Evan (2019). _threesixtygiving: Download Charitable Grants from the '360Giving' Platform_. doi: [10.5281/zenodo.3474128](https://doi.org/10.5281/zenodo.3474128), R package version `r packageVersion("threesixtygiving")`, URL: <https://docs.evanodell.com/threesixtygiving>
+Odell, Evan (2020). _threesixtygiving: Download Charitable Grants from the '360Giving' Platform_. doi: [10.5281/zenodo.3474128](https://doi.org/10.5281/zenodo.3474128), R package version `r packageVersion("threesixtygiving")`, URL: <https://docs.evanodell.com/threesixtygiving>
 
 A BibTeX entry for LaTeX users is:
 
@@ -119,7 +119,7 @@ A BibTeX entry for LaTeX users is:
   @Manual{,
     title = {threesixtygiving: Download Charitable Grants from the '360Giving' Platform},
     author = {Evan Odell},
-    year = {2019},
+    year = {2020},
     doi = {10.5281/zenodo.3474128},
     url = {https://docs.evanodell.com/threesixtygiving},
     note = {R package version `r packageVersion("threesixtygiving")`},

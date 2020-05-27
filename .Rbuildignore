@@ -9,3 +9,6 @@
 vignettes/grants.rds
 docs
 ^\_pkgdown\.yml$
+^vignettes/articles$
+^doc$
+^Meta$

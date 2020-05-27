@@ -18,7 +18,7 @@
 #' @importFrom janitor clean_names remove_empty excel_numeric_to_date
 #' @importFrom purrr map reduce
 #' @importFrom dplyr vars select select_at mutate_all bind_rows inner_join
-#' @importFrom tidyselect one_of everything
+#' @importFrom tidyselect one_of everything all_of
 #' @importFrom anytime anydate
 #' @importFrom tibble as_tibble tibble
 #' @importFrom tidyr unnest_wider
