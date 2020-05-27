@@ -30,7 +30,7 @@ returned by \code{\link[=tsg_available]{tsg_available()}}.
 \details{
 Due to the structure of the 360 Giving data, the package will make
 multiple attempts to request data. This can cause issues with servers
-automatically blocking requests, you can use \code{\link[=tsg_missing]{tsg_missing()}} to identify
+automatically blocking requests. You can use \code{\link[=tsg_missing]{tsg_missing()}} to identify
 missing sets of grant data.
 }
 \examples{
