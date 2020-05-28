@@ -1,5 +1,5 @@
 
-# threesixtygiving 0.1.1.9000
+# threesixtygiving 0.2.0
 
 * More testing coverage
 

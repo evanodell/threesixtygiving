@@ -116,10 +116,10 @@ are attached to each dataset.
 
 Please cite `threesixtygiving` as:
 
-Odell, Evan (2019). *threesixtygiving: Download Charitable Grants from
+Odell, Evan (2020). *threesixtygiving: Download Charitable Grants from
 the ‘360Giving’ Platform*. doi:
 [10.5281/zenodo.3474128](https://doi.org/10.5281/zenodo.3474128), R
-package version 0.1.1.9000, URL:
+package version 0.2.0, URL:
 <https://docs.evanodell.com/threesixtygiving>
 
 A BibTeX entry for LaTeX users is:
@@ -128,10 +128,10 @@ A BibTeX entry for LaTeX users is:
   @Manual{,
     title = {threesixtygiving: Download Charitable Grants from the '360Giving' Platform},
     author = {Evan Odell},
-    year = {2019},
+    year = {2020},
     doi = {10.5281/zenodo.3474128},
     url = {https://docs.evanodell.com/threesixtygiving},
-    note = {R package version 0.1.1.9000},
+    note = {R package version 0.2.0},
   }
 ```
 
