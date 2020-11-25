@@ -3,7 +3,9 @@
 tsg_excel <- function(temp_f) {
   z <- tryCatch(
     { ## majority of returns
-      if (length(readxl::excel_sheets(temp_f)) > 1) {
+      if ("#Awards data" %in% readxl::excel_sheets(temp_f)) {
+        s <- readxl::read_excel(temp_f, sheet = "#Awards data")
+      } else if (length(readxl::excel_sheets(temp_f)) > 1) {
         multi <- lapply(readxl::excel_sheets(temp_f),
           readxl::read_excel,
           path = temp_f,

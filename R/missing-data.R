@@ -24,9 +24,9 @@ tsg_missing <- function(x) {
 
   avail_df <- tsg_available()
 
-  x2 <- unique(unlist(purrr::map(x, "publisher_prefix")))
+  x2 <- unique(unlist(purrr::map(x, "dataset_id")))
 
-  missing_df <- avail_df[!(avail_df$publisher_prefix %in% x2), ]
+  missing_df <- avail_df[!(avail_df$identifier %in% x2), ]
 
   missing_df
 }

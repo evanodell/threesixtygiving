@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/threesixtygiving)](https://cran.r-project.org/package=threesixtygiving)
 [![GitHub tag](https://img.shields.io/github/tag/evanodell/threesixtygiving.svg)](https://github.com/evanodell/threesixtygiving)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/threesixtygiving)](https://dgrtwo.shinyapps.io/cranview/)
-[![Travis build status](https://travis-ci.org/evanodell/threesixtygiving.svg?branch=master)](https://travis-ci.org/evanodell/threesixtygiving)
+[![R build status](https://github.com/evanodell/threesixtygiving/workflows/R-CMD-check/badge.svg)](https://github.com/evanodell/threesixtygiving/actions)
 [![Codecov test coverage](https://codecov.io/gh/evanodell/threesixtygiving/branch/master/graph/badge.svg)](https://codecov.io/gh/evanodell/threesixtygiving?branch=master)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/evanodell/threesixtygiving?branch=master&svg=true)](https://ci.appveyor.com/project/evanodell/threesixtygiving)
 [![DOI](https://zenodo.org/badge/195080045.svg)](https://zenodo.org/badge/latestdoi/195080045)

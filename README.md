@@ -1,6 +1,5 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <!-- badges: start -->
 
 [![License: GPL
@@ -9,8 +8,8 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
 [![GitHub
 tag](https://img.shields.io/github/tag/evanodell/threesixtygiving.svg)](https://github.com/evanodell/threesixtygiving)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/threesixtygiving)](https://dgrtwo.shinyapps.io/cranview/)
-[![Travis build
-status](https://travis-ci.org/evanodell/threesixtygiving.svg?branch=master)](https://travis-ci.org/evanodell/threesixtygiving)
+[![R build
+status](https://github.com/evanodell/threesixtygiving/workflows/R-CMD-check/badge.svg)](https://github.com/evanodell/threesixtygiving/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/evanodell/threesixtygiving/branch/master/graph/badge.svg)](https://codecov.io/gh/evanodell/threesixtygiving?branch=master)
 [![AppVeyor build
@@ -124,16 +123,14 @@ package version 0.2.0, URL:
 
 A BibTeX entry for LaTeX users is:
 
-``` 
-  @Manual{,
-    title = {threesixtygiving: Download Charitable Grants from the '360Giving' Platform},
-    author = {Evan Odell},
-    year = {2020},
-    doi = {10.5281/zenodo.3474128},
-    url = {https://docs.evanodell.com/threesixtygiving},
-    note = {R package version 0.2.0},
-  }
-```
+      @Manual{,
+        title = {threesixtygiving: Download Charitable Grants from the '360Giving' Platform},
+        author = {Evan Odell},
+        year = {2020},
+        doi = {10.5281/zenodo.3474128},
+        url = {https://docs.evanodell.com/threesixtygiving},
+        note = {R package version 0.2.0},
+      }
 
 ### Code of Conduct
 

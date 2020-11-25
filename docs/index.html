@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">threesixtygiving</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@ install.packages("threesixtygiving")
     <span class="no">currency</span> <span class="kw">==</span> <span class="st">"EUR"</span> ~ <span class="no">amount_awarded</span>/<span class="fl">1.17</span>,
     <span class="fl">TRUE</span> ~ <span class="no">amount_awarded</span>)) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">funding_org_name</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="kw">n</span> <span class="kw">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n.html">n</a></span>(),
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="kw">n</span> <span class="kw">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span>(),
             <span class="kw">amount_awarded</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">amount_awarded</span>)) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">avg</span> <span class="kw">=</span> <span class="no">amount_awarded</span>/<span class="no">n</span>)
 
@@ -172,15 +172,15 @@ install.packages("threesixtygiving")
 <a href="#citing-threesixtygiving" class="anchor"></a>Citing <code>threesixtygiving</code>
 </h3>
 <p>Please cite <code>threesixtygiving</code> as:</p>
-<p>Odell, Evan (2019). <em>threesixtygiving: Download Charitable Grants from the ‘360Giving’ Platform</em>. doi: <a href="https://doi.org/10.5281/zenodo.3474128">10.5281/zenodo.3474128</a>, R package version 0.1.1.9000, URL: <a href="https://docs.evanodell.com/threesixtygiving" class="uri">https://docs.evanodell.com/threesixtygiving</a></p>
+<p>Odell, Evan (2020). <em>threesixtygiving: Download Charitable Grants from the ‘360Giving’ Platform</em>. doi: <a href="https://doi.org/10.5281/zenodo.3474128">10.5281/zenodo.3474128</a>, R package version 0.2.0, URL: <a href="https://docs.evanodell.com/threesixtygiving" class="uri">https://docs.evanodell.com/threesixtygiving</a></p>
 <p>A BibTeX entry for LaTeX users is:</p>
 <pre><code>  @Manual{,
     title = {threesixtygiving: Download Charitable Grants from the '360Giving' Platform},
     author = {Evan Odell},
-    year = {2019},
+    year = {2020},
     doi = {10.5281/zenodo.3474128},
     url = {https://docs.evanodell.com/threesixtygiving},
-    note = {R package version 0.1.1.9000},
+    note = {R package version 0.2.0},
   }</code></pre>
 </div>
 <div id="code-of-conduct" class="section level3">
