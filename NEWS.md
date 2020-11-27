@@ -1,4 +1,8 @@
 
+# threesixtygiving 0.2.1
+
+* Better error handling.
+
 # threesixtygiving 0.2.0
 
 * More testing coverage

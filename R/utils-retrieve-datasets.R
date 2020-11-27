@@ -1,8 +1,8 @@
 
 ## Retrieve datasets for all specified datasets. Accepts returns of
 # tsg_available and tsg_specific_data
-tsg_data_retrieval <- function(query_df, verbose = verbose,
-                               timeout = 30, retries = 0, correct_names = TRUE) {
+tsg_data_retrieval <- function(query_df, verbose = verbose, timeout = 30,
+                               retries = 0, correct_names = TRUE) {
   g_list <- list()
 
   for (i in seq_along(query_df$title)) {
@@ -56,9 +56,9 @@ tsg_data_retrieval <- function(query_df, verbose = verbose,
           col_types = readr::cols(.default = "c")
         )
       } else if (suffix %in% c("xlsx", "xls")) {
-        g_list[[i]] <- threesixtygiving:::tsg_excel(destfile)
+        g_list[[i]] <- tsg_excel(destfile)
       } else if (suffix == "json") {
-        g_list[[i]] <- threesixtygiving:::tsg_json(destfile)
+        g_list[[i]] <- tsg_json(destfile)
       }
     } else if (!(httr::status_code(result) %in% c(200, 403))) {
       resp <- httr::http_status(result)
@@ -72,13 +72,13 @@ tsg_data_retrieval <- function(query_df, verbose = verbose,
             col_types = readr::cols(.default = "c")
           )
         } else if (result$headers$`content-type` == "application/json") {
-          g_list[[i]] <- threesixtygiving:::tsg_json(temp_f)
+          g_list[[i]] <- tsg_json(temp_f)
         } else {
-          g_list[[i]] <- threesixtygiving:::tsg_excel(temp_f)
+          g_list[[i]] <- tsg_excel(temp_f)
         }
       } else {
         if (suffix %in% c("xlsx", "xls")) {
-          g_list[[i]] <- threesixtygiving:::tsg_excel(temp_f)
+          g_list[[i]] <- tsg_excel(temp_f)
         } else if (suffix == "csv") { ## some csv returns
           g_list[[i]] <- tryCatch(
             {
@@ -92,7 +92,7 @@ tsg_data_retrieval <- function(query_df, verbose = verbose,
             }
           )
         } else if (suffix == "json") {
-          g_list[[i]] <- threesixtygiving:::tsg_json(temp_f)
+          g_list[[i]] <- tsg_json(temp_f)
         }
       }
     }
@@ -186,10 +186,12 @@ tsg_data_retrieval <- function(query_df, verbose = verbose,
     m_df <- query_df[!(query_df$identifier %in%
       unique(unlist(purrr::map(g_list, "dataset_id")))), ]
 
+    if (nrow(query_df) != length(g_list)) {
     message(
       "The following datasets (Title and Identifier) did not download:\n",
       paste(m_df$title, m_df$identifier, "\n")
     )
+    }
   }
 
   g_list

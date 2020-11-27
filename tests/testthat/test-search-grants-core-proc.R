@@ -6,6 +6,7 @@ test_that("grant search and processing", {
     "bbc", "caBinet", "Dundee",
     "Co-operative Group", "masoNIC"
   ))
+
   expect_type(spec1, "list")
   expect_true(tibble::is_tibble(spec1[[1]]))
 
@@ -31,7 +32,7 @@ test_that("grant search and processing", {
 
   core_df <- tsg_core_data(spec2)
   expect_true(tibble::is_tibble(core_df))
-  expect_length(core_df, 12)
+  expect_length(core_df, 13)
   expect_gte(nrow(core_df), 1)
 
   spec3 <- tsg_search_grants(search = c("wolfson"))

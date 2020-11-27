@@ -1,7 +1,6 @@
 
 test_that("all grant retrieval works", {
   skip_on_cran()
-  skip_on_travis()
   skip_on_appveyor()
   skip_on_ci()
   # skip("local-testing")
@@ -10,7 +9,7 @@ test_that("all grant retrieval works", {
   expect_true(is.list(ag1))
 
   core <- tsg_core_data(ag1)
-  expect_length(core, 12)
+  expect_length(core, 13)
   expect_equal(class(core$award_date), "Date")
   expect_equal(class(core$amount_awarded), "numeric")
 })

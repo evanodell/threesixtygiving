@@ -14,5 +14,9 @@ test_that("retrieve available data works", {
 
   expect_named(available_df, expected = avail_names)
   expect_true("json" %in% available_df$data_type)
+  expect_true("Creative Commons Attribution 4.0 International (CC BY 4.0)"
+              %in% available_df$license_name)
   expect_length(available_df, 14)
+
+
 })

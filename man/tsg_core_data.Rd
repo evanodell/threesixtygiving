@@ -19,8 +19,9 @@ A tibble with the core variables in the 360Giving standard.
 Given a list returned by \code{\link[=tsg_all_grants]{tsg_all_grants()}} or \code{\link[=tsg_search_grants]{tsg_search_grants()}}, creates
 a tibble with the core variables required by the
 \href{https://standard.threesixtygiving.org/en/latest/}{360Giving} open standard,
-as well as the publisher prefix, which is useful for data processing,
-and the licence the data was published under.
+as well as the publisher prefix and dataset identifier,
+which are useful for data processing, and the licence the data was
+published under.
 }
 \examples{
 \dontrun{

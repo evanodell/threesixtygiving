@@ -4,8 +4,9 @@
 #' Given a list returned by [tsg_all_grants()] or [tsg_search_grants()], creates
 #' a tibble with the core variables required by the
 #' [360Giving](https://standard.threesixtygiving.org/en/latest/) open standard,
-#' as well as the publisher prefix, which is useful for data processing,
-#' and the licence the data was published under.
+#' as well as the publisher prefix and dataset identifier,
+#' which are useful for data processing, and the licence the data was
+#'  published under.
 #'
 #' @param x A list of tibble with grant data returned by [tsg_all_grants()].
 #' @inheritParams tsg_all_grants
