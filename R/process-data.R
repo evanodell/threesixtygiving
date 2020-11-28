@@ -21,7 +21,10 @@
 #' \dontrun{
 #' grants <- tsg_all_grants()
 #'
-#' df <- tsg_process_data(grants)
+#' df1 <- tsg_process_data(grants)
+#'
+#' # Only return data from columns with more than 50% coverage
+#' df2 <- tsg_process_data(grants, min_coverage = 0.5)
 #' }
 #'
 tsg_process_data <- function(x, min_coverage = 0, verbose = TRUE) {

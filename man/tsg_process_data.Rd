@@ -29,7 +29,10 @@ due to differences in how grant data is labelled and structured.
 \dontrun{
 grants <- tsg_all_grants()
 
-df <- tsg_process_data(grants)
+df1 <- tsg_process_data(grants)
+
+# Only return data from columns with more than 50\% coverage
+df2 <- tsg_process_data(grants, min_coverage = 0.5)
 }
 
 }

@@ -1,6 +1,6 @@
 Package: threesixtygiving
-Title: Access Charitable Grant Data from the '360Giving' Platform
-Version: 0.2.0.9000
+Title: Download Charitable Grants from the '360Giving' Platform
+Version: 0.2.1
 Authors@R: 
     person(given = "Evan",
            family = "Odell",
@@ -42,5 +42,6 @@ Suggests:
     ggplot2,
     scales,
     stringi,
-    ggrepel
+    ggrepel,
+    fixerapi
 VignetteBuilder: knitr
