@@ -38,6 +38,11 @@ tsg_core_process <- function(x, verbose, process_type) {
         if (process_type == "all") { ## to avoid a bunch of needless code running
 
           if ("recipient_organization_location" %in% colnames(x[[i]])) {
+
+            x[[i]][["recipient_organization_location"]][
+              sapply( x[[i]][["recipient_organization_location"]], is.null)
+              ] <- NA
+
             x[[i]][["recipient_organization_location"]] <- purrr::flatten(
               x[[i]][["recipient_organization_location"]]
             )
@@ -46,7 +51,6 @@ tsg_core_process <- function(x, verbose, process_type) {
               x[[i]][["recipient_organization_location"]],
               tibble::as_tibble
             )
-
 
             x[[i]] <- tidyr::unnest_wider(x[[i]],
               "recipient_organization_location",

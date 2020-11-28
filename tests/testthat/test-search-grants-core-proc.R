@@ -4,11 +4,12 @@ test_that("grant search and processing", {
   # Grant searching
   spec1 <- tsg_search_grants(search = c(
     "bbc", "caBinet", "Dundee",
-    "Co-operative Group", "masoNIC"
+    "Co-operative Group", "masoNIC", "json"
   ))
 
   expect_type(spec1, "list")
   expect_true(tibble::is_tibble(spec1[[1]]))
+  expect_true(tibble::is_tibble(spec1[[length(spec1)]]))
 
   # Data process testing
   proc_df <- tsg_process_data(spec1)
