@@ -14,3 +14,4 @@ docs
 ^Meta$
 ^\.github$
 ^cran-comments\.md$
+^CRAN-RELEASE$

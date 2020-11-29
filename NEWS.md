@@ -1,4 +1,9 @@
 
+# threesixtygiving 0.2.2
+
+* Made all links use https.
+
+
 # threesixtygiving 0.2.1
 
 * Better error handling.

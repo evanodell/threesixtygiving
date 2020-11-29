@@ -22,7 +22,7 @@ status](https://ci.appveyor.com/api/projects/status/github/evanodell/threesixtyg
 Access open data from [360Giving](https://www.threesixtygiving.org/)
 publishers. 360Giving is a data standard for publishing information
 about charitable grant giving in the UK. 360Giving maintains a [registry
-of grant makers](http://data.threesixtygiving.org/) using the standard.
+of grant makers](https://data.threesixtygiving.org/) using the standard.
 The package provides functions to search and retrieve data on charitable
 giving.
 
@@ -115,7 +115,7 @@ p1 <- ggplot(df2 %>%
   
 p1
 
-ggsave("man/figures/total-value.png", p1, width = 10)
+#ggsave("man/figures/total-value.png", p1, width = 10)
 ```
 
 ![](man/figures/total-value.png)
@@ -123,7 +123,7 @@ ggsave("man/figures/total-value.png", p1, width = 10)
 ## Notes
 
 This project is possible thanks to support and encouragement from David
-Kane at [360Giving](http://www.threesixtygiving.org/), and from
+Kane at [360Giving](https://www.threesixtygiving.org/), and from
 [Disability Rights UK](https://www.disabilityrightsuk.org/).
 
 ### Data licences
@@ -140,7 +140,7 @@ Please cite `threesixtygiving` as:
 Odell, Evan (2020). *threesixtygiving: Download Charitable Grants from
 the ‘360Giving’ Platform*. doi:
 [10.5281/zenodo.3474128](https://doi.org/10.5281/zenodo.3474128), R
-package version 0.2.0.9000, URL:
+package version 0.2.2, URL:
 <https://docs.evanodell.com/threesixtygiving>.
 
 A BibTeX entry for LaTeX users is:
@@ -151,7 +151,7 @@ A BibTeX entry for LaTeX users is:
         year = {2020},
         doi = {10.5281/zenodo.3474128},
         url = {https://docs.evanodell.com/threesixtygiving},
-        note = {R package version 0.2.0.9000},
+        note = {R package version 0.2.2},
       }
 
 ### Code of Conduct
